@@ -1,0 +1,12 @@
+#Port number
+server.port=8081
+
+#application name
+spring.application.name=CART-SERVICE
+
+#eureka setting
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+#Generating instance id
+eureka.instance.instance-id=${spring.application.name}:${random.value}
+

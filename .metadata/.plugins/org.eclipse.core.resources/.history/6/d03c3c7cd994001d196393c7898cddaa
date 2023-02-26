@@ -1,0 +1,5 @@
+package com.app.consumer;
+
+public interface CartConsumer {
+
+}

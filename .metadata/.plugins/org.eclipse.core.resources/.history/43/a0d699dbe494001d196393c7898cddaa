@@ -1,0 +1,37 @@
+package com.app.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.entity.Cart;
+
+@RestController
+@RequestMapping("/cart")
+public class CartRestController {
+
+	@Value("${my.app.title}")
+	private String title;
+	
+	@GetMapping("/show")
+	public ResponseEntity<String> showCart(){
+		return ResponseEntity.ok("FROM CART SERVICE =>" + title);
+	}
+	
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Cart> getCartById(@PathVariable("id") Integer id){
+		Cart c = new Cart(101,"ABC", 200.0);
+		return ResponseEntity.ok(c);
+	}
+	
+	@PostMapping("/add")
+	public ResponseEntity<String> addToCart(@RequestBody Cart c){
+		return ResponseEntity.ok("ITEM ADDED TO CART SUCCESSFULLY =>" + c);
+	}
+	
+}

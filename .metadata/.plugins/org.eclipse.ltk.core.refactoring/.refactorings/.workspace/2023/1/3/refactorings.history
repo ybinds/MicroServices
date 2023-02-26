@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 5 resources" deleteContents="true" description="Delete 5 resources" element1="/SpringCloudCartService" element2="/SpringCloudEurekaServer" element3="/SpringCloudFeignCartService" element4="/SpringCloudFeignOrderService" element5="/SpringCloudOrderService" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="5" stamp="1673787434633"/>
+</session>
