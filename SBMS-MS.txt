@@ -1,0 +1,3256 @@
+			 Date : 12-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+  			Monolithic Application
+
+Monolithic Application:-
+If an application is developed as a single unit (multiple service together)
+and finally made as single deployable component (1 WAR FILE/ 1 JAR FILE).
+
+Application = Set of Services
+Project     = Set of Modules
+
+ex: Amazon Application
+  Services = Search, Cart, Payment, Feedback..etc
+
+Life Cycle:-
+Plan -> Code -> Build -> Deploy -> Moniter
+
+
+Q) is JDK Software, platform dependent or independent?
+A)  Dependent, for every OS JDK s/w is diff.
+  JDK for Linux, JDK for Windows, JDK for Mac are different.
+
+			 Date : 13-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Q) What is down time of a Server/Project?
+A) 
+
+Q) What is Blue Green deployment? k8s
+A) 
+
+Ref:
+https://www.atlassian.com/microservices/microservices-architecture/microservices-vs-monolith
+			   Microservices
+
+*) Monolithic Application: Creating Application as a single unit
+	[one deployable component]
+
+  1 Project = all modules together.
+
+*) Microservices : it is a Design. 
+       Small Independent services as Application.
+       Creating Independent Deployable components.
+       One Module/Service = as 1 Project/Application
+
+===========================================================
+Compile : .java --> .class
+Build   : .class --> .jar/.war
+Deploy  : Place WAR under server and starter server
+Instance : A Running server with project (successfully)
+Load     : No.of Request (Incoming Request ) to server
+Load Factor : No.of Request / Total Capacity
+		0 < LF < 1
+Test      : Executing JUnit test cases
+Docker Image : OS Independent S/w can be run at VM/Server
+Jenkins : (CI) Pull Code from Git --> Compile --> Build --> Store at Nexus/JFrog
+          (CD) Create Docker Images --> Run at Server --> Code Quality--> Release to production  
+	  		--> Moniter
+
+Scalability : Done for Increasing performance of app.
+1. Horizontal Scaling : Creating multiple server instances of same type
+			application (Run our project multiple times)
+2. Vertical Scaling  : Increasing the configuration of System
+	N/w , Storage, Processor, RAM...etc
+
+Load Balancer :- Incase of Multiple instances exist (ie Horizontal Scaling )
+	for application then we need one Application Load Balancer 
+	for our Cluster to handle/distribute request.
+	
+==============================================================
+Advantages of a monolithic architecture:
+1. Development – When an application is built with one code base, 
+			it is easier to develop.
+
+2. Easy deployment – One executable file makes deployment easier.
+
+3. Performance – In a centralized code base and repository, 
+	one API can often perform the same function.
+
+4. Simplified testing – Since a monolithic application is a single, 
+	centralized unit, end-to-end testing can be performed
+	
+5. Easy debugging – With all code located in one place, it’s easier to follow a request and find an issue.
+	(Checking the code for issues)
+
+------------------------------------------------------------
+Disadvantages of a monolithic architecture:-
+1. Slower development speed – A large, monolithic application makes development more complex and slower.
+
+2. Scalability – You can’t scale individual components.
+
+3. Reliability – If there’s an error in any module,
+	it could affect the entire application’s availability.
+
+ Exception in one module may effect other modules to stop/in valid output
+ ..etc
+
+4. Barrier to technology adoption – Any changes in the framework or 
+	language affects the entire application, making changes often 
+	expensive and time-consuming.
+(It is not easy to add new modules as size of application grows slowly
+  and time consuming for development and deployment)
+
+5. Lack of flexibility – A monolith is constrained by the technologies already used in the monolith.
+  [Using different new techbologies/ enhancements are not easy]
+
+6. Deployment – A small change to a monolithic application 
+	requires the redeployment of the entire monolith.
+
+			 Date : 14-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Ref:
+https://www.atlassian.com/microservices/microservices-architecture/microservices-vs-monolith
+
+Microservices:-
+One Big Application is implemented as small projects and connected finally
+using Webservices.
+
+Service: A Part/ Business Unit / Component of a Project that provides
+         set of operations as a one project.
+
+Ex: OrderService, AuthenticationService, ProductService, PaymentService..etc
+
+*) An independent Deployable component is called as Microservices.
+> Parallel Development of independent services
+> Parallel Deployment  of independent services
+> Parallel Scaling of independent services
+
+
+---Advantages of microservices-------
+[FAST development/deployment]
+Agility – Promote agile ways of working with small teams that deploy frequently.
+
+[Scale Easily without touching other Services]
+Flexible scaling – If a microservice reaches its load capacity, new instances of that service can rapidly be deployed to the accompanying cluster to help relieve pressure. We are now multi-tenant and stateless with customers spread across multiple instances. Now we can support much larger instance sizes. 
+
+[Deploy in servers as independent]
+Continuous deployment – We now have frequent and faster release cycles. Before we would push out updates once a week and now we can do so about two to three times a day. 
+
+[Easy to add new features and test them easily]
+Highly maintainable and testable – Teams can experiment with new features and roll back if something doesn’t work. This makes it easier to update code and accelerates time-to-market for new features. Plus, it is easy to isolate and fix faults and bugs in individual services.
+
+[Deploy without stopping other services]
+Independently deployable – Since microservices are individual units they allow for fast and easy independent deployment of individual features. 
+
+[We can develop few services in other languages/technologies]
+Technology flexibility – Microservice architectures allow teams the freedom to select the tools they desire. 
+
+[As we can maintain multiple Instances, if one/some goes down other instances exist]
+High reliability – You can deploy changes for a specific service, without the threat of bringing down the entire application.
+===========================================================================
+Disadvantages of microservices:-
+
+Development  issues
+
+Ansible-> deployment playbooks, 
+Terraform / AWS -> hosting infrastructure, 
+Docker/Kubernetes -- 1000 Instance- Docker 
+ELK -> monitoring tools, and more.
+
+updates and interfaces. 
+
+			 Date : 17-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Cloud (Microservices)
+
+*) Microservices is a design/Theory, for this coding is "Spring Cloud".
+
+*) Cloud Computing v/s Spring Cloud
+Cloud Computing: Run Applications by taking services for rental
+	(PaaS, IaaS, SaaS) --Ex: AWS, MS-Azure, GCP..etc
+
+Spring Cloud : Develop application using Microservices concept.
+
+*) Netflix is Vendor who gave APIs (JARs) to implement Microservices design.
+
+--Comonponents---  
+1. Microservice : One Module/ One service is one Project (Spring ReST is used)
+2. Register and Discovery : (Netflix Eureka Server)
+	Here, all Microservices Instance details are stored
+	(serviceId, instanceId, HOST, IP, PORT, Load Factor..etc)
+
+3. Config Server : To store all Microservices common properties
+	at a external place (Github) and connect with all MS# apps.
+
+4. Communication Client : (RestTemplate)
+    Open Feign or Feign Client is used to make request from one MS# to
+    another MS# (It is also called as Client Side Load Balancer).
+   
+5. Admin Dashboard : Visual dashboard for all MS# which are registered
+	with eureka (Health, Beans, Info, cache details, ..etc)
+  It internally uses Actuator.
+
+6. ELK : Elasticsearch Logstash Kibana : 
+	To read .log file data and display at UI. So, that we can
+	search all Log details in easy way.
+
+7. Distributed Tracking: (MS2-->MS4-->MS7-->MS4-->MS2)
+  Finding execution path of a request that has multiple MS# involved
+  (Which class/methods are executed, how much time taken?)
+
+Tool: Zipkin Server, Sleuth
+
+8. Continioues Data Flow (Message Queue): [Apache Kafka]
+  Producer sending data and consumer is reading data in continuous manner.
+
+Ex: Swiggy Tracking, Ola/Uber cab status..etc
+
+9. Circuite Breaker: 
+  Avoid executing application for a period of time if app is throwing
+  exceptions in Continuous manner.
+
+10. API Gateway : Entry-Exit point to MS# apps.
+   -> Dynamic Routing : Choose MS# based on Load Details
+   -> Load Balancer : Maintain Load Details based on serviceIds
+   -> Security : JWT(JSON Web Token), OAuth2.x
+
+			 Date : 19-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Microservices : It is a Design, De-Coupled Architecture.
+		Independent Deployable Components.
+		One Big Application --> Small Apps and developed/Linked.
+
+Spring Cloud : API given by Pivotal Team + Vendor(Netflix)
+	         This is Next level app to Spring Boot.
+		 It is used to develop apps using Microservices.
+
+
+*) Our Small Apps are implemented using Spring Boot REST only.
+*) We need even other concepts like:
+   Register and Discovery, Log Aggregator, Moniter/Dashboard, 
+   Gateway, LoadBalancer, Continuous data Flow, Security,
+   Distributed Tracking,  Dynamic Routing..etc
+=======================================================================
+*) Register and Discovery Server:-
+ Register is a Storage Area for Audit details of all services.
+
+ Here Register stores all MS# details, like:
+   ServiceName, InstanceId, IP, PORT, Load Details (no.of Instances..etc)
+
+   +----------------- EXAMPLE REGISTER -------------------------+
+   | serviceId    InstanceId       IP       PORT        LF      |
+   +------------------------------------------------------------+
+   |  CART-SER    CART-SER-5410  192.168.0.1 8061       0/200   |
+   |  CART-SER    CART-SER-5411  192.168.0.2 8061       0/200   |
+   |  CART-SER    CART-SER-5412  192.168.0.3 8061       0/200   |
+   |  PYMT-SER    PYMT-SER-5412  192.168.1.4 8161       0/200   |
+   |  PYMT-SER    PYMT-SER-5412  192.168.1.5 8161       0/200   |
+   +------------------------------------------------------------+
+
+LF = Load Factor  = Current No.of Request / Max No.of Request
+
+*) Above Register is a List<ServiceInstance>. Here one ServiceInstance
+   means one Line.
+
+*) Spring Cloud + netflix, provided one Register Server "Eureka Server".
+*) Every MS# application is implemented using Spring REST and also
+	with Eureka Client + Register=true/fetch=true
+=========================================================================
+				TASK:#1
+> Create one Eureka Server
+> Define one MS# application
+> Register with Eureka Server
+
+=========================STEPS + CODE==================================
+Name: SpringCloudEurekaServer
+Dep : Eureka Server
+
+> At main class: @EnableEurekaServer
+> application.properties
+# RECOMANDED PORT NUMBER
+server.port=8761
+
+# DISABLE SELF REGISTER
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+----------------------MS# app---------------------
+Name : SpringCloudCartService
+Dep  : Spring Web, Eureka Discovery Client
+
+*) At main class: @EnableEurekaClient
+*) application.properties
+#PORT
+server.port=8081
+
+# ServiceId (app Name)
+spring.application.name=CART-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# Register with Eureka
+eureka.client.register-with-eureka=true
+# Enable Fetching other MS# Details
+eureka.client.fetch-registry=true
+==========================================================
+
+*) Execution Order:
+1. Run Eureka Server
+2. Run MS# application
+3. Enter URL : http://localhost:8761
+4. Check Instance Running and click on Link (then modify)
+   http://localhost:8081/v1/api/cart/show
+
+=================================================================
+
+*) Spring Boot  : Data JPA, Web, Email, Cache, Connection Pooling, REST..etc
+*) Spring Cloud : Eureka Server, Config Server, gateway, Feign Client..etc
+
+*)Note:
+1. Every MS# need to be register with Eureka Server.
+2. For That every MS# should contain Eureka Client Dependency,
+   annotation: @EnableEurekaClient and key 
+      eureka.client.register-with-eureka=true
+3. ** Spring Cloud is a Parent for all MS# even for Eureka Server.
+  it has given key: eureka.client.register-with-eureka=true (as default)
+  that reduces in every MS#.
+4. But, Eureka Server even gets same true value. Which means 
+	"Register Eureka Server with Eureka Server"
+   So, to remove this: eureka.client.register-with-eureka=false
+   at Eureka Server.
+
+5.*** If we do not provide eureka.client.register-with-eureka=false
+   at Eureka, It will do Self Register which is Memory waste.
+
+			 Date : 20-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		        Microservices : Spring Cloud
+
+Q) Why Spring Cloud is used?
+A) To implement one application in java using Microservices design.
+
+Q) How Spring Cloud is different from Spring Boot?
+A) Spring Cloud is built on-top of Spring Boot.
+
+  Spring Boot is mainly used for Webapps(Web MVC, REST), DATA JPA, Email,
+     Security, Configurations...etc
+
+  Spring Cloud : Register & Discovery Server, Config Server, Gateway..etc
+
+
+Q) How our app is connected with both Spring Cloud and Spring boot
+	(using Maven)?
+A) To link with Spring Boot, in our project inside pom.xml there is
+	<parent> tag exist.
+
+   Maven will allow only one <parent> tag.
+   To link with 2nd parent use BOM (Bill Of Materials) concepts.
+   ie using <dependencyManagement> tag to link next parent (like HAS-A
+   relation in java)
+
+dependencyManagement = Using a Parent (another pom.xml) as a Link
+   [set of JARS possible] to our project.
+
+======================================================================
+Q) What is Instance ? and Why?
+A) An Application running under server.
+   More instance gives services to multiple users in parallel.
+
+Q) What is a Register and Discovery Server? Give Example?
+   How it is different from webserver(tomcat)?
+
+A) Register : It will store all MS# instance details in ServiceInstance format
+      
+    1 ServiceInstance = 1 ServiceId + 1 InstanceId + 1 IP + 1 PORT + 1 LF (data)
+
+  ServiceId = application-name
+  InstanceId = (Some Number/code/application-name:randome value) 
+  IP/PORT = IP Address/ Port Number
+  LF = Load Factor
+
+  Discovery : It will support to get another MS# details from Register
+          to communicate with that MS#.
+
+*) Register and Discovery Server example: Netflix Eureka Server,
+		Apache ZooKeeper.
+
+*) Webservers are used to run .war files. (webapps)
+   Register and Discovery Server for MS# apps.
+
+==================================================================
+Q) How can we expose our MS# or Register ? How can we enable to get
+	other MS# data from Register?
+
+A) In every MS# application , follow below steps
+
+1. Add Spring Cloud Eureka Discovery Client Dependency (along with WEB)
+2. At main class add: @EnableEurekaClient
+
+3. At properties file provide below keys
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+
+*) Note: if we provide register-with-eureka=false, then we can not
+ communicate with that MS# (from ourside, or from another MS#)
+============================================================
+Q)  In MS# apps, register-with-eureka=true key and fetch-registry=true
+    must be given?
+
+A) No. By default Spring Cloud parent has given JARS and config props
+	for Eureka. There it has given default value 'true' for
+   register-with-eureka and fetch-registry.
+
+Q) Why do we need to provide 
+   register-with-eureka=false and fetch-registry=false 
+   at Eureka Server?
+
+A) Even for Eureka Server, spring cloud has provided default values as true
+   So, self register is done by eureka, that creates one UNKNOW instance
+   which takes some memory at Eureka server (no meaning) [No error, No Exception]
+============================================================================
+Q) What is the defaultZone value if we did not provide in MS#?
+A) EurekaClientConfigBean is given by Spring Cloud.
+   That is storing config details for location of Eureka as a Map.
+   The default URL is given as:
+   http://localhost:8761/eureka
+
+==========================================================================
+Q) K8s. What is Deployment and Replicasets?
+A) 
+  MS# --> Container Image --> Pod --> ReplicaSets --> Deployments
+
+ReplicaSets : No.of Instances of a Pod
+==========================================================================
+
+			 Date : 21-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Microservices Communication
+
+*) MS# Communication: If one MS# wants to send request and get response
+from another MS# then it is called as MS# communication.
+
+*) All MS# are internally Spring Boot REST apps. So, we can use RestTemplate.
+  But hardcoding URL of MS# is not a good approch.
+
+Why?
+-> MS# instances may run at different systems (IP May be diff in realtime)
+-> MS# multiple instances may be created for LoadBalancing.
+
+========================================================================
+Spring Cloud has provided Client APIs (or) Communication APIs
+They are:
+
+1. DiscoveryClient (Legacy)
+2. **LoadBalancerClient
+3. *** Feign Client (open Feign)
+
+*** Above clients helps to link two MS# apps.(for Communication only)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ ***********************[DiscoveryClient]*************************
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+This is given by Spring Cloud to fetch details from Register of a 
+given MS# based on ServiceId(application name) of client MS#
+
+The result of DiscoveryClient#getInstances(serviceId) is
+    List<ServiceInstance>
+
+One ServiceInstance means one MS# Instance details (one line)
+  ServiceInstance = serviceId + instanceId + URI(HOST+PORT) + LF..etc
+
+*) Here, if Client MS# is running only once, then result is List<SI>
+  with only one object(index#0)
+
+ From Index#0 we read SI(ServiceInstanec) and read URI (IP+PORT)
+ finally create URL by adding path (fixed always in code)
+
+*) Pass the URL to restTemplate to make call to Consumer MS# app
+   and get response ResponseEntity<T>.
+
+Q) Why DiscoveryClient?
+A) TO get MS# details from Eureka Server at runtime.
+    Based on MS# serviceId
+    
+Q) Can DiscoveryClient make request to MS# application?
+A) NO. It always connectes to Eureka Server.
+  it is never used to make Http Request/Response to MS# apps.
+
+Q) Can Eureka Server makes HTTP request to MS# application?
+A) Never. Eureka Just stores details and provide if you want of MS#.
+
+Q) What is ServiceInstance?
+A) ServiceInstance means details of One MS# instance.
+  ServiceInstance = serviceId+ InstanceId + URI(IP/PORT) + ...
+
+Q) What is the Diff b/w URI, URL, Protocol, ResourcePath?
+A)
+  http://192.168.10.11:8086/myapp/employee/find/101
+
+  Protocol = http
+  IP       = 192.168.10.11
+  Port     = 8086
+  contextpath (project name) = /myapp  (default is /  in boot)
+  Resource Path = /employee/find/101 (dynamic path)
+
+  URI = IP + PORT
+
+  URL = Protocol + URI + ContextPath + ResourcePath
+
+===Code=================================================================
+3 projects
+1. Eureka Server
+
+Name : SpringCloudEurekaServer
+Dep  : Eureka Server
+
+Main : @EnableEurekaServer
+
+application.properties
+# RECOMANDED PORT NUMBER
+server.port=8761
+
+# DISABLE SELF REGISTER
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+
+*******************************************************************
+2. CartService
+Name : SpringCloudCartService
+Dep  : Spring Web, Eureka Discovery Client
+
+Main: @EnableEurekaClient
+
+--application.properties--
+#PORT
+server.port=8081
+
+# ServiceId (app Name)
+spring.application.name=CART-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# Register with Eureka
+eureka.client.register-with-eureka=true
+# Enable Fetching other MS# Details
+eureka.client.fetch-registry=true
+
+
+--RestController-------
+package com.app.raghu.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/cart")
+public class CartRestController {
+
+	@GetMapping("/info")
+	public ResponseEntity<String> showMessage() {
+		return ResponseEntity.ok("WELCOME TO CART SERVICE");
+	}
+}
+
+*******************************************************************
+3. OrderService
+
+Main: @EnableEurekaClient
+
+--application.properties--
+#PORT
+server.port=8094
+
+# ServiceId (app Name)
+spring.application.name=ORDER-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+--Consumer code--------
+package com.app.raghu.consumer;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class CartConsumer {
+
+	//Impl class is : EurekaDiscoveryClient -- given by Netflix Eureka
+	@Autowired
+	private DiscoveryClient client;
+
+	public String getCartResponse() {
+		// Goto Eureka server with serviceId
+		List<ServiceInstance> list = client.getInstances("CART-SERVICE");
+
+		// read at index#0 ==> returns SI
+		ServiceInstance si = list.get(0);
+
+		// read URI
+		URI uri = si.getUri();
+
+		// add path ==> return URL
+		String url = uri + "/cart/info";
+
+		// use RestTemplate and call
+		RestTemplate rt = new RestTemplate();
+		
+		//make HTTP Request and get response
+		ResponseEntity<String> response = rt.getForEntity(url, String.class);
+
+		//return response body
+		return response.getBody();
+	}
+}
+
+--RestController-------
+
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.consumer.CartConsumer;
+
+@RestController
+@RequestMapping("/order")
+public class OrderRestController {
+	
+	@Autowired
+	private CartConsumer consumer;
+	
+	@GetMapping("/place")
+	public ResponseEntity<String> placeOrder() {
+		String cartResp = consumer.getCartResponse();
+		return ResponseEntity.ok("ORDER PLACED WITH => " + cartResp);
+	}
+
+}
+========================================================================
+--Execution Order--
+1. Run Eureka Server
+2. Run Cart Service 
+3. Run Order Service
+4. Goto Eureka (http://localhost:8761)
+5. Click on Order Service link
+  May look like : http://localhost:8094/actuator/info
+6. Modify Full URL of Cart service 
+ex:
+ http://localhost:8094/order/place
+
+Output: Order service output ( Order Service Response + Cart Service Response)
+  ORDER PLACED WITH => WELCOME TO CART SERVICE
+
+			 Date : 22-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Microservices Communication
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ *********************[LoadBalancerClient]*************************
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+1. If run same MS# application multiple times (at different servers)
+   then multiple instances are created.
+
+2. To provider better/faster service to end-customers, multiple instances
+	are required.
+
+3. In above case, if Consumer wants to read one instance using DiscoveryClient
+   (which has less load factor) that is not possible, Bcoz it returns
+   List<ServiceInstance> (all instances)
+
+4. LoadBalancerClient(I) will get only one Instance from Eureka Server
+   that has less Load Factor (it internall follows round robin concept)
+
+
+5.** If you want run your MS# application as multiple instances
+ then must provide : eureka.instance.instance-id=_________
+  (Any String type data)
+-----------------------------------------------------------------------
+===Code=================================================================
+3 projects
+1. Eureka Server
+
+Name : SpringCloudEurekaServer
+Dep  : Eureka Server
+
+Main : @EnableEurekaServer
+
+application.properties
+# RECOMANDED PORT NUMBER
+server.port=8761
+
+# DISABLE SELF REGISTER
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+
+*******************************************************************
+2. CartService
+Name : SpringCloudCartService
+Dep  : Spring Web, Eureka Discovery Client
+
+Main: @EnableEurekaClient
+
+--application.properties--
+#PORT
+server.port=8081
+
+# ServiceId (app Name)
+spring.application.name=CART-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# Generating Instance ID
+eureka.instance.instance-id=${spring.application.name}:${random.value}
+
+
+--RestController-------
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/cart")
+public class CartRestController {
+	
+	@Value("${server.port}")
+	private String port;
+
+	@GetMapping("/info")
+	public ResponseEntity<String> showMessage() {
+		return ResponseEntity.ok("WELCOME TO CART SERVICE =>" + port);
+	}
+}
+
+
+*******************************************************************
+3. OrderService
+Name : SpringCloudOrderService
+Dep : Spring web, Eureka Discovery Client, Cloud LoadBalacer
+
+Main: @EnableEurekaClient
+
+--application.properties--
+#PORT
+server.port=9091
+
+# ServiceId (app Name)
+spring.application.name=ORDER-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+--Consumer code--------
+package com.app.raghu.consumer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class CartConsumer {
+
+	@Autowired
+	private LoadBalancerClient client;
+
+	public String getCartResponse() {
+		ServiceInstance si = client.choose("CART-SERVICE");
+		String url = si.getUri() + "/cart/info";
+		System.out.println("*********************** " + url +" **********************");
+		
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<String> response = rt.getForEntity(url, String.class);
+		return response.getBody();
+	}
+}
+
+--RestController-------
+
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.consumer.CartConsumer;
+
+@RestController
+@RequestMapping("/order")
+public class OrderRestController {
+	
+	@Autowired
+	private CartConsumer consumer;
+	
+	@GetMapping("/place")
+	public ResponseEntity<String> placeOrder() {
+		String cartResp = consumer.getCartResponse();
+		return ResponseEntity.ok("ORDER PLACED WITH => " + cartResp);
+	}
+
+}
+========================================================================
+--Execution Order--
+1. Run Eureka Server
+2. Run Cart Service (3 times with different port number)
+3. Run Order Service (1 time)
+4. Goto Eureka (http://localhost:8761)
+5. Click on Order Service link
+  May look like : http://localhost:9091/actuator/info
+6. Modify Full URL of Cart service 
+ex:
+ http://localhost:9091/order/place
+
+Output: Order service output ( Order Service Response + Cart Service Response)
+  ORDER PLACED WITH => WELCOME TO CART SERVICE =>8083
+
+*) Note:
+1. ${random.value} Generates one Random value using class
+   RandomValuePropertySource(C)
+
+
+Q) Why LoadBalancerClient is used?
+A) To work with multiple instances of Producer MS# app
+  it is also called as Client Side Load Balancer.
+
+Q) What is the old LoadBalancer Vendor name?
+A) Ribbon. it is removed now.
+   New one is : Cloud Load Balancer
+
+Q) How many Instances does it return for a single request from eureka?
+A) Alway one ServiceInstance which has Less Load Factor
+
+
+Q) Do we need RestTemplate also if we use LoadBalancerClient?
+A) Yes RestTemplate is Required. 
+  Bcoz LoadBalancerClient interacts with Eureka. 
+  LoadBalancerClient will not make any HTTP Request to REST/MS# apps.
+======================================================================
+
+			 Date : 24-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		     Microservices Communication
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+   *********************[FeignClient]*************************
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+1. Feign Client is also called as Open Feign.
+2. It is 3rd party API, integrated with Spring Cloud.
+3. It generates code at runtime (Dynamic Proxy class)
+   which internally uses LoadBalancerClient code.
+4. Programmer has to provide,
+  a. one interface with abstract methods
+  b. Endpoint details : Path, HttpMethods, serviceId(Provider App)
+  c. Request/Response Entities/Beans need to be re-defined
+  	(type of duplicate code / bolier plate code)
+
+5. Here, we do not need to use any RestTemplate. No manual code for
+	LoadBalancer and Http calls.
+************************************************************************
+===Code=================================================================
+3 projects
+1. Eureka Server
+
+Name : SpringCloudEurekaServer
+Dep  : Eureka Server
+
+Main : @EnableEurekaServer
+
+application.properties
+# RECOMANDED PORT NUMBER
+server.port=8761
+
+# DISABLE SELF REGISTER
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+
+*******************************************************************
+2. CartService
+Name : SpringCloudCartService
+Dep  : Spring Web, Eureka Discovery Client, Lombok
+
+Main: @EnableEurekaClient
+
+--application.properties--
+#PORT
+server.port=8081
+
+# ServiceId (app Name)
+spring.application.name=CART-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+# Generating Instance ID
+eureka.instance.instance-id=${spring.application.name}:${random.value}
+
+
+----Spring Bean---
+package com.app.raghu.entity;
+
+import lombok.Data;
+
+@Data
+public class Cart {
+
+	private Integer cartId;
+	private String cartCode;
+	private Double cartCost;
+}
+
+
+--RestController-------
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Cart;
+
+@RestController
+@RequestMapping("/cart")
+public class CartRestController {
+	
+	@Value("${server.port}")
+	private String port;
+
+	@GetMapping("/info")
+	public ResponseEntity<String> showMessage() {
+		return ResponseEntity.ok("WELCOME TO CART SERVICE =>" + port);
+	}
+	
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Cart> getCartById(@PathVariable("id")Integer id) {
+		Cart cart = new Cart();
+		cart.setCartId(id);
+		cart.setCartCost(2300.0);
+		cart.setCartCode("TEST");
+		return ResponseEntity.ok(cart);
+	}
+	
+	@PostMapping("/create")
+	public ResponseEntity<String> addToCart(@RequestBody Cart cart) {
+		return ResponseEntity.ok("ADDED TO CART => " + cart);
+	}
+}
+
+
+*******************************************************************
+3. OrderService
+Name : SpringCloudOrderService
+Dep : Spring web, Eureka Discovery Client, Open Feign, Lombok
+
+Main: @EnableEurekaClient, @EnableFeignClients
+
+--application.properties--
+#PORT
+server.port=9091
+
+# ServiceId (app Name)
+spring.application.name=ORDER-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+--Spring Bean--------
+package com.app.raghu.entity;
+
+import lombok.Data;
+
+@Data
+public class Cart {
+
+	private Integer cartId;
+	private String cartCode;
+	private Double cartCost;
+}
+
+
+--Consumer code--------
+package com.app.raghu.consumer;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.app.raghu.entity.Cart;
+
+@FeignClient("CART-SERVICE")
+public interface CatConsumerFeign {
+
+	@GetMapping("/cart/info")
+	public ResponseEntity<String> showMessage();
+	
+	@GetMapping("/cart/find/{id}")
+	public ResponseEntity<Cart> getCartById(
+			@PathVariable("id")Integer id);
+	
+	
+	@PostMapping("/cart/create")
+	public ResponseEntity<String> addToCart(
+			@RequestBody Cart cart);
+}
+
+
+--RestController-------
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.consumer.CatConsumerFeign;
+import com.app.raghu.entity.Cart;
+
+@RestController
+@RequestMapping("/order")
+public class OrderRestController {
+	
+	@Autowired
+	private CatConsumerFeign consumer;
+	
+	@GetMapping("/place")
+	public ResponseEntity<String> placeOrder() {
+		String cartResp = consumer.showMessage().getBody();
+		return ResponseEntity.ok("ORDER PLACED WITH => " + cartResp);
+	}
+	
+	@GetMapping("/fetch/{id}")
+	public ResponseEntity<String> fetchOrderWithCart(
+			@PathVariable("id") Integer id
+			) 
+	{
+		Cart cob = consumer.getCartById(id).getBody();
+		return ResponseEntity.ok("ORDER WITH CART DATA => " + cob);
+	}
+
+	@PostMapping("/addToCart")
+	public ResponseEntity<String> addToCart(
+			@RequestBody Cart cart
+			) 
+	{
+		String cartResp = consumer.addToCart(cart).getBody();
+		return ResponseEntity.ok("ORDER WITH => " + cartResp);
+	}
+}
+
+========================================================================
+--Execution Order--
+1. Run Eureka Server
+2. Run Cart Service (3 times with different port number)
+3. Run Order Service (1 time)
+4. Goto Eureka (http://localhost:8761)
+5. Click on Order Service link
+  May look like : http://localhost:9091/actuator/info
+6. Modify Full URL of Cart service 
+ex:
+ http://localhost:9091/order/place
+
+Output: Order service output ( Order Service Response + Cart Service Response)
+  ORDER PLACED WITH => WELCOME TO CART SERVICE =>8083
+======================================================================
+Ex#2
+GET http://localhost:9091/order/fetch/1190
+
+
+Ex#3
+POST  http://localhost:9091/order/addToCart
+	Body
+		raw(*)  [JSON]
+{
+    "cartId" : 1019,
+    "cartCode" : "AA",
+    "cartCost" : 9900.0
+}
+=======================================================================
+
+			 Date : 26-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Cloud Config Server
+
+1. One Application can have multiple MS# implemented using Spring REST
+	and Spring Cloud components.
+2. Every MS# application contains application.properties file
+3. These files contains key=val few are same as other MS#(Duplicate Key=Val pairs)
+4. Such Duplicate Pairs can be placed outside of All MS# and link
+  ie called as Config Server
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+   *********************[Config Server]*************************
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  To externalize all duplicate key=val pairs from each MS# 
+  into one common location (Ex: Github) and connect with every MS#
+  at runtime using a medium server ie runs at port:8888
+
+*) Every MS# should have Config Client Dependency and URL of Config Server
+*) Config Server recomanded port number is 8888
+*) Config Server will load all KEY=VALs into Environment(I)
+raghu2023sample@gmail.com
+Model@12034
+
+
+--Stage@1-------Create Github Properties file-------------------
+> Goto https://github.com/signup?source=login
+> Fill Form and get Registered
+raghu2023sample@gmail.com
+Model@12034
+
+> Click on Plus Symbol > Create Repository > Enter name 
+Ex: SpringCloudConfigServerEx
+> Finish
+
+> Creating new file > Enter name : application.properties
+> with some key=vals
+> Commit
+
+GitLink: https://github.com/raghu2023sample/SpringCloudConfigServerEx.git
+=====================================================================
+--Stage@2---------Create Config Server Application--------------
+Name : SpringCloudConfigServerEx
+Dep  : Config Server
+
+> At main class: @EnableConfigServer
+> application.properties
+------------------
+server.port=8888
+
+spring.cloud.config.server.git.uri=https://github.com/raghu2023sample/SpringCloudConfigServerEx.git
+spring.cloud.config.server.git.username=raghu2023sample
+spring.cloud.config.server.git.password=Model@12034
+spring.cloud.config.server.git.default-label=main
+--------------------------
+
+> Run main class and Enter URL:
+ http://localhost:8888/actuator/refresh
+
+===================================================================
+--Stage@3---------Integrate Every MS# with Config server--------
+
+1 Add Config Client Dependency
+> Right click on Project (MS# app)
+> Spring > add Starter > Config Client
+> Next > select pom.xml checkbox > next > finish
+
+2 Add Location of Server at MS# properties file
+
+spring.config.import=optional:configserver:http://localhost:8888
+
+=================================================================
+Execution order:
+1. Run Config Server | Eureka Server 
+2. Run MS# Apps
+3. Enter URL:
+http://localhost:8084/cart/info
+
+--------------------------------------------------------------
+Check at console: At Cart Service / Order Service 
+ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8888
+
+
+			 Date : 27-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		Spring Cloud Config Server : Refresh Scope
+
+Problem Statement:
+ Once we start MS# apps with Eureka and Config server, then we modify/
+ update any key=vals at Config Server (+Git properties File)
+ those will not get effected at MS# until we restart MS# apps.
+
+Solution Statement:
+ We have to implement "Refresh Scope" at MS# app. So, that if any
+ key=val is updated at Config server that will be updated at MS# app
+ also, without restarting MS# apps.
+
+--Coding Steps---
+*) Code changes at MS# app only
+
+1. Add Actuator Dependency at MS#
+> Right click on MS# Project > Spring > Add Starters > Choose Actuator
+> Next > pom.xml checkbox > finish
+
+2. Activate Actuator by adding one key=val in properties
+management.endpoints.web.exposure.include=*
+
+3. At RestController (or at main class)
+@RefreshScope
+
+4. Start all apps in order (Eureka, Config Server, MS# apps)
+ check: http://localhost:8082/cart/info
+
+5. Modify value at Github and make POSTMAN Request
+  POST   http://localhost:8082/actuator/refresh   [SEND]
+
+ check: http://localhost:8082/cart/info
+
+*) Above POST call should be implemented using RestTemplate with one
+   Scheduler Service that gets latest data always.
+
+==Ex========================================
+Name: SpringCloudSchedulerService
+Dep : Web
+
+application.properties
+server.port=9601
+
+> at main class: @EnableScheduling
+
+--Scheduler code--
+package com.app.raghu.scheduler;
+
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class FetchLatestDataFromProps {
+
+	@Scheduled(cron = "10 * * * * *")
+	public void fetch() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>("{}", headers);
+		
+		RestTemplate rt = new RestTemplate();
+		String output = rt.postForEntity(
+				"http://localhost:8082/actuator/refresh", entity, String.class)
+				.getBody();
+		System.out.println(output);
+	}
+}
+===============================================================
+*) ConfigServerConfigDataLoader is given by Spring Cloud Config Client
+   that gets latest key=val from Config Server. It internally fetch
+   the data from Environment(I) using PropertySource process.
+
+*) If a key is present at MS# app and Github(Config Server)
+  then priority is given to Config server properties file key=val only.
+  ie our MS# Properties are overriden.
+
+======================================================================
+
+			 Date : 28-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Plan -> Document -> Development -> Build -> Test -> Release -> Moniter
+
+We are having different monitering tools like:
+1. Admin Server (+Actuator)
+2. Zipkin and Slueth
+
+These are tools used to know the current status of applications/MS# running 
+
+*) Actuator : Set of Production Ready Endpoints.
+It gives some pre-defined services which are commonly used in Production
+Environment for every MS# apps. Like:  Health Checking, Beans detaiks, 
+ mapping inforation(URL,HttpMethods), cache, heap, thread dumps..etc
+
+=> If we use only 'Actuator' that is manual process of using/checking
+  services. We should also Integrate Admin Server to have GUI based
+  checking.
+
+=======Steps to activate Actuator services=========================
+S#1 Add Actuator Dependency in MS# 
+> Right click > Add Starter > Actuator > Next > pom.xml checkbox
+> next > finish
+
+pom.xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+S#2 Enable Services
+management.endpoints.web.exposure.include=*
+#management.endpoints.web.exposure.include=health,beans,env
+
+
+S#3 Enter URL :  http://IP:PORT/actuator
+
+Ex:
+http://localhost:8082/actuator
+
+
+Note:
+1. If we did not specify any include services then default only
+  one service 'health' is activated.
+  (old versions : Upto 2.4.x -- 2 were activated - health, info)
+
+2. Enter service URL to check their details
+http://localhost:8082/actuator/beans
+http://localhost:8082/actuator/env
+
+======================================================================
+			Spring Cloud Adminserver
+
+It is a central server that is used to Moniter Actuator Results of 
+Every MS# which is connected using Admin Client and ADMIN URL.
+
+*) MS# will connect to Admin Server using Admin Client.
+*) Actuator must be enabled at every MS# then only Admin Client
+  can read its information.
+
+===Coding Steps=============================
+1. Admin Server
+Name : SpringCloudAdminServer
+Dep  : Admin Server
+
+> At main class: @EnableAdminServer
+> application.properties
+server.port=9999
+
+2. At MS#
+*) Add Two Dependencies : Actuator, Admin Client
+
+*) At MS# Properties file
+#Activate Actuator
+management.endpoints.web.exposure.include=*
+
+#Connect with Admin Server
+spring.boot.admin.client.url=http://localhost:9999
+
+
+--Execution order-------
+1. Eureka Server | Config Server | Admin Server
+2. MS# Apps (create multiple instances)
+
+http://localhost:8761/
+http://localhost:8888/actuator/refresh
+http://localhost:9999/applications
+
+
+			 Date : 30-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Workspace Link:
+https://github.com/javabyraghu/Workspace7AM_082022
+
+	 Microservices (Design) - Spring Cloud (Programming)
+
+1. Register and Discovery Server -- Eureka server
+-> Supports Storing MS# instance details and communication
+   using clients(DiscoveryClient, LoadBalancerClient, FeignClient)
+
+2. Config Server -- Github + Config
+-> Common key=val of multiple MS# kept at External Location.
+-> Each MS# reading this using Config Client Dependency.
+
+3. Admin Server + Actuator
+-> Moniter service to find details of MS# like
+  health, instances , cache, beans, environment..etc
+
+4. MS# implemented using Spring REST.
+
+========================================================================
+
+			 Date : 02-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Ref:
+https://kafka.apache.org/intro
+
+Quick Start:***
+https://kafka.apache.org/quickstart
+
+Kafka Tut:
+https://data-flair.training/blogs/kafka-terminologies/
+
+			  Message Queues (MQs)
+
+*) The continuous data flow between two systems. Producer will send data
+   and consumer will read by using a connector/mediator ie 'Message Broker'
+
+*) Client-Server applications works using HTTP protocl. 
+   There client has to make request then server will process it and
+   gives response back to client.
+
+*) But here, one time connection between producer-consumer is made using
+  Message broker, then continioues data flow is done. Consumer need not
+  to make request again and again. one time connection is fine.
+
+*)MQs usecases:
+1. Swiggy Delivery 
+2. Ola/Uber cab status
+3. Live Train status 
+4. Live Stock Market data
+5. Live Currency Updates
+6. Live Cricket Score (BCCI server-> ESPN, CricBuzz,XYZ Server)
+..etc
+
+*) MQs concept uses TCP protocol to exchange data.
+========================================================================
+1. Basic MQs (single broker - No LoadBalancer)
+JMS : Java Message Service / Apache ActiveMQ 
+
+2. Advanced MQs (Multi Broker - LoadBalancer)
+Apache Kafka***
+
+
+*) One MOM (Message Oriented Middleware) is used to connect two systems
+ [Producer and Consumer]
+
+*) MOM s/w contains destination, it is a memory that holds messages
+  given by Producer and sent to Consumer.
+
+*) Here, Both Producer and Consumer systems are connected using
+  one common destination only. ie Destination name given at consumer
+  must match with destination name given at producer.
+
+*) There is no direct connection is created between producer and consumer
+  ie NO IP/PORT details shared.
+
+*) There are two types of communications. Given as:
+1. Peer-To-Peer Communication [P2P]
+If one message is given to one Consumer, then it is called as P2P.
+In this case Destination type is known as : Queue.
+
+2. Publish-Subscribe Communication [Pub/Sub]
+If one message is given to Multiple Consumers (cloned copied)
+then it is called as Pub/Sub.
+
+In this case Destination type is known as : Topic.
+
+*)Note:
+1. There can be multiple topics, queues are created with unique names.
+2. Both P2P and Pub/Sub are used in realtime.
+
+==========Apache ActiveMQ setup====================================
+1. Download
+https://activemq.apache.org/components/classic/download/
+
+Click on : apache-activemq-5.17.3-bin.zip 
+and Extract to a Folder
+
+2. Run ActiveMQ
+> Goto Folder : D:\apache-activemq-5.17.3\bin\win64
+> Click on    : activemq.bat
+> Enter URL   : http://localhost:8161/admin/
+un: admin , pwd: admin
+
+================================================================
+
+			 Date : 03-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+ActiveMQ 5 Download Link:
+https://activemq.apache.org/activemq-5016005-release
+
+Click on : apache-activemq-5.16.5-bin.zip
+and Extract to a Folder
+
+2. Run ActiveMQ
+> Goto Folder : D:\apache-activemq-5.17.3\bin\win64
+> Click on    : activemq.bat
+> Enter URL   : http://localhost:8161/admin/
+un: admin , pwd: admin
+
+
+*) For HTTP protocol, to see web console (Moniter Tool) Port number is : 8161
+*) For communication between systems, we use TCP protocol, runs at port: 61616
+
+
+===========================Producer===============================
+Name : SpringCloudMqProducerEx
+Dep  : ActiveMQ5
+
+*) application.properties
+#Connect with MOM
+spring.activemq.broker-url=tcp://localhost:61616
+spring.activemq.user=admin
+spring.activemq.password=admin
+
+#Communication Type [P2P]
+spring.jms.pub-sub-domain=false
+
+#Destination name
+my.app.desti-name=my-q-abc1
+------------------------------------
+*) ProducerService
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ProducerService {
+
+	@Autowired
+	private JmsTemplate jt;
+	
+	@Value("${my.app.desti-name}")
+	private String destination;
+	
+	public void sendMessage(String message) {
+		jt.send(destination, session -> session.createTextMessage(message));
+		System.out.println("MESSAGE SENT FROM PRODUCER " + message);
+	}
+}
+-----------------------------
+*) Runner class
+package com.app.raghu.runner;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import com.app.raghu.service.ProducerService;
+
+@Component
+public class TestSenderRunner { 
+//implements CommandLineRunner {
+
+	@Autowired
+	private ProducerService service;
+	
+	//public void run(String... args) throws Exception {
+	
+	@Scheduled(cron = "*/10 * * * * *")
+	public void sendMsgTest()  throws Exception {
+		service.sendMessage("HELLO "+ new Date());
+	}
+
+}
+
+*) At main class: @EnableScheduling
+
+===================Consumer Application=========================
+Name : SpringCloudMqConsumerEx
+Dep  : ActiveMQ5
+
+*) application.properties
+#Connect with MOM
+spring.activemq.broker-url=tcp://localhost:61616
+spring.activemq.user=admin
+spring.activemq.password=admin
+
+#Communication Type [P2P]
+spring.jms.pub-sub-domain=false
+
+#Destination name
+my.app.desti-name=my-q-abc1
+---------------------------
+*) Consumer Service
+package com.app.raghu.service;
+
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ConsumerService {
+
+	@JmsListener(destination = "${my.app.desti-name}")
+	public void readMsg(String message) {
+		System.out.println(message);
+	}
+}
+======Execution Order==========================================
+1. Start ActiveMQ
+2. Run Consumer and Producer apps
+
+			 Date : 04-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+1st Party	Sun / Oracle - JMS API	[javax.jms package]
+
+3rd Party	Apache  - ActiveMQ 5.x API [org.apache.activemq package]
+
+2nd Party      Programmer - Application
+
+*) Set of interfaces (and few classes) are given by Sun/Oracle for 
+  Message Queues using JMS API [Java Message Service]
+
+  Ex Interface names: Session, Message
+
+*) For these interfaces Implementation is given by Apache vendor
+  with API name : ActiveMQ 5.x
+
+ Ex Impl class names: ActiveMQSession, ActiveMQTextMessage
+
+*) Spring boot JMS has given one functional interface
+
+MessageCreator(I)
+   createMessage(Session) : Message
+
+Above interface contains one method createMessage() that takes
+session as input and return Message as output.
+
+*) So, we can just call above session and pass data using createMessage()
+ with method createTextMessage().
+
+=======Note===========================================
+1. JmsTemplate(C) is given by Spring JMS which is pre-configured
+2. It has method send(destination,messageCreator) 
+3. Destination is a name must be matched with Producer and consumer
+4. MessageCreator is a Functional Interface
+5. It takes Session as input and Returns Message as output
+6. Session and Message are interfaces given by Sun/Oracle
+7. Impl classes are given by Apache ActiveMQ
+   ActiveMQSession, ActiveMQTextMessage
+
+8. We have to Just call interface methods and pass our message.
+ either using Lambda Expression or using Anonymous Inner class.
+  session -> session.createTextMessage(message)
+
+=========core java style code================
+interface C{}
+interface A{
+  C m1(String s);
+}
+------
+class D implements C{
+  D(String s) {}
+}
+class B implements A{
+  C m1(String s) {
+    return new D(s);
+  }
+}
+--------
+A oa = new B();
+------------
+C oc = oa.m1("Our Message");
+
+			 Date : 06-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Kafka:
+https://kafka.apache.org/quickstart
+
+			MQs - Message Queues
+
+*) Session(I) is given by Sun/Oracle, this is used to make connection
+   and create Message to send data to Consumer.
+
+-> interface is given,
+1. Write Subclass (or Impl class) and create object
+2. Anonymous Inner class [MAM]
+
+ new interfaceName() {
+   //override methods
+ }
+
+3. If it is FI(Functional interface), [SAM]
+  Define Lambda Expression
+
+==Note=============================================================
+1. Both Producer and Consumer must be connected to same destination.
+2. Both internally uses JMS API that is Session support
+3. They are connected using TCP protocol and PORT number 61616
+4. To view Web UI output use HTTP porotocol and PORT 8161.
+5. JmsTemplate (C) is pre-configured by Spring Boot.
+6. Incase of Consumer application we need to apply @EnableJms
+   and also use @JmsListener.
+====================================================================
+
+			 Date : 07-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Apache Kafka:
+https://www.youtube.com/watch?v=0V9SK6jmDPk
+https://www.youtube.com/watch?v=gg-VwXSRnmg&list=PLkz1SCf5iB4enAR00Z46JwY9GGkaS2NON&index=1
+
+
+P2P Communication : If one Message is sent to one Consumer
+Destination type is : Queue.
+
+Publish-Subscribe [Pub/Sub] Communication:
+  if one Message is sent to multiple consumers. Destination type : Topic.
+
+*) In Producer and Consumer applications we need to set one Property
+   spring.jms.pub-sub-domain as true. Default is false.
+
+=> false means P2P communication, true means Pub/sub.
+=> Just define multiple consumers and set spring.jms.pub-sub-domain=true.
+=> Cloned Copies of Actual Message is sent to multiple consumers.
+=> Make Sure, all destination names (Producer and Consumer apps)
+   must be matching.
+
+Q) What if we delete topic from MQ Broker?
+A) A new topic with same name is created. But old data will be removed.
+  It is not a recomanded approch.
+
+Q) What if we stop one consumer and start from some time?
+  In case of P2P and Pub/Sub?
+
+A)
+ P2P : There will be only one consumer. So , all Producer mesages single
+ 	copy is persisted at MOM Destination. Once consumer is up
+	then all Messages are delivered.
+
+ Pub/Sub : Based on No.of Consumers, Cloned Copies are created and sent to
+ 	consumer applications. [not persisted]
+	Ex: 3 consumers are connected first.
+	    1 Message in = 3 Message out.
+	    If One Consumer is stopped in middle
+	    1 Message in = 2 Message out
+
+Input x Consumers = Output
+ 5    x 0         = 0   (data lost)
+ 2    x 2         = 4   (delivered)
+
+
+Q) Does ActiveMQ supports LoadBalancing?
+   What if MOM S/w ActiveMQ is down?
+
+A) ActiveMQ comes with single instance (No LoadBalance)
+   if it is down data lose may occure.
+
+=====Execution order===================
+1. Start ActiveMQ
+2. Start Consumer Application#1 and #2
+3. Start Producer application
+
+			 Date : 10-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+https://kafka.apache.org/quickstart
+
+			     Apache Kafka
+
+*) It is a Open Source API used to connect multiple applications to
+   send data (Message Queue)
+
+*) Multi-Broker concept : it contains multiple brokers (Cluster)
+   to send data to multiple consumers.
+
+   [ActiveMQ - Single broker].
+
+*) Scaling/Load Balancing can be done in Cluster.
+*) Protocol independent (uses app protocol).
+
+*) Kafka supports Pub/Sub Model only. No P2P. To send data to one consumer
+   use only Pub/Sub.
+
+*) Full Kafka S/w is called as EcoSystem. This system contains mainly
+  3 parts. They are:
+
+  1. Zoo Keeper : Controls entire system.
+  2. Kafka Cluster : Group of Message Brokers(old version: min 3, new version: min 1)
+  3. Topics : Memory that stores data in partitions
+
+
+*) Data is exchanged in Serilized format (String/JSON/XML Data)
+*) Producer and Consumer both are connected using TopicName.
+*) By using KafkaTemplate<K,V> producer app will send data to Kafka.
+   K = TopicName and V = Data
+   and @KafkaListener(K) is used to read data at consumer app.
+
+
+*) Topics is a memory that holds data in packets formats [dat blocks].
+   Those are identified using index numbers starts from zero [offset]
+
+*) MR : Messsage Replica creates cloned copies of actual data to send
+   it to consumer.
+
+*) ZooKeeper controls Eco-System like, create/manage topic, 
+   allocate a broker to consumer, increase cluster size..etc
+
+==========================================================================
+Download : https://kafka.apache.org/downloads
+Link: Scala 2.12  - kafka_2.12-2.8.1.tgz (asc, sha512)
+
+Commands:
+1. Start ZooKeeper
+[Windows]
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+[Linux/MacOS]
+.\bin\zookeeper-server-start.sh .\config\zookeeper.properties
+
+*) Starts on Port : 2181
+
+==============================================================
+2. Start Kafka Server
+[Windows]
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+[Linux/MacOS]
+.\bin\kafka-server-start.sh .\config\server.properties
+
+*) Starts on port : 9092
+================================================================
+3. Create one topic
+
+.\bin\windows\kafka-topics.bat --create --topic myabc --bootstrap-server localhost:9092
+
+4. Start Producer Console
+
+.\bin\windows\kafka-console-producer.bat --topic myabc --bootstrap-server localhost:9092
+
+5. Start Consumer Console
+
+.\bin\windows\kafka-console-consumer.bat --topic myabc --bootstrap-server localhost:9092
+.\bin\windows\kafka-console-consumer.bat --topic myabc --from-beginning --bootstrap-server localhost:9092
+
+*) Press ctrl+C to stop (execute in below order)
+ Consumer > Producer > Kafka server > ZooKeeper
+
+			 Date : 11-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+*) Kafka is Open Source and MQ S/w
+*) Implemented by Apache
+*) Uses LoadBalancer for Cluster (Multiple Message Broker)
+*) Uses our application protocol
+*) Kafka Supports only Pub/Sub Model (Topics).
+   Even if we want to send message to one consumer use Topic only.
+*) Kafka accepts only Serialized data for partitions.
+*) Partitions contains index number [offset]
+
+*) KafkaTemplate<K,V> is used at Producer application to send data
+   to Kafka S/w
+
+*) In case of non-Spring Boot application(Java app)
+Ref this:
+https://docs.spring.io/spring-kafka/reference/html/#with-java-configuration-no-spring-boot
+
+*) Spring boot supports integration with kafka, we need to use JARs
+
+<dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+</dependency>
+
+*) It gives auto-configuration for KafkaTemplate<K,V> and @KafkaListener
+*) Both Producer and Consumer are connected using TopicName.
+
+    @Bean
+    public NewTopic topic() {
+        return TopicBuilder.name("myabc")
+                .partitions(10)
+                .replicas(1)
+                .build();
+    }   
+
+--cmd--
+.\bin\windows\kafka-topics.bat 
+  --create 
+  --topic myabc 
+  --partitions 10 
+  --replicas 1
+  --bootstrap-server localhost:9092
+
+
+==================================================================
+
+
+			 Date : 17-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+	Spring Boot + Apache Kafka Integration Example
+
+*) We need to add Kafka API using Spring Boot in pom.xml
+<dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+</dependency>
+
+*) EcoSystem creates a connection with Producer application
+ (by taking some properties) and supports sending data from producer
+ to EcoSystem using KafkaTemplate<K,V> class.
+
+
+*) If consumer also connected with EcoSystem, then one Message Broker
+  is allocated to read data from TopicName using Message Replica(creates
+   one copy of actual message)
+
+  4 Consumers --> 1 Group --> Message Broker --> MR(4 copies)
+  @KafkaListener takes topicName and groupId to read data from EcoSystem.
+
+*) Im using RestController and MessageStore additionally to send data
+   and view output.
+
+======code=========================
+Name : SpringBootKafkaServiceEx
+Dep  : Lombok, Data JPA, MySQL, Web, Devtools, Spring For apache kafka
+
+
+1. application.properties
+# server port
+server.port=8686
+
+# Producer properties
+spring.kafka.producer.bootstrap-servers=localhost:9092
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+
+# Consumer properties
+spring.kafka.consumer.bootstrap-servers=localhost:9092
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.group-id=abcd
+
+# TopicName
+my.topic.name=TEST-SAMPLE
+
+# Database Properties
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+# JPA Properties
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=create
+
+
+2. Entity
+package com.app.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="stocktab")
+public class StockInfo {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="sid")
+	private Integer stkId;
+	
+	@Column(name="scode")
+	private String stkCode;
+	
+	@Column(name="scost")
+	private Double stkCost;
+	
+}
+
+3. Repository
+package com.app.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.StockInfo;
+
+public interface StockInfoRepository extends JpaRepository<StockInfo, Integer> {
+
+}
+
+4. JSONUTIL
+package com.app.raghu.util;
+
+import com.app.raghu.entity.StockInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class JsonUtil {
+
+	public static StockInfo convertToObj(String message) {
+		try {
+			return new ObjectMapper().readValue(message, StockInfo.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String convertToString(StockInfo si) {
+		try {
+			return new ObjectMapper().writeValueAsString(si);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}
+
+5. MessageStore
+package com.app.raghu.db;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.app.raghu.entity.StockInfo;
+import com.app.raghu.repo.StockInfoRepository;
+import com.app.raghu.util.JsonUtil;
+
+@Component
+public class MessageStore {
+	
+	@Autowired
+	private StockInfoRepository repo;
+
+	public void add(String message) {
+		//JSON TO Object
+		StockInfo si = JsonUtil.convertToObj(message);
+		repo.save(si);
+	}
+
+	public List<StockInfo> getAll() {
+		return repo.findAll();
+	}
+
+}
+
+6. Consumer Service
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
+
+import com.app.raghu.db.MessageStore;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ConsumerService {
+	
+	@Autowired
+	private MessageStore store;
+
+	@KafkaListener(topics = "${my.topic.name}",groupId = "abcd")
+	public void readMessage(String message) {
+		log.info("MESSAGE AT CONSUMER : {}", message);
+		store.add(message);
+	}
+}
+
+
+7. Producer service
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ProducerService {
+
+	@Autowired
+	private KafkaTemplate<String, String> template;
+	
+	@Value("${my.topic.name}")
+	private String topicName;
+	
+	public void sendMessage(String message) {
+		log.info("MESSAGE IS AT PRODUCER SERVICE");
+		template.send(topicName, message);
+	}
+}
+
+
+8. RestController
+package com.app.raghu.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.db.MessageStore;
+import com.app.raghu.entity.StockInfo;
+import com.app.raghu.service.ProducerService;
+import com.app.raghu.util.JsonUtil;
+
+@RestController
+@RequestMapping("/api/v1/kafka")
+public class StockRestController {
+	
+	@Autowired
+	private ProducerService service;
+	
+	@Autowired
+	private MessageStore store;
+
+	//send?code=__&cost=__
+	@GetMapping("/send")
+	public String readMessage(
+			@RequestParam String code,
+			@RequestParam Double cost
+			) 
+	{
+		//create Entity class object
+		StockInfo si = new StockInfo();
+		si.setStkCode(code);
+		si.setStkCost(cost);
+		
+		//convert to JSON
+		String message = JsonUtil.convertToString(si);
+		
+		//call producer service
+		service.sendMessage(message);
+		
+		return "SENT";
+	}
+	
+	@GetMapping("/all")
+	public List<StockInfo> fetchAll() {
+		return store.getAll();
+	}
+	
+	
+}
+
+
+
+=======execution order==========================
+1. run zookeeper
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+2. run kafka server
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+
+3. run your app
+
+4. enter urls
+
+http://localhost:8686/api/v1/kafka/send?code=A&cost=50.0
+http://localhost:8686/api/v1/kafka/all
+
+
+			 Date : 18-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+*) JACKSON API (open source Java API)
+ This API is used to convert
+	1. Java Object to JSON 
+	2. JSON to Java Object
+
+(C) ObjectMapper 
+	(M) write__   Obj->JSON
+	(M) read__    JSON->OBJ
+
+==Example code==========
+*) if we create any Spring boot application with Web Dependeny
+  then by default JACKSON API is also added.
+
+
+1. Model / Entity
+package com.app.raghu.entity;
+
+import lombok.Data;
+@Data
+public class StockInfo {
+	private Integer stkId;
+	private String stkCode;
+	private Double stkCost;
+	
+}
+
+2. Test class
+package com.app.raghu;
+
+import com.app.raghu.entity.StockInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class Test {
+	
+	//JSON to Object
+	public static void main(String[] args) {
+		String json ="{\"stkId\":101,\"stkCode\":\"A\",\"stkCost\":200.0}";
+		
+		try {
+			ObjectMapper om = new ObjectMapper();
+			StockInfo si = om.readValue(json, StockInfo.class);
+			System.out.println(si);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//Object to JSON
+	public static void main1(String[] args) {
+		StockInfo si = new StockInfo();
+		si.setStkCode("A");
+		si.setStkCost(200.0);
+		si.setStkId(101);
+		
+		try {
+			ObjectMapper om = new ObjectMapper();
+			String s = om.writeValueAsString(si);
+			System.out.println(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+======================================================================
+Topic: Apache Kafka supports only Topics to send data even for 1 to 1 also.
+ No P2P -- Queue concept in kafka. Everything is Pub/Sub -- Topic 
+
+@Bean
+public NewTopic topic() {
+       return TopicBuilder.name("topic1")
+               .partitions(10) //based on message sizes
+               .replicas(1) // no.of consumers
+               .build();
+}
+//default values are : partitions=1 , replicas =1 
+(or) KafkaTemplate creates given topic name on the fly (at runtime)
+
+*)Group : Logical unit of a multiple consumers which are using same topicName
+ In this case MessageBroker informs MessageReplica to create Cloned Copies
+
+ ex: group=abc, consumers=5 , topicName=TEST-A
+  MessageBroker-5 is allocated, MR-5 copies of actual message from TEST-A
+
+======================================================================
+*) When ever KafkaTemplate calls send method then Kafka API creates one object
+  ProducerRecord (C)
+
+Internal code: Data --> Serialized
+ProducerRecord<K, V> producerRecord = new ProducerRecord<>(topic, data);
+
+*) @KafkListener that reads data from given topicName into ConsumerRecord(C)
+
+//Data -> Deserialized
+ConsumerRecord<K,V> consumerRecord = new ConsumerRecord<>(topic,data);
+
+*) Internally data format is binary (byte[]) easy for trasfer and partitions
+
+=> One consumer can read data from multiple topics too.
+Ex:
+@KafkaListener(topics = {
+           "${my.topic.name2}",
+	   "${my.topic.name1}",
+	   "${my.topic.name3}"
+         },
+	groupId = "abcd")
+
+
+*) Spring with Kafka uses MessagingMessageListenerAdapter(C)
+ which is a Listener class that reads data from Kafka broker and
+ converts data. 
+
+*) Our application is connected with Kafka Server that runs on port : 9092
+  Zookeeper runs on port: 2181 
+=====================================================================
+Gateway: Single entry and exit point for entire MS# apps.
+
+=> Expose One IP/PORT
+=> Single Entry and exit
+=> Load Balancer
+=> Connected with consumer apps (Angular/ReactJS/3rd Party)
+=> Routing Table (Which request --> Where to Go)
+
+ http://sampleapp.com/user/find/101
+ http://sampleapp.com/cart/modify/106
+
+			 Date : 19-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		     Spring Cloud : API Gateway
+
+
+API Gateway : It is a single entry and exit point for our MS# application.
+
+=> There may be multiple MS# apps running as multiple Instances
+=> All these details are stored at Eureka Server
+=> Eureka Server is a Register (Store data). 
+     It never makes any HTTP call to any MS#
+=> We can not expose all MS# IP and PORTs to client machine/app.
+   We should give only one IP and PORT ie Gateway IP and PORT.
+
+Why Gateway?
+1. Routing : Dispatching a client request to MS# application
+2. LoadBalancing : Choose one Instance from Eureka based on LoadFactor
+			for every request
+3. Filters : Modify Request/ Response details (Encryption, Authentication..etc)
+
+Dynamic Routing | Dynamic Dispatching : Routing + Load Balancing.
+
+*) Router needs Input as Routing table which is configured by Developers
+*) Predicate compares Request Path with Routertable path if matching
+   returns true means select MS# serviceId and goto eureka.
+
+*) Pre-Filter(optional), if exist Modify the request before sending to MS# app.
+   Post-Filter(optional), if exist Modify the Response before sending to Client.
+   
+*) Gateway also one type of MS#, It needs to be register with Eureka.
+   It uses Porxy client (Feign) generated at Gateway, to make call to MS#.
+===========================================================================
+*) Spring Cloud API Gateway Routing(or Config) can be defined in two ways
+1. YAML/Properties file
+2. ***Java based Config
+
+---EXAMPLE ROUTING TABLE ------------------
+    PATH                    URI                          
+  /order/**          lb://ORDER-SERVICE
+
+  /cart/**           lb://CART-SERVICE
+--------------------------------------------
+If request URL contains /order in Path
+ex: http://localhost:80/order/find/10 
+  then select ORDER-SERVICE goto Eureka, fetch one ORDER-SERVICE instance
+    and execute request for path "/order/find/10"
+
+===Example Java Config=========================================
+Dep : Gateway, Eureka Discovery Client
+
+1. Config class for Routing table
+
+
+package com.app.raghu.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyRouteConfig {
+
+	//use lb://ServiceId for multiple instance of MS#
+	//use http://IP:PORT for single instance of MS#
+	@Bean
+	public RouteLocator configRoutes(RouteLocatorBuilder builder) {
+		
+		return builder.routes()
+				//.route("cartRoutingId", r->r.path("/cart/**").uri("http://172.10.12.36:9696")) //one cart instance only
+				.route("cartRoutingId", r->r.path("/cart/**").uri("lb://CART-SERVICE"))
+				.route("orderRoutingId", r->r.path("/order/**").uri("lb://ORDER-SERVICE"))
+				.build();
+	}
+}
+
+
+2. properties file
+#server.port=80
+server.port=9600
+
+# Register with eureka
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+			 Date : 20-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Cloud : API Gateway
+
+1. Routing : Request --> MS# using Eureka
+2. Loadbalancing : Choose one Instance has less LF (Round Robin)
+3. Filters : Modify Request/Response
+
+*) Router is a pre-defined component that taking Routing table data.
+  Routing table must be configured by Programmer.
+
+  Routing table = PATH + URI(serviceId/IP:PORT/HOSTNAME)
+
+  ---------------------------------------------------------
+     ID           PATH                     URI
+  ---------------------------------------------------------
+     CID        /cart/**              lb://CART-SERVICE
+     OID	/order/**             lb://ORDER-SERVICE
+  ---------------------------------------------------------
+
+=> Every Routing table contains List<Route>
+=>  1 route contains = 1 id + 1 path + 1 uri + multiple filters
+    1 MS = 1 route
+
+=> Eureka gives ServiceInstance(serviceId,InstanceId, IP, PORT, LF)
+
+=> If a MS# which is not configured at ApiGateway can never be
+   accessed from outside world.
+
+Step#1 Define one Application for ApiGateway with 2 dependencies
+a. Spring Cloud Gateway
+b. Eureka Discovery Client
+
+Step#2 Must be Registed with Eureka Server
+
+--application.properties---
+server.port=80
+#server.port=9600
+
+spring.application.name=API-GATEWAY
+
+# Register with eureka
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+Step#3 Define Java Configuration for Routing Table configuration
+ RouteLocator stores List<Route> / Flux<Route>
+ (Reactive Programming: Mono-1, Flux-n objects)
+
+package com.app.raghu.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyRouteConfig {
+
+	@Bean
+	public RouteLocator configureRoutes(RouteLocatorBuilder builder) {
+
+		return builder.routes()
+				.route("cartId", r -> r.path("/cart/**").uri("lb://CART-SERVICE"))
+				.route("orderId", r -> r.path("/order/**").uri("lb://ORDER-SERVICE"))
+				.build();
+	}
+
+}
+
+
+==Execution order=========
+1. Config Server | Eureka Server | Admin Server
+http://localhost:8888/actuator/refresh
+http://localhost:8761
+http://localhost:9999/applications
+
+2. MS# apps (Cart, Order) run multiple times
+Cart MS# - port - 8081, 8082, 8084 (3 times started)
+Order MS#- 9091,9092,9094 (3 times)
+
+3. Api Gateway - start once
+Enter URL:
+http://192.168.0.3:80/cart/find/101
+http://192.168.0.3:80/order/fetch/33
+
+Here IP and PORT of API GATEWAY: 192.168.0.3:80
+
+cmd> ipconfig
+sh> ifconfig   (or) ip addr show
+    ifconf
+=================================================
+
+			 Date : 23-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Ref Workspace:
+https://github.com/javabyraghu/Workspace7AM_082022
+
+			Spring Cloud : API Gateway
+
+DSA: https://github.com/javabyraghu/DataStructuresAndAlgorithms
+
+Filters:-
+ To Modify existed request/response data at API Gateway level
+ we use filters.
+
+*) Here we have two types:
+1. Pre-Filter : That adds/modify data at Request
+2. Post-Filter: That adds/modify data at Response
+
+Inside routing config we can provide headers to request like:
+.filters(f->
+	f.addRequestHeader("MyToken", "Basic "+UUID.randomUUID().toString())
+	.addResponseHeader("Service Mode", "Active")
+)
+
+==code changes====================================
+1. API Gateway
+package com.app.raghu.config;
+
+import java.util.UUID;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyRouteConfig {
+
+	@Bean
+	public RouteLocator configureRoutes(RouteLocatorBuilder builder) {
+
+		return builder.routes()
+
+				.route("cartId", r -> r.path("/cart/**")
+						.filters(f->
+						f.addRequestHeader("MyToken", "Basic "+UUID.randomUUID().toString())
+						.addResponseHeader("Service-Mode", "Active")
+						)
+						
+						.uri("lb://CART-SERVICE"))
+				.route("orderId", r -> r.path("/order/**").uri("lb://ORDER-SERVICE")).build();
+	}
+
+}
+
+
+2. Cart RestController
+@RestController
+@RequestMapping("/cart")
+@RefreshScope
+public class CartRestController {
+	
+	@Value("${my.app.title}")
+	private String title;
+
+	@GetMapping("/info")
+	public ResponseEntity<String> showMessage(
+			@RequestHeader("MyToken") String token 
+			)
+	{
+		return ResponseEntity.ok("WELCOME TO CART SERVICE =>" + token);
+	}
+	....
+}
+
+
+==Execution order=========
+1. Config Server | Eureka Server | Admin Server
+http://localhost:8888/actuator/refresh
+http://localhost:8761
+http://localhost:9999/applications
+
+2. MS# apps (Cart, Order) run multiple times
+Cart MS# - port - 8081, 8082, 8084 (3 times started)
+Order MS#- 9091,9092,9094 (3 times)
+
+3. Api Gateway - start once
+Enter URL:
+http://192.168.0.2/cart/info
+
+Here IP and PORT of API GATEWAY: 192.168.0.2:80
+
+cmd> ipconfig
+sh> ifconfig   (or) ip addr show
+    ifconf
+=================================================
+
+Equal YAML Configuration for API Gateway:
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 80
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: cartId
+        uri: lb://CART-SERVICE
+        predicates:
+        - Path=/cart/**
+        filters:
+        - AddRequestHeader=MyToken,BasicTEST
+        - AddResponseHeader=Service-Mode, Active
+      - id: orderId
+        uri: lb://ORDER-SERVICE
+        predicates:
+        - Path=/order/**
+          
+ 
+			 Date : 24-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Distributed Tracing
+			[Sleuth and Zipkin]
+
+=> For one request, there can be multiple MS# executed.
+Example Flow:
+ Req#1 --> API Gateway --> Eureka -> Gateway --> MS#1 --> MS#2 -->MS#3
+         ->MS#2-->MS#1-> Gateway --> Resp#1
+
+=> Distributed Tracing concept is used to find out,
+1. No of MS# called
+2. Execution Path (method->Method)
+3. Time taken for exact service and all services
+
+=> It is type of debugging (Flow Debug).
+=> Spring Cloud API has given : Sleuth and Zipkin to handle 
+	"Distributed Tracing"
+
+=> Sleuth : Generates details like Tracing Info/Execution Path/
+            Execution Time.
+=> Zipkin server will store and display Sleuth Result.
+
+*) Eureka Server : Will store Instance details (Not request details)
+ How Many MS#? Instance count? LF ? IP / PORT ?
+
+*) Zipkin Server: 
+ How many Request processed?
+ Execution Path?
+ How Many MS# called?
+ How much time taken?
+
+==========Download and test Zipkin Server=========================
+Goto : 
+https://repo1.maven.org/maven2/io/zipkin/java/zipkin-server/2.12.9/
+
+Click on :
+zipkin-server-2.12.9-exec.jar  
+
+Execute Command:
+ java -jar zipkin-server-2.12.9-exec.jar  
+
+Enter URL:
+ http://127.0.0.1:9411/zipkin/
+
+===================================================================
+*) We have to define two MS# wich are connected using any one client.
+-> DiscoveryClient / LoadBalancerClient [manual code]
+-> Open Feign (Abstract client)
+-> RestTemplate : Supports all Apps (non-Java)
+-> WebClient : Webflux (Reactive coding)
+
+*) We need to add 2 dependencies in MS# application
+
+   <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-sleuth</artifactId>
+    </dependency>
+
+     <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-zipkin-client</artifactId>
+    </dependency>
+
+
+
+			 Date : 25-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+TASK:
+https://www.youtube.com/results?search_query=ELK
+
+*) Define Multiple MS# applications using
++ Web, Zipkin and Sleuth Dependencies
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-sleuth</artifactId>
+</dependency>
+
+We can even add : Admin Client, Eureka Discovery Client, Config Client..etc
+
+*) Define one config file
+package com.app.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class AppConfig {
+	
+	@Bean
+	public RestTemplate rt() {
+		return new RestTemplate();
+	}
+
+}
+
+*)Define RestController
+package com.app.raghu.rest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+public class ProcessARestController {
+	
+	private static final Logger log = LoggerFactory.getLogger(ProcessARestController.class);
+
+	@Autowired
+	private RestTemplate rt;
+	
+	@GetMapping("/showA")
+	public String showMsg() {
+		log.info("WE ARE AT A SERVICE...");
+		
+		String resp = rt.getForEntity("http://localhost:8082/showB", String.class).getBody();
+		
+		return "FROM A.."+resp;
+	}
+}
+
+*) Repeate same for multiple MS# applications
+  ServiceB, ServiceC examples.
+
+*) Sleuth and Zipkin stores data using Logs and format looks like
+ [ServiceName, TraceId, spanId, ExportFlag]
+
+TraceId: Id generated for one entire request flow
+spanId : Id generated for one MS# request flow.
+parentId: Previous MS# spanId is current MS# parentId
+
+*) Run apps in order and enter URL
+http://localhost:8081/showA
+
+*) Check at Zipkin Server , click on Trace.
+
+
+			 Date : 27-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		    Spring Boot Reactive Programming
+
+*) Spring Boot WEB (MVC and REST)
+starter: spring-boot-starter-web
+@Controller, @RestController, @RequestMapping, @GetMapping...
+@ModelAttribute, Model ..etc
+
+
+*) Server: *Tomcat, Undertow, Jetty..etc
+*) Tomcat is the default server, that allocates one Thread for one Request
+ which will process request and returns response.
+
+*) By default every Thread allocated to process is "BLOCKING MODEL".
+ ie Thread if is making NIO call, then it will be idel, it will not
+ process any other request meanwhile.
+
+*) NON BLOCKING MODE says do not keep any thread idel.
+   Use it for another request processing if is waiting for NIO call output.
+   once we get NIO output allocate same thread or different one for
+   processing response.
+
+=> Spring Boot WebFlux (Spring 5.x), comes with Netty Server.
+=> We need to use NoSQL DB like MongoDB, Redis..etc
+    stores: JSON Format/Documents Data
+
+Ouptput: Mono<T> (0/1), Flux<T> (0..n) output.
+
+
+=> We have to use Spring boot reavtie API which is implemented using
+   Spring Webflux. Here DB are used NoSQL Reactive suported.
+
+==MongoDB setup====================================
+1. Goto : https://www.mongodb.com/try/download/community
+2. Fill details and download
+3. Run Executable
+4. Create folder system C:/data/db
+5. To start Mongodb server 
+  cmd: mongod  (starts on port: 27017)
+
+6. To start mongodb client
+   cmd: mongo
+
+7. Enter commands like:
+> show dbs;
+> use bootdb;
+> show collections;
+> db.student.insert({"sid":10,"sname":"AJAY","sfee":300.0});
+> db.student.find();
+> db.student.find().pretty();
+
+Ref:
+#1
+https://www.mongodb.com/docs/v4.2/crud/
+#2
+https://data-flair.training/blogs/mongodb-relationships/
+#3
+https://www.mongodb.com/docs/manual/reference/sql-comparison/
+
+			 Date : 28-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+1. Producer: [Spring Webflux and Reactive MongoDB API]
+
+Step#1 Downloaded and Installed MongoDB
+cmd> mongod 
+cmd> mongo
+
+Step#2 Create a Spring Boot Application
+Name : SpringBootReactiveProducerEx
+Dep  : Reactive Web, Reactive MongoDB, Lombok, Devtools
+
+1. Entity
+package com.app.raghu.entity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document //optional annotation
+public class Student {
+
+	@Id
+	private String id;
+	private String name;
+	private Double fee;
+}
+
+2. Repository
+package com.app.raghu.repo;
+
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+
+import com.app.raghu.entity.Student;
+
+public interface StudentRepository 
+	extends ReactiveMongoRepository<Student, String>{
+
+}
+
+3. Service
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.repo.StudentRepository;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Service
+public class StudentService {
+
+	@Autowired
+	private StudentRepository repo;
+
+	public Mono<Student> save(Student student) {
+		return repo.save(student);
+	}
+
+	public Mono<Student> getOne(String id) {
+		return repo.findById(id).switchIfEmpty(Mono.empty());
+	}
+
+	public Flux<Student> findAll() {
+		return repo.findAll().switchIfEmpty(Flux.empty());
+	}
+
+	public Mono<Void> delete(String id) {
+		return repo.deleteById(id);
+	}
+}
+
+4. RestController
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.service.StudentService;
+
+import reactor.core.publisher.Mono;
+
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
+
+	@Autowired
+	private StudentService service;
+
+	@PostMapping("/create")
+	public Mono<Student> save(@RequestBody Student student) {
+		return service.save(student);
+	}
+}
+
+
+5. Properties file
+#Server Port
+server.port=9090
+
+#Database connection details
+spring.data.mongodb.host=localhost
+spring.data.mongodb.database=bootdb
+spring.data.mongodb.port=27017
+#spring.data.mongodb.username=
+#spring.data.mongodb.password=
+
+****************************************************
+> first run cmd "mongod" then start application
+> Test using POSTMAN
+
+****************************************************
+
+Note: Here PK type is String by default (we can change it)
+It generates PK as HexaDecimal value (UUID internally)
+ex:
+"id": "63d48120435d697460977319"
+
+*) PK Field name is taken as _id in Database
+*) If we find _class property then it indicates data came from 
+	external sources (like Java, .Net ..etc)
+*) If we use any other DataType for PK in coding then value will never
+	be generated. We need to pass manual value.
+
+2. Consumer: [ Spring Webflux - WebClient ]
+
+			 Date : 30-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			 Reactive Programming
+
+1. NoSQL DB : MongoDB (Reactive API)
+2. Application: Spring Webflux (Reactive API)
+	Annotations are similer to REST API
+	Output: Mono (0/1) , Flux(0..n)
+
+3. Consumer : WebClient
+
+*) execution order:
+-> Run cmd: mongod
+-> Run Application(Producer)
+
+=====================================================================
+Q) Does MongoDB Generates PK values?
+A) YES. But type must be String only (UUID value)
+   We can check in DB like
+   "_id" : ObjectId("_________"),
+
+Q) Can we pass our own PK value to MongoDB?
+A) YES. Then it is not a generated value then it will show direct value
+	without ObjectId.
+  ex: "_id" : "AA1100"
+
+===code=============
+Create a Spring Boot Application
+Name : SpringBootReactiveProducerEx
+Dep  : Reactive Web, Reactive MongoDB, Lombok, Devtools
+
+
+1. application.properties
+#Server Port
+server.port=9090
+
+#Database connection details
+spring.data.mongodb.host=localhost
+spring.data.mongodb.database=bootdb
+spring.data.mongodb.port=27017
+#spring.data.mongodb.username=
+#spring.data.mongodb.password=
+
+2. Entity class / Collection class
+package com.app.raghu.entity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document //optional annotation
+public class Student {
+
+	@Id
+	private String id;
+	private String name;
+	private Double fee;
+}
+
+3. Repository interface
+package com.app.raghu.repo;
+
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+
+import com.app.raghu.entity.Student;
+
+public interface StudentRepository 
+	extends ReactiveMongoRepository<Student, String>{
+
+}
+
+4. Service class
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.repo.StudentRepository;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Service
+public class StudentService {
+
+	@Autowired
+	private StudentRepository repo;
+
+	public Mono<Student> save(Student student) {
+		return repo.save(student);
+	}
+
+	public Mono<Student> getOne(String id) {
+		return repo.findById(id).switchIfEmpty(Mono.empty());
+	}
+
+	public Flux<Student> findAll() {
+		return repo.findAll().switchIfEmpty(Flux.empty());
+	}
+
+	public Mono<Void> delete(String id) {
+		return repo.deleteById(id);
+	}
+}
+
+5. RestController
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.service.StudentService;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
+
+	@Autowired
+	private StudentService service;
+
+	@PostMapping("/create")
+	public Mono<Student> save(@RequestBody Student student) {
+		return service.save(student);
+	}
+	
+	@GetMapping("/fetch/{id}")
+	public Mono<Student> getOne(@PathVariable String id) {
+		return service.getOne(id);
+	}
+	
+	@GetMapping("/all")
+	public Flux<Student> fetchAll() {
+		return service.findAll();
+	}
+	
+	@DeleteMapping("/remove/{id}")
+	public Mono<Void> deleteOne(@PathVariable String id) {
+		return service.delete(id);
+		/* service.delete(id);
+		return Mono.just("Removed Id "+id); */
+	}
+	
+}
+
+6. Execution order
+cmd> mongod
+Run application
+
+
+			 Date : 31-01-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+  			 Reactive Programming
+		        [consumer application]
+
+1. RestTemplate : It is a class, supports HTTP Protocol
+	connects with any language Producer application
+	Supported only Synchronous Communication
+2. LoadBalancerClient/ Open Feign : Supported for MS# application communication
+
+WebClient:-
+=> It is a Reactive Client.
+=> RestTemplate will not support reactive calls(request)
+=> It is internally Asynchronous communication.
+
+
+--coding steps---
+1. Define WebClient object using base URL
+2. Provide call details in order
+  HttpMethod
+  PATH + PathVariables
+  Body With Type
+  Execute
+  Convert Response to Type(Mono/Flux)
+  Subscribe data
+
+=> Here we need to use Spring Boot Reactive API (Webflux)
+=> Make sure port numbers are not same compared to Producer application
+
+Name: SpringBootReactiveConsumerEx
+Dep : Spring Boot Reactive Web, Lombok
+
+1. Runner class
+package com.app.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import com.app.raghu.entity.Student;
+
+import reactor.core.publisher.Mono;
+
+@Component
+public class TestProducerCallRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		//1. Create WebClient object using base URL 
+		WebClient client = WebClient.create("http://localhost:9090/student");
+		
+		//call 
+		/*
+		Mono<Student> result = 
+				client
+				.post() //Http Method
+				.uri("/create") //PATH
+				.body(Mono.just(new Student("AA256", "SAM", 300.0)), Student.class) //Body
+				.retrieve() // execute
+				.bodyToMono(Student.class); //convert response
+		
+		System.out.println("FROM CONSUMER ---->");
+		//access result
+		result.subscribe(System.out::println);
+		*/
+		
+		
+		/*
+		Flux<Student> flux =  client.get().uri("/all").retrieve().bodyToFlux(Student.class);
+		flux.doOnNext(System.out::println).blockLast();
+		*/
+		
+		Mono<Student> result = 
+		client.get().uri("/fetch/AA256").retrieve() 
+		.bodyToMono(Student.class);
+		result.subscribe(System.out::println);
+	}
+
+}
+
+2. Entity class
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+	private String id;
+	private String name;
+	private Double fee;
+}
+====================================================================
+
