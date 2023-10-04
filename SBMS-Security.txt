@@ -1,0 +1,1516 @@
+			 Date : 01-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+	          JAAS : Java Authentication and Authorization
+			         [Security]
+
+*) Authentication : Validating User Login details : username, password
+*) Authorization  : Validating User Role to access a service/resources
+
+Ex: BankApplication
+  URLs:  /home, /login, /checkBal, /logout, /approveLoan, /openFD ..etc
+
+User:  AJAY/AJAY  Role: Customer
+User:  SAM/SAM    Role: Manager
+User:  SYED/SYED  Role: Clerk
+..etc
+
+
+Authorization Levels(3):
+1. permitAll : A URL/Path can be accessed by every one 
+[no login/ no role is required]
+Ex: /home, /login, /contactUs, /aboutUs
+
+2. Authenticated: A URL/Path can be accessed only after login
+	[any role is valid]
+
+ex: Show Logout Link, First Login , /chagePwd, /logout ..etc
+
+3. hasAuthority: Login must and Valid Role is required
+
+ex: /approveLoan => Login and Role : Manager
+    /checkBal    => Login and Role : Customer, Manager
+
+=> Role - String, Authority(I) - SimpleGrantedAuthority(C)
+--------------------------------------------------------------
+Authentication Type(3):-
+1. InMemoryAuthentication 
+=> Storing user details inside RAM / Temp Memory.
+=> This is only for Testing purpose. (NO database is used)
+=> Not Recomanded in production.
+
+2. JDBCAuthentication
+=> We use Database to Store user data and roles (1/2 tables)
+=> But check details (login details and role details)
+   using SQL queries (manually we need to define)
+
+3.*** ORM Authentication/UserDetailsService
+=> ORM means uses Data JPA, No SQL Query
+=> It stores data in Database Table and converts into Object format
+   when it is required.
+
+====================================================================
+*) PasswordEncoder:- It is not recomanded to store plain text password
+  inside database, better convert into unreadable format ie encoding.
+
+  There is no decode method is given by Spring boot.
+  If we enter Pwd from Login page then that is encoded and compared
+  with DB encoded password, if matched then goto Home Page...etc
+
+===coding================================================================
+1. We need to define only one class (additionally) for security.
+  ie SecurityConfig (any equal name) called as One Configuration class.
+
+2. This class contains two methods mainly.
+  a. Authentication : InMemory/JDBC/UserDetailsService
+  b. Authorization  : permitAll/autnehticated... Login Form + Logout Link
+
+
+3. ** In Spring Boot 2.6 or before version SecurityConfig class must
+   extends one class "WebSecurityConfigurerAdapter".
+   but in new Version ie Spring Boot 2.7 or later it is not required.
+
+Old Configuration:
+https://github.com/javabyraghu/SpringBoot2SecurityOrmEx/blob/master/src/main/java/in/nareshit/raghu/config/SecurityConfig.java
+
+New Configuration:
+https://github.com/javabyraghu/SpringBootSecurityInMemoryEx/blob/main/src/main/java/com/app/raghu/config/WebSecurityConfig.java
+
+
+*) In our application we need to add one Dependency: Spring Security
+in pom.xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+Ref Doc:-
+https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
+=================================================================================
+
+			 Date : 02-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Ref Link:
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+
+Example code sampels For Authorization:-
+1. Accessed by every one : /welcome 
+
+.antMatchers("/welcome").permitAll()
+
+2. Access URL only after Login : /profile
+
+.antMatchers("/profile").authenticated()
+
+3. Access URL after login having role ADMIN : /mydata
+
+.antMatchers("/mydata").hasAuthority("ADMIN")
+
+4. Access URL after login having role MANAGER or CUSTOMER: /checkBal
+
+.antMatchers("/checkBal").hasAnyAuthority("MANAGER", "CUSTOMER")
+
+5. To indicates remaining URLs (which are not configured like above)
+
+   .anyRequest().permitAll()
+          [or]
+   .anyRequest().authenticated()
+          [or]
+   .anyRequest().hasAuthority("ADMIN")
+
+======================================================================
+		Spring Boot Security # InMemoryAuthentication
+======================================================================
+
+.antMatchers("/home","/login").permitAll()
+.antMatchers("/hello").authenticated()
+
+*) Create one user in RAM/Temp Memory (not in DB)
+
+(UserDetails)
+ username : sam
+ password : sam  (No password encoder)
+ roles    : ADMIN
+
+UserDetailsService => InMemoryUserDetailsManager(userDetails)
+
+
+*) Spring Security has given code for
+1. User Validation on Login
+2. Session Management
+3. Session Invation and Logout logic
+
+
+==============Simple Security Application====================
+Name : SpringSecurityInMemoryEx
+Dep  : Spring Web, Spring Security, Devtools, Thymeleaf
+
+1. Controller
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping({"/home","/"})
+	public String showHome() {
+		return "home";
+	}
+	
+	@GetMapping("/hello")
+	public String showHello() {
+		return "hello";
+	}
+	
+	@GetMapping("/login")
+	public String showLogin() {
+		return "login";
+	}
+}
+
+2. SecurityConfig
+package com.app.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+	// 2. Authorization
+	@Bean
+	public SecurityFilterChain configurePaths(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(
+				request -> request.antMatchers("/","/home").permitAll()
+				.anyRequest().authenticated()
+				)
+			.formLogin( form -> form.loginPage("/login").permitAll() )
+			.logout( logout -> logout.permitAll() );
+			
+		return http.build();
+	}
+	
+	//old style
+	/*
+	public void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		.antMatchers("/","/home").permitAll()
+		.anyRequest().authenticated()
+		
+		.and()
+		.formLogin()
+		.loginPage("/login")
+		.defaultSuccessUrl("/hello")
+		
+		.and()
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/login?logout");
+	}
+	*/
+	
+	
+
+	// 1. Authentication (InMemory)
+	@Bean
+	public UserDetailsService userDetailsService() {
+
+		UserDetails user = User.withDefaultPasswordEncoder()
+				.username("sam").password("sam").roles("ADMIN")
+				.build();
+		
+		UserDetails user2 = User.withDefaultPasswordEncoder()
+				.username("ram").password("ram").roles("CUSTOMER")
+				.build();
+		
+		return new InMemoryUserDetailsManager(user,user2);
+	}
+
+}
+
+3. UI/ View Pages
+a) home.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Spring Security Example</title>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+
+        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+    </body>
+</html>
+
+
+b) hello.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1>Hello world!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </body>
+</html>
+
+c) login.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Spring Security Example </title>
+    </head>
+    <body>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <br/>
+        <form th:action="@{/login}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
+    </body>
+</html>
+
+*) Run application and Enter URL:
+http://localhost:8080/home
+
+			 Date : 03-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Docs:
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+		   Spring Boot Security - using JDBC
+
+*) InMemoryAuthentication : Recomanded to use in Dev Environment only.
+  It is for testing purpose. Do not use in Production.
+
+*) To store/fetch user details using Database, we use JDBC API.
+*) Here we are going to use PasswordEncoder to add user data.
+
+Two tables are created to store user data
+	users (username, password, enabled)
+	authorities(username, authority)
+
+
+*) Password encoder is recomanded to use to encode and store passwords
+  in database tables.
+=================sample -- Test class===================
+package com.app.raghu;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class Test {
+
+	public static void main(String[] args) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String pwd = encoder.encode("ram");
+		System.out.println(pwd);
+	}
+}
+======================================================================
+
+Database Setup:
+create table users(
+	username varchar(50) not null primary key,
+	password varchar(500) not null,
+	enabled boolean not null);
+
+create table authorities (
+	username varchar(50) not null,
+	authority varchar(50) not null,
+	constraint fk_authorities_users foreign key(username) 
+	references users(username));
+
+create unique index ix_auth_username on authorities (username,authority);
+
+
+==MySQL Console=================================
+mysql> drop database boot6am;
+Query OK, 5 rows affected (0.12 sec)
+
+mysql> create database boot6am;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use boot6am;
+Database changed
+mysql> create table users(
+    -> username varchar(50) not null primary key,
+    -> password varchar(500) not null,
+    -> enabled boolean not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> create table authorities (
+    -> username varchar(50) not null,
+    -> authority varchar(50) not null,
+    -> constraint fk_authorities_users foreign key(username)
+    -> references users(username));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql>
+mysql> create unique index ix_auth_username on authorities (username,authority);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+================================================================
+Name : 02SpringBootSecurityJdbcAuthEx
+Dep  : Spring web, Spring Security, Devtools, JDBC, MySQL, Thymeleaf
+
+
+1. Controller class
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	//EVERY ONCE CAN ACCESS
+	// .antMatchers("/home").permitAll
+	@GetMapping({"/home","/"})
+	public String showHome() {
+		return "home";
+	}
+	
+	//ONLY AFTER LOGIN
+	// .antMatchers("/hello").authenticated()
+	@GetMapping("/hello")
+	public String showHello() {
+		return "hello";
+	}
+	
+	//ONLY ADMIN After login
+	// .antMatchers("/admin").hasAuthority("ADMIN")
+	@GetMapping("/admin")
+	public String showAdmin() {
+		return "admin";
+	}
+	
+	//ONLY CUSTOMER After login
+	// .antMatchers("/customer").hasAuthority("CUSTOMER")
+	@GetMapping("/customer")
+	public String showCustomer() {
+		return "customer";
+	}
+	
+	@GetMapping("/login")
+	public String showLogin() {
+		return "login";
+	}
+}
+
+2. Security Config
+package com.app.raghu.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	//authorization
+	@Bean
+	public SecurityFilterChain configureAuth(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(
+				request->request.antMatchers("/home","/").permitAll()
+						.antMatchers("/admin").hasAuthority("ADMIN")
+						.antMatchers("/customer").hasAuthority("CUSTOMER")
+						.anyRequest().authenticated()
+				)
+		.formLogin(
+				form->form.loginPage("/login").permitAll()
+				.defaultSuccessUrl("/hello", true)
+				)
+		.logout(logout->logout.permitAll())	;
+		
+		
+		return http.build();
+	}
+	
+	//authentication
+	@Bean
+	public UserDetailsService userDetailsService(DataSource datasource) {
+		UserDetails user1  = User.withUsername("sam")
+				.password("$2a$10$TD7ldmKUQw3EHFxVivyA8OUrzy7butY9QDRnltnBS/b9aI0j6reYq")
+				.authorities("ADMIN").build();
+		
+		UserDetails user2  = User.withUsername("ram")
+				.password("$2a$10$dEm8gdOC0R2S7IgXSnBKFOSeeKbCNuVeMC/hP24eY7zdADlUif4n.")
+				.authorities("CUSTOMER").build();
+		
+		JdbcUserDetailsManager users = new JdbcUserDetailsManager(datasource);
+		users.createUser(user1);
+		users.createUser(user2);
+		
+		return users;
+	}
+
+
+}
+
+3. View pages
+a) admin.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1>HELLO ADMIN PAGE!!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </body>
+</html>
+
+b) customer.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1>HELLO CUSTOMER PAGE!!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </body>
+</html>
+
+
+c) hello.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1>Hello world!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </body>
+</html>
+
+d) home.html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Spring Security Example</title>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+
+        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+    </body>
+</html>
+
+e) login.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Spring Security Example </title>
+    </head>
+    <body>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <br/>
+        <form th:action="@{/login}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
+    </body>
+</html>
+
+
+4) application.properties
+
+#DB Connection
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot6am
+spring.datasource.username=root
+spring.datasource.password=root
+
+5) Run app and enter URL
+http://localhost:8080
+
+*) If we enter details user : sam he is a ADMIN, and 
+trying to access CUSTOMER PAGE, which is not allowed then FC throws
+   403 Error Forbidden
+
+==Run below SQLs while starting application if you get any issue===
+mysql> delete from authorities;
+mysql> delete from users;
+====================================================================
+
+			 Date : 04-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		      Spring Boot Security using ORM
+
+1. Application setup and User Register  
+2.*** User Login and Password Encoder
+3. Session Management and Internal Process.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+	   Stage#1 Application setup and User Register
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+In this stage we define Spring boot web mvc application like CRUD process
+that reads Register Form data and stores in  two tables.
+ie  User table and Roles table.
+
+For this we need to define User Entity with Repository, service and Controller
+
+
+S#1 Define One Spring boot application
+Name : 03SpringBootSecurityOrmEx
+Dep  : web, lombok, data jpa, mysql, devtools, thymeleaf.
+
+S#2 Comment Spring Security Dependencies in pom.xml
+---------------------------------------
+S#3 application.properties
+server.port=9090
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=create
+------------------------------------------
+S#4 Entity class
+package com.app.raghu.entity;
+
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="usertab")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="uid")
+	private Integer userId;
+	
+	@Column(name="uname")
+	private String userName;
+	
+	@Column(name="umail")
+	private String userEmail;
+	
+	@Column(name="upwd")
+	private String userPwd;
+	
+	@ElementCollection
+	@CollectionTable(name="roles_tab",
+		joinColumns = @JoinColumn(name="uid")
+	)
+	@Column(name="urole")
+	private Set<String> userRoles;
+	
+}
+-----------------------------------
+S#5 Repository interface
+package com.app.raghu.repo;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Integer>{
+
+	Optional<User> findByUserEmail(String userEmail);
+}
+-------------------------
+S#6 Service interface/class
+package com.app.raghu.service;
+
+import java.util.Optional;
+
+import com.app.raghu.entity.User;
+
+public interface IUserService {
+
+	Integer saveUser(User user);
+	Optional<User> getOneUser(Integer id);
+}
+--------------
+package com.app.raghu.service.impl;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.User;
+import com.app.raghu.repo.UserRepository;
+import com.app.raghu.service.IUserService;
+
+@Service
+public class UserServiceImpl implements IUserService {
+
+	@Autowired
+	private UserRepository repo;
+	
+	public Integer saveUser(User user) {
+		return repo.save(user).getUserId();
+	}
+
+	public Optional<User> getOneUser(Integer id) {
+		return repo.findById(id);
+	}
+
+}
+
+
+7. Controller
+package com.app.raghu.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.app.raghu.entity.User;
+import com.app.raghu.service.IUserService;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+	@Autowired
+	private IUserService service;
+	
+	//1. show Register page
+	@GetMapping("/register")
+	public String showReg() {
+		return "UserRegister";
+	}
+	
+	//2. save user data
+	@PostMapping("/save")
+	public String saveUser(
+			@ModelAttribute User user, Model model)
+	{
+		Integer id = service.saveUser(user);
+		String message = "User '"+id+"' created!";
+		model.addAttribute("message", message);
+		return "UserRegister";
+	}
+	
+	
+}
+
+8. UI View Page 
+-- UserRegister.html --
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>SECURITY USING ORM</title>
+	</head>
+	<body>
+		<h3> WELCOME TO REGISTER PAGE</h3>
+		<form th:action="@{/user/save}" method="POST">
+		<pre>
+			NAME   : <input type="text" name="userName"/>
+			EMAIL  : <input type="text" name="userEmail"/>
+			PASSWD : <input type="password" name="userPwd"/>
+			ROLES :
+				<input type="checkbox" name="userRoles" value="ADMIN"/> ADMIN
+				<input type="checkbox" name="userRoles" value="CUSTOMER"/> CUSTOMER
+				<input type="submit" value="Create User"/>
+		</form>
+		</pre>
+		<div>[[${message}]]</div>
+	</body>
+
+</html>
+==================================================================
+
+
+			 Date : 06-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Link:
+https://github.com/javabyraghu/Workspace7AM_082022
+
+		      Spring Boot Security using ORM
+
+1. Application setup and User Register  (DONE)
+2.*** User Login and Password Encoder
+3. Session Management and Internal Process.
+
+===================================================================
+		2.*** User Login and Password Encoder
+===================================================================
+		Custom UserDetailsService (ORM)
+
+*) User data is stored inside database tables : usertab and rolestab
+*) This data can be loaded into User#Entity class object using DataJPA
+*) But Spring Security needs User#Security class object, using
+   Custom UserDetailsService (ie Impl class).
+
+*) UserDetailsService(I) having one method loadUserbyUsername(String un)
+ that converts Entity class User object to Spring Security User object.
+
+
+=> We do call roles in application, but Spring security storing them as
+  Authority type internally String only.
+Ex: ADMIN, CUSTOMER, CLERK ..etc
+
+Roles allocated to one user is called as GrantedAuthority as List.
+Ex: User : SAM, GrantedAuthority: ADMIN, CUSTOMER
+
+*) GrantedAuthority(I) -Impl class- SimpleGrantedAuthority(C)
+
+
+*) We need to configure some beans
+ 1. PasswordEncoder
+ 2. UserDetailsservice Impl class object
+ 3. AuthenticationManager
+ 4. Configure DaoAuthManager using (PasswordEncoder and UserDetailsservice)
+
+
+Coding Steps:
+1. Add Security Dependencies in pom.xml
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+2. Configure Bean Password Encoder
+package com.app.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+}
+--------------------------------------
+3. Encode Password Before save operation
+
+--UserServiceImpl--
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserRepository repo;
+
+	public Integer saveUser(User user) {
+		String encPwd = passwordEncoder.encode(user.getUserPwd());
+		user.setUserPwd(encPwd);
+		return repo.save(user).getUserId();
+	}
+	...//other methods...
+-------------------------------------------
+4. Security Config and login pages
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	//old
+	/*
+	void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}*/
+
+	//new code--starts
+	@Bean
+	public AuthenticationManager authenticationManager(
+			AuthenticationConfiguration authConfig) 
+					throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
+	
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsService(userDetailsService);
+		return provider;
+	}
+	//new code ends
+	
+	@Bean
+	public SecurityFilterChain configureAuth(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(
+				request->request.antMatchers("/home","/","/user/**").permitAll()
+						.antMatchers("/admin").hasAuthority("ADMIN")
+						.antMatchers("/customer").hasAuthority("CUSTOMER")
+						.anyRequest().authenticated()
+				)
+		.formLogin(
+				form->form.loginPage("/login").permitAll()
+				.defaultSuccessUrl("/hello", true)
+				)
+		.logout(logout->logout.permitAll())	;
+		
+		
+		return http.build();
+	}
+	
+
+
+}
+===============================================================
+mysql> select * from usertab;
++-----+-------------+-------+--------------------------------------------------------------+
+| uid | umail       | uname | upwd                                                         |
++-----+-------------+-------+--------------------------------------------------------------+
+|   1 | ajay@gm.com | AJAY  | $2a$10$qZoopSxnSw1H.ZvnahqNiOqfnQFzNpSfzI2Y.BeGqioCUWhIcHwDW |
++-----+-------------+-------+--------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from roles_tab;
++-----+----------+
+| uid | urole    |
++-----+----------+
+|   1 | ADMIN    |
+|   1 | CUSTOMER |
++-----+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from roles_tab where urole='CUSTOMER';
++-----+----------+
+| uid | urole    |
++-----+----------+
+|   1 | CUSTOMER |
++-----+----------+
+1 row in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from roles_tab where urole='CUSTOMER';
+Query OK, 1 row affected (0.02 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+
+			 Date : 09-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		Spring Boot Security using ORM
+
+1. HttpSession :
+  Once a User login is successful then server creates one Session per 
+  client/user. That stores user data.
+
+  This is an object stores user data fora period of time (Login to Logout)
+  Ex: userId, roles ..etc
+
+--internal Servlets code -------------
+#a Creating a new session
+
+	HttpSession session = request.getSession(true);
+	
+#2 Read Existed Session
+
+	HttpSession session = request.getSession(false);
+
+Note: Below line read old session, if not present creates new Session 
+    HttpSession session = request.getSession();
+
+#3 Add/Modify/Remove/Read existed data in session (key String:val Object)
+
+   session.setAttribute("userId",102345); //adds data to Session
+
+   session.setAttribute("userId",11111); //modify data to Session
+
+   int id = (Integer) session.getAttribute("userId"); //Returns Object
+
+   session.removeAttribute("userId"); //delete data from session
+
+#4 Delete Session on logout
+
+	session.invalidate();
+
+====================================================================
+   
+
+			 Date : 10-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Security
+
+*) Token based Authentication:-
+=> Server Generates one Token after validating user login details
+  by using one Security Hasing Algorithm and Secret key.
+
+=> Once a token is generated then it will be sent to client using
+   response. Client App has to store the token data.
+
+=> Server will never store any user data, no session, no token even.
+=> When client wants to make a request then it has to send token
+   along with request. 
+
+=> Server validates token using Secret key if valid provide response
+   Else redirect to login page (or any other).
+
+=======================================================================
+JWT - JSON Web Token is used to implement Token based Authentication.
+
+=> JJWT is open Source API used by java applications to generate,
+    validate, read/parse Tokens.
+
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.1</version>
+</dependency>
+
+=> JWT Token Contains 3 Parts:
+1. Head : JWT Related Information
+2. Payload: Username and other details(expDate, provider, ....etc)
+3. Signature : SignUsingSecret(Encoded[Header]+ Encoded[Payload])
+
+=> Token Format looks like:
+   xxxxxxxxxx.yyyyyyyyyyyyyyyy.zzzzzzzzzzz
+
+=> Always Signature is validated at server using Secret.
+=====================================================================
+
+
+Maven Project:
+<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+	</dependencies>
+
+*) Test class:
+package com.app.raghu;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+public class Test {
+
+	public static void main(String[] args) {
+		String secret = "TestAppOneSample";
+		
+		String token = 
+		Jwts.builder()
+		.setId("8562455") //user UnqId
+		.setSubject("sample") //username
+		.setIssuedAt(new Date(System.currentTimeMillis())) //created time
+		.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2))) //exp time
+		.setIssuer("ASHOKIT") //token provider name
+		.signWith(SignatureAlgorithm.HS256, secret.getBytes()) //sec algo, secret
+		.compact();
+		
+		System.out.println(token);
+		
+		Claims c =
+		Jwts.parser()
+		.setSigningKey(secret.getBytes())
+		.parseClaimsJws(token).getBody();
+		
+		System.out.println(c.getSubject());
+		System.out.println(c.getIssuer());
+		System.out.println(c.getExpiration());
+		
+	}
+}
+================================================================
+task: 
+1. What are Filters in Servlet API?
+2. Why they need ?
+3. How can we define them ?
+
+			 Date : 11-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Security
+
+1) User Register
+=> Read data as JSON From POSTMAN and Store in DB
+
+
+2) User Login and Token Generation
+Define JWT Token service to generate token afte login success
+
+3) Token validation and Service
+Check Auth Header using Filter and validate using JwtUtil
+if valid then continue to service/controller code
+
+--Check code in github--- github.com/ybinds
+
+			 Date : 12-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Security
+1. Filter : 
+=> In general Filters are used to execute PRE/POST processing logic
+  for a servlet.
+=> We need to define one Filter that is used execute for every request only
+   OncePerRequestFilter(C) # doFilterInternal()
+=> In this Filter, define below coding steps
+*) Read Authorization Header (Read Token)
+*) Validate Token by using JwtUtil
+*) Read Subject/username
+*) Validate Username by loading userdata from db
+*) Create UsernamePasswordAuthenticationToken
+*) Link to current request and SecurityContext
+  (which is valid upto Response)
+
+
+2. Security Config
+=> Define Authentication, Authorization
+=> Make Configuration for security as Stateless(No HTTPSession)
+=> Add/Register Filter that gets executed before FC.
+
+================================================================
+
+1. Create user
+
+POST  http://localhost:9090/user/save   [SEND]
+	Body
+		(*) raw		[JSON]
+{
+    "name" : "AJAY",
+    "username" : "ajay@gm.com",
+    "password" : "ajay",
+    "roles" : ["ADMIN","CUSTOMER"]
+}
+
+
+2. Login user 
+
+POST  http://localhost:9090/user/login   [SEND]
+	Body
+		(*) raw		[JSON]
+{
+    "username" : "ajay@gm.com",
+    "password" : "ajay"
+
+}
+
+3. Check Secured Resources
+
+POST   http://localhost:9090/user/welcome  [SEND]
+	Headers
+
+ Key			Value
+ Authorization		Paste your token here
+
+===============================================
+*) Sun/Oracle has given one Security Contract ie : Principal(I)
+  ie If any F/w, Tech is implementing Security Concept then
+  store current user details inside Principal Object.
+
+  Principal(I)   --- Stores only name
+	IS-A
+  Authentication(I) -- Given by Spring Security that holds
+  			username and roles
+     IS-A
+  UsernamePasswordAuthenticationToken(C)  Impl class
+
+*) To hold current user details object inside container to access
+ globally, Spring Security provided SecurityContextHolder(C)
+ which creates SecurityContext(I).
+=======================================================
+1. Filter class
+package com.app.raghu.filter;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.app.raghu.util.JwtUtil;
+
+@Component
+public class SecurityFilter extends OncePerRequestFilter {
+
+	@Autowired
+	private JwtUtil jwtUtil;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+
+		// read Token from Request Header
+		String token = request.getHeader("Authorization");
+		if (token != null) {
+
+			// validate and read subject from token
+			String username = jwtUtil.getUsername(token);
+
+			// check userdetails
+			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				// load user from DB
+				UserDetails user = userDetailsService.loadUserByUsername(username);
+				UsernamePasswordAuthenticationToken authenitcation = new UsernamePasswordAuthenticationToken(username,
+						user.getPassword(), user.getAuthorities());
+				authenitcation.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authenitcation);
+			}
+		}
+
+		filterChain.doFilter(request, response);
+	}
+
+}
+-------------------------------------
+2. Security Config
+package com.app.raghu.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.app.raghu.filter.SecurityFilter;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private AuthenticationEntryPoint authenticationEntryPoint;
+	
+	@Autowired
+	private SecurityFilter securityFilter;
+	
+	@Bean
+	public AuthenticationManager authenticationManager(
+			AuthenticationConfiguration configuration
+			) throws Exception 
+	{
+		return configuration.getAuthenticationManager();
+	}
+	
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsService(userDetailsService);
+		return provider;
+	}
+	
+	@Bean
+	public SecurityFilterChain configureAuth(HttpSecurity http) throws Exception {
+		http.csrf().disable()
+		.authorizeRequests().antMatchers("/user/save","/user/login").permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.exceptionHandling()
+		.authenticationEntryPoint(authenticationEntryPoint)
+		.and()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+		
+		return http.build();
+	}
+	
+}
+
+			 Date : 14-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Security
+			      OAuth 2.x
+
+=> OAuth 2.x Means Open Authorization using "Auth and Resource Server"
+(3rd Party services) to access enduser data by a client application.
+
+=> OAuth is a standard Protocol for User Identity and verify concept
+  using client application service.
+
+=> OAuth 2.x is recomanded for Day-to-Day business application.
+   (Internal network application).
+
+Ex: MMT, Carwale, Zomato, BookMyShow ...etc
+
+=> It is not recomanded for finance/banking applications.
+Ex: ICIC Bank, CreditCard service..
+
+--3 devices---
+1. Auth & Resource Server
+2. Client Application (server)
+3. End Customer Device (Browser)
+
+*) AuthService Providers: Google , Facebook, Github, LinkedIn, Twiiter..etc
+Example:
+https://developers.facebook.com/
+https://console.cloud.google.com/
+
+================Stages======================================
+1. Register Client application with Auth&Resource Server
+
+2. Create End Customer account at client application and login
+
+3. Get Access Token by a client+user from Auth Server to access
+   resource from Resource Server.
+===========================================================
+*) End Customer tries to make Login request to client application
+*) Client app will ask user to login first and allow access request
+ (ie called as Grant)
+*) If user has given Grant to Client application, then client 
+  makes request to Auth Server for Access Token using details
+    clientId, secret and User Grant
+*) Auth Server validates data and given accessToken to client app.
+*) Client makes request to Resource server to read enduser data
+  using AccessToken.
+*) Resource server validates accessToken and provides user data.
+*) Client App stores user data and makes user login success
+  redirect to HomePage.
+
+			 Date : 15-02-2023
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Stage#1 Register Client with Auth Server
+(Facebook, google, github)
+
+
+*) Goto : https://developers.facebook.com/
+ > Click on MyApps
+ > Choose Consumer > Next
+ > Enter app name > Next
+ > Click on App name (Top left corner)
+ > Create test app > Finish
+ > Click on Settings > Basics
+ > copy client-id: 1651876458565698
+ 	secret: 0b407987f0c3fea6bd82fb155819e2db
+===================================================
+
+--application.yml---
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 1651876458565698
+            client-secret: 0b407987f0c3fea6bd82fb155819e2db
+
+==========================================================
+SecurityConfig.java
+package com.app.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+	//authentication ...
+	
+	//authorization
+	@Bean
+	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+		http.antMatcher("/**")
+		.authorizeRequests()
+		.antMatchers("/","/login**").permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.oauth2Login();
+		
+		return http.build();
+	}
+}
+========UserController========
+package com.app.raghu.rest;
+
+import java.security.Principal;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class UserController {
+
+	@GetMapping("/secure")
+	public String showHome(Principal p) 
+	{
+		System.out.println(p);
+		return "Secure";
+	}
+	
+	@GetMapping("/")
+	public String showLogin() 
+	{
+		return "Index";
+	}
+}
+
+==========Index.html===========
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+	<title>WELCOME TO LOGIN</title>
+</head>
+<body>
+	<h2>Spring Security using OAuth2.x</h2>
+	<a href="secure">Login </a>
+</body>
+</html>
+
+==============Secure.html====================
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+	<title>WELCOME TO LOGIN</title>
+</head>
+<body>
+	<h2>WELCOME</h2>
+	<span th:text="${#authentication.name}"></span>
+</body>
+</html>

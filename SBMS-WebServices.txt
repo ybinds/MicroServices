@@ -1,0 +1,4760 @@
+			     Webservices
+
+*) To link two or more applications running at different web-servers
+   using HTTP protocol and data as Global Format (XML/JSON).
+
+*) Webservices is also called as Integration.
+  ex: BookMyShow App Linked with PayTM.
+
+*) One Application is called as Consumer (Client) and another one
+   is called as Poducer(Server).
+
+*) Client always makes request to Server application, using
+   Http Method and URL.
+
+Http Method says "What todo for a Server"
+---- Http Request Methods-------------------
+GET     : Fetch Resource from Server
+POST    : Create a New Resource at Server
+PUT     : Modify existed Resource at Server
+DELETE  : Remove existed Resource at Server
+PATCH   : Partially Update existed Resource at Server
+
+Other: TRACE, CONNECT, OPTIONS, HEAD
+Resource: (File/Image/Doc/DB Data)
+
+Q) Can we use POST Method to Get Data from Server?
+A) Actually it supports getting data. But it is not a Http Standard.
+
+Q) What is the difference between PUT and PATCH?
+A) PUT : it is recomanded to use when full resource is getting modified.
+   PATCH: used only for partial data update.
+
+========================================================================
+Producer application gives Response Back using Codes/Numbers called as
+Http Response Status Codes
+
+ ---------------------------------------
+  Type               Code
+ ---------------------------------------
+  Information        1xx
+  Success            2xx  (200-OK)
+  Redirect           3xx
+  Client Side Error  4xx  (404-Not found)
+  Server side Error  5xx  (500-Internal Server Error)
+
+Ref:-
+https://developer.mozilla.org/en-US/docs/Web/HTTP
+
+Http Message Types:
+1. Request : Init Line + Header + Body
+2. Response : Init Line + Header + Body
+
+Init Line will be in different format
+For Request: Http Method   URL   Version
+For Response: Version  Status   Phrase
+
+Q) What is the difference between GET and HEAD?
+A) Get Will not support request Body. It is used to fetch data from server.
+   Head will not support both request and response body.
+    Just used to call a task at server (do not know its message, 
+      we get only response code)
+
+Q) What is the difference between GET and POST?
+A) 
+ Get Will not support request Body. It is used to fetch data from server.
+ Post is used to send data using its request body (Data is hidden here),
+  that creates a new resource at server.
+
+Q) What is the difference between POST and PUT?
+A)
+    Post is used to send data using its request body (Data is hidden here),
+  that creates a new resource at server.
+
+   Put is used to send data using its request body (Data is hidden here),
+    that modifies existed resource at server.
+
+			 Date : 12-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+				Webservices
+
+*) 3 Layers (PL,SL and DAL) are used to develop application
+   (ie consumer or producer).
+*) Now we are using 4th Layer Integration (IL) Layer.
+   This is used to link applications. 
+
+*) Both Producer and Consumer should contain this layer.
+       
+   Skeleton/API -- Producer (IL) Code
+   Stub/Caller  -- Consumer (IL) Code
+
+========================================================================
+Global Data Format:- (XML/JSON)
+This format of data can be read/processed by any language.
+(ie Java, .Net, PHP, Python, Node..etc)
+
+Serialization: Converting Java Object to other formats
+      Object ---> binary/file/stream/..etc
+-------------------------------------------------------------------
+JSON : JavaScript Object Notation.
+It follow data format like:
+ {
+   "key" : value,
+   "key" : value,
+   ...
+ }
+=> Every key must be quoted, value is quoted for String type.
+-------------------------------------------------------------------
+	Java                            JavaScript
+------------------------------------------------------------------
+   int id = 10				var id = 10
+   String s = "ABC";                    var s = "ABC";
+
+  Emp e = new Emp();                 var e = { "id": 10, "name":"ABC" };
+  e.setId(10);                          //Object Notation
+  e.setName("ABC");
+--------------------------------------------------------------------
+JACKSON API | GSON | JAX-B :-
+These are opensource 3rd party APIs which are used to convert
+		Java Object <---> JSON
+
+1. Primitives Data 
+{
+ "eid" : 10, "ename" : "A", "enabled" : false
+}
+
+2. Array/List/Set
+{
+  "eid" : 10, "ename" : "A",
+  "depts" : [ "DEV", "QA", "HR" ]
+}
+
+3. Map/child class(HAS-A)
+{
+  "eid": 10, "ename" : "A",
+  "project" : {
+                "pid" : "101",
+		"pcode": "AA"
+              }
+}
+
+Q) When should we use YAML and JSON?
+A)
+      JSON                  YAML
+  EndUser data		Programmer Data
+  Trasfer b/w Apps      Input to service
+
+Ex: use YAML - Use Email Service (host,port,un,pwd)
+    use JSON - 200 Products data send it to Order Module.
+
+ 1 Employee = 1 DB Row = 1 JSON object
+
+DevOps - YAML --> input  Ansible / Kubernetes(Runtime Env)
+============================================================
+XML : eXtensible Markup Language 
+
+It is used to represent data in Global Format used for both
+Configuration and Data Trasfer.
+
+*) web.xml in Servlets (data given to server)
+*) employees.xml file is used to trasfer to another app.
+
+ex:
+<employee>
+ <eid>10</eid>
+ <ename>AJ</ename>
+</employee>
+
+*) JAXB : Java Architecture for XML Binding
+https://en.wikipedia.org/wiki/Jakarta_EE
+
+ This API is used to convert Java Object <--> XML
+
+*) Spring Boot will not support XML as Configuration/Data
+   by default. We have to enable this to use.
+======================================================================
+Webservices 2 Types:
+1. SOAP : Fully dependent XML/XSD/DTD.
+
+=> SOAP is Protocol (like HTTP) with XML Standards.
+=> Slow in processing/ Heavy Code and Configuration.
+=> Maintain / Testing is not easy.
+
+2. ReST : It is a design of Client-Server using HTTP + Global Data.
+
+Re = Representation
+S  = State
+T  = Trasfer
+
+=>** Send/receive data in global format. 
+*) ReST API / Restful / ReST ... are same.   
+
+*) API : [Application Programming Interface] 
+	Code defined to provide service.
+ (pre-defined classes/interfaces/enums/annotation)
+-------------------------------------------------------------------
+     Spring Boot ReST/ Restful Webservices using Spring boot
+
+case#1 (Both apps) [BookMyShow --- Paytm] 
+  Consumer Application  -------   Producer Application
+     (Java)                          (.net)
+
+case#2 Fullstack design [Frontend -- Backend]
+     UIApplication ----- Java Application (IL,SL,DAL)
+     Angular/ReactJS
+
+case#3 Microservices Design [1 Application --> n Modules --> n Small Apps]
+   1 Module App ---- 1 Module App ---- 1 Module App.
+
+			 Date : 13-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+		    Spring Boot Restful Webservices
+
+=> Webservices is used to link two apps (runs in different server).
+=> Webservices - SOAP (XML Based / Protocol), 
+		ReST(Architecture/Client-Server) [XML/JSON/Text]
+=> ReST - Representation State Transfer 
+=> Two apps: Producer and Consumer.
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+case#1 Restful Webservices
+ Link/Integrate two different applications running in two different
+ servers by using HTTP Protocol and Global Data Format.
+
+ Producer should contain -- Service Provider code / Skelton / API
+ Consumer should contain -- Service Consumer code / Stub  / Caller
+
+*) In This case at Producer Application side, we use @RestController,
+   and at Consumer application side we use RestTemplate(C).
+
+ +----------------------------+----------------------------------------+	
+ |	Controller            |         RestController                 |
+ +----------------------------+----------------------------------------+
+   This is for WEB MVC Apps          This is for RestBased Apps
+
+   It is connected with View        Here, we have no View(UI Concept)
+  (UI/Java based-JSP/Thymeleaf)
+
+   Data is Exchanged using Objects    Data is Exchanged using XML/JSON
+    between UI and Controller             with Consumer Apps.
+    (Model/ModelAttribute..etc)
+
+   It is a full web-app developing   It is like a service Provider
+      concept.                          must be used by a client.
+      						(Any Language)
+ +----------------------------+----------------------------------------+
+Ex of Webservices: Payment Service, OTP service, Card Payments ..etc
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+case#2 Fullstack Application design.
+ 
+Fullstack Application = Frontend Apps + Backend Apps
+
+Frontend Applications are called as Client Apps which are fully dependent 
+on Backend Application. ie Business Logic / Tx and database exist at
+backend only.
+
+Backend Apps are called as Provider which is connected using HTTP 
+Protocol and data in Global Format(XML/JSON). 
+
+Ex Frontend Tech are : Angular/ReactJS, Andriod, iOS,... etc
+
+====================================================================
+case#3 Microservices Design (Backend in new way)
+       [Large Scale Application]
+
+*) Independent deployable components 
+ that supports Auto-Scale, Load Balance, Service Communication,
+ Less DownTime/Zero DownTime.
+
+ Implementing every Module as 1 Project (which are independent)
+ and connect with using Webservices.
+
+Q) Explain these terms?
+ Compile
+ Build
+ Deploy
+ Instance
+ Scale(Horizontal/Vertical)
+ DownTime
+ Load balace
+ IP Address (private/public/elastic)
+ Network/firewall/routing.
+
+			 Date : 14-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+		    Spring Boot Restful Webservices
+
+*) By Using Spring Boot Restful webservices we can develop both
+   Producer and Consumer applications.
+
+*) Producer application work flow:
+1. Every request is taken by FC(FrontController) which is a
+	   Servlet (DispatcherServlet).
+
+2. FC provides Request details (PATH/Http Method) to HandlerMapper
+   that returns RestController#Method details
+   (ex: PaymentRestController#doPay)
+
+3. Once it gets executed output will be ResponseEntity<T>
+   (Other ReturnType: String, ClassType, Collection).
+
+4. This ResponseEntity is given back to FC and same sent to clientapp.
+
+*) Note:
+1. There is NO UI at Producer App for webservices concept.
+2. Data Formats are (request/response): Text, JSON, XML
+3. No ViewResolver is required to configure.
+4. For both Spring boot WEB MVC and Spring boot ReST
+   we have to use same dependency "Spring Boot WEB"
+   that comes with default server "Tomcat" with default port:8080
+5. Browser supports making GET and POST request only.
+   So, for Testing purpose we use a Tool "POSTMAN".
+Download Link:
+https://www.postman.com/downloads/
+
+ +----------------------------+----------------------------------------+	
+ |	Controller            |         RestController                 |
+ +----------------------------+----------------------------------------+
+   This is for WEB MVC Apps          This is for RestBased Apps
+
+   It is connected with View        Here, we have no View(UI Concept)
+  (UI/Java based-JSP/Thymeleaf)
+
+   Data is Exchanged using Objects    Data is Exchanged using XML/JSON
+    between UI and Controller             with Consumer Apps.
+    (Model/ModelAttribute..etc)
+
+   It is a full web-app developing   It is like a service Provider
+      concept.                          must be used by a client.
+      						(Any Language)
+ +----------------------------+----------------------------------------+
+Spring Boot Rest Annotations:
+1. @RestController : We need to apply this at class level
+2. @RequestMapping : At class/ method level too.
+3. @GetMapping      
+4. @PostMapping
+5. @PutMapping
+6. @PatchMapping
+7. @DeleteMapping
+8. @PathVariable  : URL Input (Similer to Request Param)
+9. @HeaderParam   : to read Request Header parameters
+10. @RequestBody  : Request(JSON/XML) ---> Object (Method Input)
+11. @ResponseBody : Object (Method Return) ---> Response(JSON/XML)
+========================================================================
+	First Application : Spring Boot Rest Producer Application
+
+
+*) HttpStatus is a enum that gives all Http Response Status codes
+ to be returned with Response Object.
+
+200 - OK  (success)
+400 - Bad Request (Client data is missing/not valid)
+404 - Not Found (Invalid URL)
+405 - Method Not Allowed (URL is valid, but not Http Method type)
+500 - Internal Server Error (Exception at Server side)
+
+
+App/Coding Steps:-
+1. Create one Spring Boot Application
+Name: SpringBootRestProducerFirstEx
+Dep : Spring Web, Devtools
+
+2. RestController
+package com.app.raghu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	//1. Fetch Resource
+	//@RequestMapping(value = "/fetch",method = RequestMethod.GET)
+	@GetMapping("/fetch")
+	public ResponseEntity<String> getProduct() {
+		ResponseEntity<String> response = new ResponseEntity<>(
+				"FROM GET OPERATION",  //body
+				HttpStatus.OK);        //status (OK/200)
+		
+		return response;
+	}
+	
+	
+	//2. Create Resource
+	@PostMapping("/save")
+	public ResponseEntity<String> createProduct() {
+		ResponseEntity<String> response = new ResponseEntity<>(
+				"FROM POST OPERATION",
+				HttpStatus.OK
+				);
+		return response;
+	}
+	
+	
+	//3. Modify Resource
+	@PutMapping("/update")
+	public ResponseEntity<String> updateProduct() {
+		ResponseEntity<String> response = new ResponseEntity<>(
+				"FROM PUT OPERATION",
+				HttpStatus.OK
+				);
+		return response;
+	}
+	
+	//4. Remove Resource
+	@DeleteMapping("/remove")
+	public ResponseEntity<String> deleteProduct() {
+		ResponseEntity<String> response = new ResponseEntity<>(
+				"FROM DELETE OPERATION",
+				HttpStatus.OK
+				);
+		return response;
+	}
+	
+	
+	//5. Partial Update of Resource
+	@PatchMapping("/updatecost")
+	public ResponseEntity<String> modifyProductCost() {
+		ResponseEntity<String> response = new ResponseEntity<>(
+				"FROM PATCH OPERATION",
+				HttpStatus.OK
+				);
+		return response;
+	}
+	
+	
+}
+
+3. Run Main class and Test from POSTMAN
+
+[GET] http://localhost:8080/product/fetch	[SEND]
+[POST] http://localhost:8080/product/save	[SEND]
+[PUT] http://localhost:8080/product/update	[SEND]
+[DELETE] http://localhost:8080/product/remove	[SEND]
+[PATCH] http://localhost:8080/product/updatecost[SEND]
+
+--Task----------------------------------------------------
+Write one simple REST API For Student that will display simple messages
+for GET, POST, PUT, DELETE, PATCH.
+=====================================================================
+Q) how can we switch to some other servers from tomcat?
+   How can we remove embeeded tomcat from Spring Boot application?
+
+Step#1 Remove embedded tomcat
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+Step#2 Add other server
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+
+		(or)
+
+	 <dependency>
+		<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-jetty</artifactId>
+	 </dependency>
+====================================================================
+
+			 Date : 15-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+			Global Data Formats (XML/JSON)
+
+*) Incase of complex data inputs/outputs like JSON/XML, we use
+   MediaType annotations.
+
+1.  @RequestBody : It will read Http Request Body Section, checks
+			Content-type -> read data from Body -> Convert to
+			   one Object -> Give it as method param.
+2.  @ResponseBody: It will write Http Response Body Section,
+    If return type is non-String type(ClassType, CollectionType)
+     then object -> Gloabl Data -> given to Response Body and also
+       updates Content-type.
+
+*)Note:
+1. These annotations are applicable only if we work on non-String types
+  (ex: Employee, List<Product> ..etc)
+
+2. Validation of data (request) is done by annotations.
+3. Only by default JSON (JACKSON) Conversions are supported.
+   No XML by default in Spring boot.
+
+4.**** When we add @RestController by default it internally adds
+   @ResponseBody.
+
+===============================================================
+JSON Syntax:
+
+a) For one Object: { "key":val, "key":val }
+
+b) For one List/Array/Set :
+[
+  element1, element2,...
+]
+
+c) For one Map/Properties :
+{
+   "key":val, "key":val
+}
+
+===========Working with output (@ResponseBody) ==================
+Name : SpringBootRestJSONOutput
+Dep  : Spring web, Lombok, Devtools
+
+1. Entity classes
+package com.app.raghu.entity;
+
+import java.util.Map;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+
+	@JsonProperty("user-unq-id")
+	private Integer userId;
+	
+	@JsonProperty("user-first-name")
+	private String userName;
+	
+	private String userRole;
+	
+	@JsonIgnore
+	private String password;
+	
+	private Set<String> permissions; 
+	//private List<String> permissions; 
+	//private String[] permissions; 
+	
+	private Map<String,String> models;
+	//private Properties models;
+	
+	
+}
+
+-------Role Entity-----------
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role {
+
+	private Integer roleId;
+	private String roleCode;
+}
+
+2. RestController class
+package com.app.raghu.rest;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Role;
+import com.app.raghu.entity.User;
+
+@RestController
+@RequestMapping("/user")
+public class UserRestController {
+
+	@GetMapping("/one")
+	//@ResponseBody
+	public ResponseEntity<User> getOneObj() {
+		User ob = new User(101, "ABC",  "Dev", "PASSWD1234",
+				Set.of("P1","P2"),
+				Map.of("M1","AA","M2","AB")
+				);
+		
+		ResponseEntity<User> response = new ResponseEntity<>(ob, HttpStatus.OK);
+		return response;
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<List<Role>> getAllRoles() {
+		List<Role> roles = Arrays.asList(
+					new Role(1100, "ADMIN"),
+					new Role(1102, "BA"),
+					new Role(1103, "QA")
+				);
+		
+		ResponseEntity<List<Role>> response = new ResponseEntity<>(roles, HttpStatus.OK);
+		return response;
+	}
+	
+	@GetMapping("/map")
+	public ResponseEntity<Map<String,Role>> getMappedRoles() {
+		Map<String,Role> rolesMap = Map.of(
+					"R1", new Role(1100, "ADMIN"),
+					"R2", new Role(1102, "BA"),
+					"R3", new Role(1103, "QA")
+				);
+		
+		ResponseEntity<Map<String,Role>> response = new ResponseEntity<>(rolesMap, HttpStatus.OK);
+		return response;
+	}
+	
+	
+	
+	
+}
+
+URLS:
+http://localhost:9090/user/one
+http://localhost:9090/user/list
+http://localhost:9090/user/map
+=======================================================================
+Note:
+1. Use @JsonIgnore to avoid a variable/field in JSON operations
+  (used in project)
+
+2. @JsonProperty to give alias names to variables. 
+
+=======================================================================
+Q) Write one Example using Maven for JSON/JACKSON?
+
+Q) Do we need to apply @ResponseBody in Spring boot rest ?
+A) Not required. By default @RestController gives it.
+
+Q) How can we avoid one field/variable in JSON operations?
+A) @JsonIgnore
+
+Q) What will happen if variable holds null in JSON Operations?
+A) null is printed.
+
+Q) how can we provide alias names to variables in JSON?
+A) @JsonProperty
+=================================================================
+			Working with XML
+
+Step#1 Add Dependency
+
+<dependency>
+	<groupId>com.fasterxml.jackson.dataformat</groupId>
+	<artifactId>jackson-dataformat-xml</artifactId>
+</dependency>
+
+Step#2 While Making Request, send one Header Param
+    Accept = application/xml
+
+*) Note: If Dependency is not added, then Accept Request may get
+   Response code as : 406 Not Acceptable
+----------------------------------------------------------------------
+
+			 Date : 16-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+			Global Data Formats (XML/JSON)
+
+@RequestBody: It takes data (XML/JSON) from Http Request Body Section
+ and converts into one Object Format.
+
++--------------------------------------+
+| POST  |   /employee/create | HTTP 1.1|
++--------------------------------------+
+|                                      |
+|  Content-Type: application/json      |
++--------------------------------------+
+|                                      |
+| { "empId" : 101, .... }              |
++--------------------------------------+
+
+1. We have to use NON-GET types request to send data using Body.
+2. @RequestBody must be used inside Method Parameter.
+  Syntax:
+	@RequestBody ClassName objName
+
+3. If any field/variable is missing data from JSON, then it holds
+   default value based on datatype (ex: null for String).
+
+4. Sending additional keys in JSON (Request) which are not present 
+	in Entity, then those are ignored.
+ex:
+{
+    "empId": 10,
+    "empName": "A",
+    "empSal": 300.0,
+    "empDept" : "DEV"
+}
+Here empDept is ignored , it is not exist in Employee.
+
+5. JSON Keys can be sent/receive in any order.
+
+6. Invalid JSON Request, leads to 400-Bad Request.
+Ex:
+{
+    "empId": 10,
+    "empSal": 300.0,
+    "empName": "A"
+ 
+7. If XML Dependency (jackson-dataformat-xml) is not added, 
+   and trying to send XML as Input/Request Body with 
+   Content-type: application/xml
+   then FC returns 415 Unsupported MediaType.
+
+8. To work with XML conversions, add  below dependency
+<dependency>
+	<groupId>com.fasterxml.jackson.dataformat</groupId>
+	<artifactId>jackson-dataformat-xml</artifactId>
+</dependency>
+
+=============Code=======================================
+Name : SpringBootRestMediaTypeOutputEx
+Dep  : Web, Lombok, Devtools
+
+1. Entity
+package com.app.raghu.entity;
+
+import lombok.Data;
+
+@Data
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	
+}
+
+2. RestController
+package com.app.raghu.rest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Employee;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+
+	@PostMapping("/create")
+	public ResponseEntity<String> createEmployee(
+			@RequestBody Employee employee
+			) 
+	{
+		String s = employee.toString();
+		ResponseEntity<String> response = new ResponseEntity<>(s,HttpStatus.OK);
+		return response;
+	}
+}
+
+3. Run Application and Make Request using POSTMAN.
+
+==========Complex Inputs========================================
+1. Entity classes
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Address {
+
+	private String hno;
+	private String loc;
+}
+-----------------
+package com.app.raghu.entity;
+
+import java.util.List;
+import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	
+	private Address addr;//HAS-A
+	
+	private List<String> projects;
+	private Map<String,Integer> codes;
+	
+}
+
+2. Controller code
+package com.app.raghu.rest;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Address;
+import com.app.raghu.entity.Employee;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+	
+	@GetMapping("/find")
+	public ResponseEntity<Employee> getOneEmployee() {
+		Employee employee = new Employee(101, "AAAA", 500.0, 
+				new Address("A/44","HYD"), List.of("M1","M2"), 
+				Map.of("A1",10,"A2",20));
+		return new ResponseEntity<>(employee,HttpStatus.OK);
+	}
+
+	@PostMapping("/create")
+	public ResponseEntity<String> createEmployee(
+			@RequestBody Employee employee
+			) 
+	{
+		String s = employee.toString();
+		ResponseEntity<String> response = new ResponseEntity<>(s,HttpStatus.OK);
+		return response;
+	}
+}
+
+3. POSTMAN Request
+URL: http://localhost:9090/employee/create
+Method: POST
+
+Body (raw/JSON)
+{
+    "empId": 10,
+    "empSal": 300.0,
+    "empName": "A",
+    "addr" : {
+        "hno": "7-A/77-B",
+        "loc" : "AMPT, HYD"
+    },
+    "projects" : ["P1","P2","P3"],
+    "codes" : { "C1": 10, "C2": 20, "C3": 30 }
+}
+
+Body (raw/XML)
+<Employee>
+    <empId>101</empId>
+    <empName>AAAA</empName>
+    <empSal>500.0</empSal>
+    <addr>
+        <hno>AB/44</hno>
+        <loc>HYD</loc>
+    </addr>
+    <projects>
+        <projects>M1</projects>
+        <projects>M2</projects>
+    </projects>
+    <codes>
+        <A2>20</A2>
+        <A1>10</A1>
+    </codes>
+</Employee>
+=================================================================
+Task:
+ Student (sid,sname,sgen,course, langs:List, qualif:Map<String,Double>)
+ Course (cid,cname,cfee)
+ send Input JSON/XML
+ Get output JSON/XML
+
+			 Date : 17-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  --------------------------------------------------------------------- 
+Request Parameter:-
+ URL ? key = val & key = val & key = val 
+
+ ex: http://localhost:9090/employee/find?id=10&name=A
+
+---Adv Java / Servlets--------------------
+String val = request.getParameter("key");
+int id = Integer.parseInt(val);
+--------------------------------
+@RequestParam("key")DataType variableName
+		(or)
+@RequestParam DataType key
+
+===========================================================
+PathVariable: Sending data along with URL as Path
+
+.../employee/find/10/A
+
+.../employee/find?id=10&name=A ( Query String)
+.../employee/find?name=A&id=10
+
+1. Clean URLs (NO SYMBOLS LIKE ? and &)
+2. URL LENGTH AND SIZE is reduced
+3. No Overloaded Symbols (NO BURDEN ON SERVER WHILE PARSING URL)
+4. Follows Data/Path sending order.
+
+*) Note:
+1. Path Creation
+	@GetMapping("/employee/find/{id}/{name}")
+
+ Here /employee/find is called as static path
+ and /{id}/{name} dynamic path (Data comes at runtime)
+
+
+2. Data Reading
+@PathVariable("key")DataType variable
+
+
+====================code============================================
+Name : SpringBootRestPathVariableEx
+Dep  : Web, Lombok, Devtools
+
+
+*) Controller code
+package com.app.raghu.rest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	// Using RequestParam
+	// .../dataa?pid=10&pname=A
+	@GetMapping("/dataa")
+	public ResponseEntity<String> showDataA(
+			@RequestParam("pid") Integer id,
+			@RequestParam("pname") String name
+			)
+	{
+		System.out.println("PID " + id +" PNAME "+ name);
+		return new ResponseEntity<>("PID " + id +" PNAME "+ name,HttpStatus.OK);
+	}
+
+	// Using Pathvariable
+	//.../datab/10/A
+	@GetMapping("/datab/{pid}/{pname}")
+	public ResponseEntity<String> showDataB(
+			@PathVariable("pid") Integer id,
+			@PathVariable("pname") String name
+			) 
+	{
+		System.out.println("PID " + id +" PNAME "+ name);
+		return new ResponseEntity<>("PID " + id +" PNAME "+ name,HttpStatus.OK);
+	}
+}
+
+
+Request URL:
+1.
+http://localhost:9090/product/datab/101/MNO
+Output Id=__ name=___
+2.
+http://localhost:9090/product/datab/222/111
+Output Id=__ name=___
+3.
+http://localhost:9090/product/datab/MNO/888
+Output 
+4.
+http://localhost:9090/product/dataa?pid=10&pname=A
+Output 
+5.
+http://localhost:9090/product/dataa?pname=AB&pid=101
+Output 
+
+Q) Which one is better to use PathVariable or RequestParam?
+A) PathVariable is better over RequestParam.
+  PathVariables are called as clean URL with less size/length.
+  No Processing time required for Query String reading.
+
+*) JAVA EE : Supoprts only RequestParam, No PathVariable.
+   It exist in Spring Boot apps.
+
+*) In fullstack/Rest based apps PathVariable is used.
+===============================================================
+Still lot of apps are using RequestParam. So, Spring boot even
+supports Request Param also.
+https://www.google.com/search
+? q= sachin+tendulkar
+& sxsrf=ALiCzsZBVp76CI2yhnmxjbUGyPbMNMyotQ%3A1668650417775
+& source=hp
+& ei=sZV1Y6bJLMe3z7sPvtWYqAM
+& iflsig=AJiK0e8AAAAAY3Wjwf8qaKKi4GIF9p
+
+===============================================================
+HeaderParams : These are instructions/Additional Data
+ (Security, Token data, Certificates, Date and Time, Cookies..etc )
+exchanged by both Browser and Server.
+
+*) it is a Key-value pair. Data is sent in String format
+*) There are pre-defined headers:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+*) We can even pass our key-val as header params.
+*) To read data use 
+	 @RequestHeader("key")DataType variableName
+
+=> Authorization Header | Accept Header | Content-Type | Cookies Header
+=======================================================================
+Example:
+package com.app.raghu.rest;
+//ctrl+shift+O
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	
+	@PostMapping("/details")
+	public ResponseEntity<String> showHeaders(
+			@RequestHeader("Content-Type")String type,
+			@RequestHeader("Content-Length")String len,
+			@RequestHeader("Authorization")String auth,
+			
+			HttpServletRequest req
+			) 
+	{
+		System.out.println(auth);
+		Enumeration<String> headerNames = req.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String hdr =  headerNames.nextElement();
+			System.out.println(hdr + " " + req.getHeader(hdr));
+		}
+		System.out.println("Data " + type +" - "+ len);
+		return new ResponseEntity<>("CHECK",HttpStatus.OK);
+	}
+	
+
+}
+==============================================================
+Dynamic ReturnType Selection based on workflow (condition)
+Generics (Java 1.5) - wild card character (?)
+
+	public ResponseEntity<?> showInfo() {
+		
+		if(new Random().nextInt() > 0) {
+			return new ResponseEntity<String>("OK",HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(101,HttpStatus.OK);
+		}
+	}
+=============================================================
+
+			 Date : 18-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  --------------------------------------------------------------------- 
+*) ReturnType in RestController # Methods
+=> Here standard ReturnType is ResponseEntity.
+=> It is a combination of Status Code + Header Params + Response Body.
+=> ResponseEntity<T> , Here T = DataType of Body.
+=> Allowed or possible T types are:
+	String, ClassType, Collection, Object (Not recomanded)
+	even ? (wild card char) if type is decided at runtime.
+
+=> We can even return direct type without ResponseEntity<>.
+   In this case we can not provide our Status code and Headers,
+   that is considered only as body.
+========================================================================
+Q) What is MultiValueMap and how it is different from Map?
+A) MultiValueMap is a Map internally. 
+   But Key is SimpleType (Primitive) and Value is List(ColelctionType)
+
+*) Http Headers are MultiValueMaps. ie one key can have multiple values
+Ex:
+  Accept = application/xml,application/json,*/*
+
+*) In Spring REST HttpHeaders(C) is a MultiValueMap internally.
+
+Q) When should we use ResponseEntity<> and Direct Return Type?
+A)
+  If we want to return our own headers/Http status along with Body,
+  then use ResponseEntity.
+  Else Just return Direct class/String/Collection type that indicates
+  only body.
+
+Q) Can we create ResponseEntity object without HttpStatus?
+A) Status is must in case of ResponseEntity object.
+   it can never be null/empty.
+Q) Can we create ResponseEntity object without Body?
+A) Body can be null / empty
+Q) Can we create ResponseEntity object without Headers?
+A) Custom headers can be null / empty
+======================Sample code==========================================
+
+Name : SpringBootRestReturnTypeEx
+Dep  : Web, Lombok, Devtools
+
+1. Entity
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bookId;
+	private String bookName;
+	private Double bookCost;
+}
+
+2. RestController
+package com.app.raghu.rest;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+
+@RestController
+@RequestMapping("/book")
+public class BookRestController {
+	
+	
+	@GetMapping("/a")
+	public String justBody() {
+		return "Hello Book Data!";
+	}
+	
+	@GetMapping("/b")
+	public Book justBook() {
+		return new Book(10,"AA",200.0);
+	}
+
+	@GetMapping("/data")
+	public ResponseEntity<String> showInfo() {
+		//1. passing Http Status
+		//ResponseEntity<String> response = new ResponseEntity<>(HttpStatus.OK);
+		
+		//2. passing Body + Http Status
+		//String body = "WELCOME TO APP";
+		//ResponseEntity<String> response = new ResponseEntity<>(body, HttpStatus.OK);
+		
+		//3. Passing  headers + status
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("MyAppOne", "ACTIVATED-CLIENT");
+		//ResponseEntity<String> response = new ResponseEntity<>(headers, HttpStatus.OK);
+		
+		//4. Passing body + headers + status
+		String body = "WELCOME TO APP";
+		ResponseEntity<String> response = 
+				new ResponseEntity<>(body, headers, HttpStatus.OK);
+		
+		return response;
+	}
+}
+==================================================================
+Usecase# ResponseEntity with custom Headers HttpStatus and Body.
+
+*) Entity class
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bookId;
+	private String bookName;
+	private Double bookCost;
+}
+
+*) REstController
+package com.app.raghu.rest;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+
+@RestController
+@RequestMapping("/book")
+public class BookRestController {
+	
+	//Path variable id --> Book (200,book,found=yes), String(400,Sorry No Book found, found=no)
+	@GetMapping("/obj/{id}")
+	public ResponseEntity<?> findBookById(@PathVariable Integer id) 
+	{
+		ResponseEntity<?> response = null;
+		HttpHeaders headers = new HttpHeaders();
+		
+	
+		if(id == 501) {
+			headers.add("found", "yes");
+			
+			response = new ResponseEntity<Book>(
+					new Book(id, "DUMMY", 500.0),   //body 
+					headers,  //headers
+					HttpStatus.OK); //http status
+		} else {
+			
+			headers.add("found", "no");
+			response = new ResponseEntity<String>(
+					"Sorry! No Book Found",   //body 
+					headers,  //headers
+					HttpStatus.BAD_REQUEST); //http status
+		}
+		
+		return response;
+	}
+	
+}	
+===================================================================
+
+			 Date : 21-11-2022
+		    Spring Boot and Microservices
+				7AM
+		             Mr. Raghu
+			     (ASHOK IT)
+  --------------------------------------------------------------------- 
+		Spring Boot - Exception Handling Process
+
+*) Spring Boot has given one Pre-defined class "BasicErrorController"
+  which takes care of Error and Exception Handling.
+
+=> if any exception is occured in RestController/Controller and not
+ handled (using try/catch block) then it is taken care by 
+ BasicErrorController(C) and method error().
+
+=> This error() method returns some pre-defined response format.
+Ex:
+{
+    "timestamp": "2022-11-21T01:42:22.666+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "trace": "java.lang.RuntimeException: Product Not Found 5586\r\n\tat com.app.raghu.rest.ProductRestController.getProductById(ProductRestController.java:24)\r\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\r\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\r\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\r\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:568)\r\n\tat org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)\r\n\tat org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)\r\n\tat org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)\r\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)\r\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)\r\n\tat org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)\r\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)\r\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)\r\n\tat org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:670)\r\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)\r\n\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:779)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)\r\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)\r\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)\r\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)\r\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\r\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)\r\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)\r\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)\r\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)\r\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)\r\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)\r\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)\r\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)\r\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)\r\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)\r\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)\r\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)\r\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)\r\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)\r\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)\r\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\r\n\tat java.base/java.lang.Thread.run(Thread.java:833)\r\n",
+    "message": "Product Not Found 5586",
+    "path": "/product/one/5586"
+}
+
+===Sample code ======================================
+1. RestController code
+package com.app.raghu.rest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	@GetMapping("/one/{id}")
+	public ResponseEntity<String> getProductById(
+			@PathVariable("id") Integer id
+			) 
+	{
+		if(id==150) 
+		{
+			return new ResponseEntity<>("Product Exist", HttpStatus.OK);
+		}
+		else
+			throw new RuntimeException("Product Not Found " + id);
+	}
+}
+
+2. application.properties
+server.port=9090
+
+3. POSTMAN URL
+GET http://localhost:9090/product/one/158
+GET http://localhost:9090/product/one/150
+====================================================================
+*******************************************************************
+			Custom Exception Handling
+*******************************************************************
+====================================================================
+We can define our own Response Format incase of Any exception occured
+in application by using Annotations : @RestControllerAdvice and
+@ExceptionHandler.
+
+@RestControllerAdvice: Added in Spring 4.3 version
+=> It says this is a global class for exception handling.
+=> It is executed by FC in the place of BasicErrorController.
+
+@ExceptionHandler: Every Exception type is compared with this annotation
+on given methods, if matched execute, else redirect back to 
+"BasicErrorController".
+
+=> For one exception type, we need to define one Handler method.
+====================================================================
+*) We can even return Custom Error Response class type for JSON/XML
+  output. ie @RestControllerAdvice internally uses @ResponseBody
+  annotation.
+
+-------------case#1-----------------------------------------
+1. RestController
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Product;
+import com.app.raghu.exception.ProductNotFoundException;
+import com.app.raghu.service.ProductService;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+	
+	
+	
+	@GetMapping("/one/{id}")
+	public ResponseEntity<String> getProductById(
+			@PathVariable("id") Integer id
+			) 
+	{
+		if(id==150) 
+		{
+			return new ResponseEntity<>("Product Exist", HttpStatus.OK);
+		}
+		else
+			throw new ProductNotFoundException("Product Not Found " + id);
+	}
+	
+	
+}
+
+2. Handler class
+package com.app.raghu.handler;
+
+import java.util.Date;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.app.raghu.bean.MyErrorResponse;
+import com.app.raghu.exception.ProductNotFoundException;
+
+@RestControllerAdvice
+public class MyCustomExceptionHandler {
+
+	
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<String> showCustomErrorMsg(
+			ProductNotFoundException pnfe
+			)
+	{
+		return new ResponseEntity<String>(
+				pnfe.getMessage(),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
+}
+
+----------case#2------------------------------------------
+2. Custom ErrorResponse
+
+1. Entity/Beans
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+
+	private Integer pid;
+	private String pcode;
+}
+--------------
+package com.app.raghu.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MyErrorResponse {
+
+	private String date;
+	private String status;
+	private int code;
+	private String message;
+}
+
+2. Custom exception class
+package com.app.raghu.exception;
+
+public class ProductNotFoundException 
+	extends RuntimeException
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ProductNotFoundException() {
+		super();
+	}
+	
+	public ProductNotFoundException(String message) {
+		super(message);
+	}
+}
+
+3. Service class
+package com.app.raghu.service;
+
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.Product;
+import com.app.raghu.exception.ProductNotFoundException;
+
+@Service
+public class ProductService {
+
+	public Product getOneProductById(Integer id) {
+		if(id==150)
+			return new Product(id, "DUMMY");
+		else 
+			throw new ProductNotFoundException("PRODUCT '"+id+"' NOT EXIST");
+	}
+
+}
+
+4. RestController
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Product;
+import com.app.raghu.exception.ProductNotFoundException;
+import com.app.raghu.service.ProductService;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+	
+	@Autowired
+	private ProductService service;
+
+	/*
+	@GetMapping("/one/{id}")
+	public ResponseEntity<String> getProductById(
+			@PathVariable("id") Integer id
+			) 
+	{
+		if(id==150) 
+		{
+			return new ResponseEntity<>("Product Exist", HttpStatus.OK);
+		}
+		else
+			throw new ProductNotFoundException("Product Not Found " + id);
+	}*/
+	
+	@GetMapping("/one/{id}")
+	public ResponseEntity<Product> getProductById(
+			@PathVariable("id") Integer id
+			) 
+	{
+		ResponseEntity<Product> response =  null; 
+		try {
+			Product pob = service.getOneProductById(id);
+			response = new ResponseEntity<Product>(pob,HttpStatus.OK);
+		} catch (ProductNotFoundException pnfe) {
+			pnfe.printStackTrace();
+			throw pnfe;//call handler
+		}
+		return response;
+	}
+}
+
+5. RestController advice
+package com.app.raghu.handler;
+
+import java.util.Date;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.app.raghu.bean.MyErrorResponse;
+import com.app.raghu.exception.ProductNotFoundException;
+
+@RestControllerAdvice
+public class MyCustomExceptionHandler {
+
+	/*
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<String> showCustomErrorMsg(
+			ProductNotFoundException pnfe
+			)
+	{
+		return new ResponseEntity<String>(
+				pnfe.getMessage(),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	*/
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<MyErrorResponse> showCustomErrorMsg(
+			ProductNotFoundException pnfe
+			)
+	{
+		return new ResponseEntity<MyErrorResponse>(
+				new MyErrorResponse(
+						new Date().toString(), 
+						"EXCEPTION IN PROCESS", 
+						500, 
+						pnfe.getMessage()),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
+
+
+==================================================================
+Q) How do you handle exceptions in your RestApplications?
+A) Here Service Layer throws exception based on some conditions.
+  Caught by RestController and re-thrown to GlobalHandler.
+  Global Exception Handler compares exception type and returns
+  Custom Error Message with status code.
+
+Request->FC->HM->RestController->call service -> call Repo
+-> No Data -> Service throw exception -> catch in RestController
+-> throw exception obj -> Exception Handler -> compare type
+-> Return custom message.
+
+			 Date : 21-11-2022
+		    Spring Boot and Microservices
+		     7AM | Mr. Raghu | (ASHOK IT)
+  --------------------------------------------------------------------- 
+		Spring Boot ReST : Client Application
+
+*) Sometimes, our application (implemented using Spring Boot) wants to
+  connect with other applications (implemented using Java/.net/Python..etc).
+  ie our application is Consumer.
+
+*) In this case use Http Client : "RestTemplate"(C).
+  [It is a class, that supports HTTP Protocol]
+
+=> RestTemplate:
+1. it is a class 
+2. Suports all HTTP Methods (GET/POST/PUT/DELETE)
+3. Supports Request Body and Headers creation
+4. Reads Response into ResponseEntity or DirectType(String, Employee).
+5. Auto-type conversion of global Data (JSON/XML-->Object)
+
+Q) What is var-args and how they are different arrays?
+A) ... (3 dots) indicates var-args (Varing Length Arguments)
+   we can pass data of same type multiple values without creating as an array
+   Just comma separated values.
+
+   Array once created fiexd in size, var-args size not fixed.
+
+   -> var-args must be the last parameter in method
+   -> only 1 var-args type is allowed for 1 method
+   -> JDK 1.5 version (Java 5)
+   -> Arrays can be any number and any order as parameter for a method
+
+Q) What is mean by : java.net.ConnectException: Connection refused: connect?
+A) If Producer application is down/ not started then we see this.
+
+
+=======================GET OPERATIONS =============================
+1. Producer Code
+Name : 07SpringBootRestProducerEx
+Dep  : Spring web, Lombok, Devtools
+
+*) Bean class
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bid;
+	private String bname;
+	private String bauth;
+	private Double bcost;
+}
+
+*) RestController
+package com.app.raghu.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+
+@RestController
+@RequestMapping("/v1/api/book")
+public class BookRestController {
+
+	@GetMapping("/showA")
+	public ResponseEntity<String> showMsg1() {
+		//return new ResponseEntity<String>("WELCOME",HttpStatus.OK);
+		return ResponseEntity.ok("WELCOME TO FIRST CALL TYPE - GET");
+	}
+	
+	@GetMapping("/showB/{id}/{name}")
+	public ResponseEntity<String> showMsg2(
+			@PathVariable("id") Integer id,
+			@PathVariable("name") String name
+			) 
+	{
+		return ResponseEntity.ok("WELCOME TO FIRST CALL TYPE - GET ==> " +id +"-"+name);
+	}
+	
+	@GetMapping("/showC")
+	public ResponseEntity<Book> showMsg3() {
+		return ResponseEntity.ok(new Book(101, "ABC", "RAJ", 500.0));
+	}
+
+	//try return type List<Book>
+	
+}
+
+----------------------------------
+2. Consumer Code
+
+Name : 07SpringBootRestConsumerEx
+Dep  : Spring web, lombok
+
+==application.properties==
+server.port=9696
+
+==Runner classes======
+package com.app.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class GetTestARunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		//1. Create URL
+		//String url = "http://localhost:8080/v1/api/book/showA";
+		String url = "http://localhost:8080/v1/api/book/showC";
+		
+		//2. Create Request Headers
+		//3. Create Request Body
+		
+		// 2+3
+
+		//4. Create RestTemplate object
+		RestTemplate template = new RestTemplate();
+		
+		//5. Make HTTP call and Get Response back
+		ResponseEntity<String> response = template.getForEntity(url, String.class); //URL, ResponseFormat.class
+		
+		//6. print details
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+		
+	}
+
+}
+-----------------------------------------
+package com.app.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+//@Component
+public class GetTestARunner2 implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		//1. Create URL
+		String url = "http://localhost:8080/v1/api/book/showB/{id}/{name}";
+		
+		//2. Create Request Headers
+		//3. Create Request Body
+		
+		// 2+3
+
+		//4. Create RestTemplate object
+		RestTemplate template = new RestTemplate();
+		
+		//5. Make HTTP call and Get Response back
+		ResponseEntity<String> response = 
+				template.getForEntity(
+						url, 
+						String.class,
+						101, "ABC"  //path variables
+						); 
+		
+		//6. print details
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+		
+	}
+
+}
+========================================================================
+POST METHOD CALL:
+
+To make POST Request we need to pass URL, RequestEntity(Body+Headers)
+along with ResponseType to a method postForEntity().
+
+--API--
+postForEntity(
+  url : String,
+  requestEntity:HttpEntity,
+  responseType:K.class
+) ResponseEntity<K>
+
+HttpEntity = HttpHeaders + Body
+
+--Sample code---
+HttpHeaders headers = new HttpHeaders(); 
+headers.setContentType(MediaType.APPLICATION_JSON);
+
+===============================CODE=============================
+1. Producer code
+package com.app.raghu.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+
+@RestController
+@RequestMapping("/v1/api/book")
+public class BookRestController {
+
+
+	@PostMapping("/showD")
+	public ResponseEntity<String> showMgs4(
+			@RequestBody Book book
+			) 
+	{
+		return ResponseEntity.ok("Data given is " + book);
+	}
+	
+}
+
+
+2. Consumer code (Runner class)
+package com.app.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class PostTestARunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		//1. Create URL
+		String url = "http://localhost:8080/v1/api/book/showD";
+		
+		//2. Create Request Headers
+		HttpHeaders headers = new HttpHeaders(); 
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		//3. Create Request Body
+		String body = "{\"bid\" : 101,\"bname\" : \"ABC\", \"bauth\":\"AJ\", \"bcost\":500.0}";
+		
+		// 2+3 Combine Both Body and Headers
+		HttpEntity<String> requestEntity = new HttpEntity<>(body,headers);
+		
+		//4. Create RestTemplate object
+		RestTemplate template = new RestTemplate();
+		
+		//5. Make HTTP call and Get Response back
+		ResponseEntity<String> response = 
+				template.postForEntity(url, requestEntity, String.class);
+				
+		//6. print details
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+		
+	}
+
+}
+=====================================================================
+
+			 Date : 23-11-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  --------------------------------------------------------------------- 
+			RestTemplate (Http Client)
+
+*) RestTemplate has given one generic method : exchange()
+  that supports all Http Method call : GET, POST, PUT..etc
+
+exchange(
+  url,
+  HttpMethod,
+  HttpEntity(request),
+  ResponseType.class,
+  pathVariables...
+): ResponseEntity<T>
+
+*) Just Replace below lines of code in consumer application
+Old Line:
+ResponseEntity<String> response = template.postForEntity(url, requestEntity, String.class);
+New Line:
+ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+Old Line:
+ResponseEntity<String> response = template.getForEntity(url,String.class,101, "ABC" ); 
+New Line:
+ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, null, String.class, 101,"ABC"); 
+
+*) There are no direct methods for put() and delete() that returns
+  ResponseEntity<>. In that case we use exchange() method.
+
+
+====================exchange() method code============================
+1. Producer Application
+
+*) RestController code
+package com.app.raghu.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+
+@RestController
+@RequestMapping("/v1/api/book")
+public class BookRestController {
+
+	//-------PUT/DELETE EXAMPLES
+	
+	@PutMapping("/showE")
+	public ResponseEntity<String> showMgs5(
+			@RequestBody Book book
+			) 
+	{
+		return ResponseEntity.ok("Data FROM PUT is " + book);
+	}
+	
+	@DeleteMapping("/showF/{id}")
+	public ResponseEntity<String> showMsg6(
+			@PathVariable("id") Integer id
+			) 
+	{
+		return ResponseEntity.ok("DELETE MAPPING " + id);
+	}
+	
+}
+=====================================================================
+2. Consumer Application
+
+*) Runner class code
+package com.app.raghu.runner;
+
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+//@Component
+public class PutTestARunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		String url = "http://localhost:8080/v1/api/book/showE";
+		
+		String body = "{\"bid\" : 101,\"bname\" : \"ABC\", \"bauth\":\"AJ\", \"bcost\":500.0}";
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
+		
+		RestTemplate rt = new RestTemplate();
+		//This method makes request , but returns no body (void)
+		//rt.put(url, requestEntity);
+		ResponseEntity<String> response = rt.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+		
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+		
+	}
+
+}
+---------------------------------------------------------------
+package com.app.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class DeleteTestARunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		// URL
+		String url = "http://localhost:8080/v1/api/book/showF/{id}";
+		
+		// Body, Headers => RequestEntity
+		// RestTemplate
+		RestTemplate rt = new RestTemplate();
+		// make call
+		//rt.delete(url, 101);
+		ResponseEntity<String> response = rt.exchange(url, HttpMethod.DELETE, null, String.class, 101);
+		
+		// Print Response
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+	}
+
+}
+=======================================================================
+*) Implicite Type Conversion:-
+By Default any type of Response Content can be stored in String
+(Text/JSON/XML/HTML/..etc). But we can even store JSON/XML into a 
+Specific type (like Employee.class, in place of String.class)
+ In that case RestTemplate compares key names and if matched then
+ type conversion is done internally (Response Body --> JSON/XML--> Objeect)
+
+
+*) Producer Code (Method only)
+@GetMapping("/showC")
+public ResponseEntity<Book> showMsg3() {
+   return ResponseEntity.ok(new Book(101, "ABC", "RAJ", 500.0));
+}
+
+(Entity class)
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bid;
+	private String bname;
+	private String bauth;
+	private Double bcost;
+}
+
+
+*) Consumer code:
+--Runner class-------
+package com.app.raghu.runner;
+
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import com.app.raghu.entity.BookAtConsumer;
+
+@Component
+public class GetTestBRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		String url = "http://localhost:8080/v1/api/book/showC";
+		RestTemplate template = new RestTemplate();
+		
+		//ResponseEntity<BookAtConsumer> response = template.getForEntity(url, BookAtConsumer.class); 
+		ResponseEntity<BookAtConsumer> response = template.exchange(url, HttpMethod.GET, null, BookAtConsumer.class); 
+		
+
+		System.out.println(response.getBody());
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatusCode().name());
+		System.out.println(response.getStatusCode().value());
+		
+	}
+
+}
+
+--------Entity class---------
+package com.app.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookAtConsumer {
+
+	private Integer bid;
+	private String bname;
+	private String bauth;
+	private Double bcost;
+}
+
+*) Note: class name at consumer need not to be same as producer.
+   But variable names must match (should have set/get methods)
+====================================================================
+
+
+			 Date : 24-11-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  --------------------------------------------------------------------- 
+		Spring Boot ReST -- Backend Application
+
+Module : Student
+Layers: DAL, SL and IL
+Class File:
+ Entity
+ Repository
+ CustomException
+ Service
+ RestController
+ RestControllerAdvice
+------------------------------------------------------------------------
+Name : SpringBootRestCrudMySQLEx
+Dep  : Spring web, Lombok, Devtools, Data JPA, MySQL
+
+
+1. application.properties
+#Port number
+server.port=9690
+
+#Database config
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+#JPA Configuration
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+
+2. Entity class
+package com.app.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="stdtab")
+public class Student {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="sid")
+	private Integer stdId;
+
+	@Column(name="sname")
+	private String stdName;
+	
+	@Column(name="sgen")
+	private String stdGen;
+	
+	@Column(name="scourse")
+	private String stdCourse;
+	
+	@Column(name="saddr")
+	private String stdAddr;
+}
+
+3. Repository interface
+package com.app.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.Student;
+
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+
+}
+
+4. Service interface
+package com.app.raghu.service;
+
+import java.util.List;
+
+import com.app.raghu.entity.Student;
+
+public interface IStudentService {
+
+	Integer saveStudent(Student s);
+	void updateStudent(Student s);
+	void deleteStudent(Integer id);
+	Student getOneStudent(Integer id);
+	List<Student> getAllStudents();
+}
+
+5. Service Impl
+package com.app.raghu.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.exception.StudentNotFoundException;
+import com.app.raghu.repo.StudentRepository;
+import com.app.raghu.service.IStudentService;
+
+@Service
+public class StudentServiceImpl implements IStudentService {
+
+	@Autowired
+	private StudentRepository repo;
+	
+	public Integer saveStudent(Student s) {
+		s = repo.save(s);
+		return s.getStdId();
+	}
+
+	public void updateStudent(Student s) {
+		if(s.getStdId() == null || !repo.existsById(s.getStdId()))
+			throw new StudentNotFoundException("STUDENT '"+s.getStdId()+"' NOT EXIST");
+		else
+			repo.save(s);
+	}
+
+	public void deleteStudent(Integer id) {
+		repo.delete(getOneStudent(id));
+	}
+
+	public Student getOneStudent(Integer id) {
+		return repo.findById(id)
+				.orElseThrow(
+						()->new StudentNotFoundException("STUDENT '"+id+"' NOT EXIST")
+						);
+	}
+
+	@Override
+	public List<Student> getAllStudents() {
+		List<Student> list = repo.findAll();
+		return list;
+	}
+
+}
+
+6. Custom Exception class
+package com.app.raghu.exception;
+
+public class StudentNotFoundException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public StudentNotFoundException() {
+		super();
+	}
+	public StudentNotFoundException(String message) {
+		super(message);
+	}
+}
+
+7. RestController
+package com.app.raghu.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Student;
+import com.app.raghu.exception.StudentNotFoundException;
+import com.app.raghu.service.IStudentService;
+
+@RestController
+@RequestMapping("/v1/api/student")
+public class StudentRestController {
+
+	@Autowired
+	private IStudentService service;
+	
+	//1. create one student
+	@PostMapping("/create")
+	public ResponseEntity<String> createStudent(
+			@RequestBody Student student
+			)
+	{
+		Integer id = service.saveStudent(student);
+		String message = "STUDENT '"+id+"' CREATED";
+		
+		//return new ResponseEntity<String>(message, HttpStatus.OK);
+		return new ResponseEntity<String>(message, HttpStatus.CREATED);//201
+	}
+	
+	//2. fetch all students
+	@GetMapping("/all")
+	public ResponseEntity<List<Student>> getAllStudents() {
+		List<Student> list = service.getAllStudents();
+		//return new ResponseEntity<List<Student>>(list, HttpStatus.OK);
+		return ResponseEntity.ok(list);
+	}
+	
+	//3. fetch one by id
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Student> getOneStudent(
+			@PathVariable("id") Integer id
+			) 
+	{
+		ResponseEntity<Student> response = null;
+		try {
+			Student s = service.getOneStudent(id);
+			response = ResponseEntity.ok(s);
+		} catch (StudentNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return response;
+	}
+	
+	//4. remove one by id
+	@DeleteMapping("/remove/{id}")
+	public ResponseEntity<String> deleteStudent(
+			@PathVariable("id") Integer id
+			) 
+	{
+		ResponseEntity<String> response = null;
+		try {
+			service.deleteStudent(id);
+			response = ResponseEntity.ok("STUDENT '"+id+"' REMOVED");
+		} catch (StudentNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return response;
+	}
+	
+	//5. update student
+	@PutMapping("/modify")
+	public ResponseEntity<String> updateStudent(
+			@RequestBody Student student
+			)
+	{
+		ResponseEntity<String> response = null;
+		try {
+			service.updateStudent(student);
+			response = ResponseEntity.ok("STUDENT '"+student.getStdId()+"' UPDATED");
+		} catch (StudentNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return response;
+	}
+}
+
+8. Global Exception Handler
+package com.app.raghu.handler;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.app.raghu.exception.StudentNotFoundException;
+
+@RestControllerAdvice
+public class MyCustomExceptionHandler {
+
+	@ExceptionHandler(StudentNotFoundException.class)
+	public ResponseEntity<String> showStudentNotFoundError(
+			StudentNotFoundException snfe
+			) 
+	{
+		return new ResponseEntity<>(
+				snfe.getMessage(),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
+=======================================================================
+*) Note:
+1. 
+200-OK Request is processed without any exception (no failure/success)
+2.
+201-CREATED -- new resource is created at producer side (Used for POST operations)
+
+
+
+			 Date : 25-11-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  --------------------------------------------------------------------- 
+		Spring Boot ReST -- Backend Application
+
+*) Spring Bean Validator API
+=> Validating input at backend application using annotations.
+=> To use this option we must add Spring Bean Validator (Hibernate Validator API)
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+=> These annotation are given in as : Validation API (javax.validation)
+
+@NotNull : Do not allow null values
+
+ sname = null //rejected
+ sname =""  //accepted
+ sname="  " //accepted
+
+@NotEmpty : Do not allow null or empty values
+ sname = null //rejected
+ sname =""  //rejected
+ sname="  " //accepted
+
+@NotBlank : Do not allow null/empty string/white space chars
+ sname = null //rejected
+ sname =""  //rejected
+ sname="  " //rejected
+
+@Size : To specify min/max size for input (For String type)
+
+@Min : For numbers (int/double)
+@Max : For numbers (int/double)
+
+@Pattern : We can given String Pattern Inputformat (RegExp)
+
+@Past  : Date type only
+@Future : Date type only
+ex:
+@Past(message="DOB is invalid")
+Date dob;
+@Future(message="Product is invalid")
+Date exp;
+
+@AssertTrue : used for boolean types (expecting true only)
+ex: 
+@AssertTrue
+boolean readTermsAndConditions;
+
+@AssertFalse: Expected input value is false only.
+
+@Email : To validate Email Pattern
+----------------
+@Valid : This annotation activates validation-api and executes above
+	annotations in order.
+
+If validation is failed then FC returns error code 400 (Bad Request).
+Here,
+
+=======================================================================
+1. At Entity class
+package com.app.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="stdtab")
+public class Student {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="sid")
+	private Integer stdId;
+
+	@Column(name="sname")
+	//@NotNull(message = "Name can not be null")
+	//@NotEmpty(message="STUDENT NAME CAN NOT BE EMPTY")
+	@NotBlank(message="STUDENT NAME CAN NOT BE EMPTY")
+	@Size(min = 2,max = 6,message = "NAME MUST BE 2-6 CHARS ONLY")
+	@Pattern(regexp = "[A-Za-z]{2,6}",message = "Only A-Z/a-z are allowed")
+	private String stdName;
+	
+	@Column(name="sgen")
+	@NotBlank(message="STUDENT GENDER CAN NOT BE EMPTY")
+	private String stdGen;
+	
+	@Column(name="scourse")
+	@NotBlank(message="STUDENT COURSE MUST BE SELECTED")
+	private String stdCourse;
+	
+	@Column(name="saddr")
+	@Pattern(regexp = "[A-Za-z0-9\\.\\-\\?]{10,250}",message = "INVALID ADDRESS DETAILS")
+	private String stdAddr;
+}
+
+2. At RestController
+Old Code:
+@RequestBody Student student
+
+New Code:
+@RequestBody @Valid Student student
+
+
+*) Patterns in Java:
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+
+			 Date : 28-11-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Frontend Application (Angular/ReactJS)
+*) Node 
+Goto : https://nodejs.org/en/download/
+Click on Download Link (OS BASED LINK)
+--check using these-------
+C:\Users\user> node -v
+C:\Users\user> npm -v
+C:\Users\user> npx -v
+
+*) VS Code Editor
+Link: https://code.visualstudio.com/download
+Download and Install (Next > Next > Finish)
+
+> File > open Folder .. > new folder ex: FrontEndApps > Open
+===============================================================
+*) Angular Setup
+Ref This: https://angular.io/guide/setup-local
+
+Only one time: 
+> npm install -g @angular/cli
+> ng version
+================================================================
+*) Application Creation
+> Open VS Code Editor
+> Terminal > new Terminal > Switch to Cmd Prompt
+
+> type cmd:
+   ng new student-ang-app
+   (Add Routing) y
+   (Choose CSS) y
+
+> Start Application
+   cd student-ang-app
+   ng serve --open
+
+> open app.component.html
+> remove all lines of code and  paste below code
+
+	<h3>WELCOME TO ANGULAR APPLICATION</h3>
+	<router-outlet></router-outlet>
+
+
+http://localhost:4200/
+
+> Come back to terminal and press cltr+C to stop app.
+=================================================================
+ReactJS Setup:
+	npm uninstall -g create-react-app
+	npx clear-npx-cache
+	npm i create-react-app
+
+Ref:
+https://reactjs.org/docs/create-a-new-react-app.html#create-react-app
+	npx create-react-app@latest student-rjs-app
+	cd student-rjs-app
+	npm start
+
+http://localhost:3000/
+
+> open App.js and Modify code as:
+import "./App.css";
+
+function App() {
+  return (
+    <div className="App">
+      <h3>WELCOME TO APP</h3>
+    </div>
+  );
+}
+
+export default App;
+======================================================================
+
+			 Date : 29-11-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Types of Files in Angular to be implemented:
+1. Entity
+2. Service
+3. Component
+
+========================Stage#1 START=========================
+Step#1 Generate All code files in project
+
+> cd <projectName>
+ex:
+> cd student-ang-app
+---Angular commands to Generage files------
+ng g class entities/student --skip-tests
+ng g s services/student --skip-tests
+ng g c components/student-list --skip-tests
+ng g c components/student-add --skip-tests
+------------------------------------------------------
+Step#2 Activate Forms and HTTP Client concepts
+
+> open app.module.ts file
+> under import array add:
+  FormsModule, HttpClientModule
+
+> Import Statements
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+---------------------------------------------------------
+Step#3 Configure Routing (For which URL where to GO)
+
+> open app-routing.module.ts
+> You can check empty Routes array 
+  const routes: Routes = []
+> Modify code as 
+const routes: Routes = [
+  { path: 'all', component: StudentListComponent },
+  { path: 'create', component: StudentAddComponent },
+  { path: '', redirectTo: 'all', pathMatch: 'full' },
+  { path: '**', component: StudentListComponent },
+];
+
+> incase of import issues:
+import { StudentAddComponent } from './components/student-add/student-add.component';
+import { StudentListComponent } from './components/student-list/student-list.component';
+
+==========================================================
+Step#4 Configure Menubar and check Routing working
+
+> index.html
+Inside head tag, add below links
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+> change body as 
+  <body>
+    <div class="container">
+      <app-root></app-root>
+    </div>
+  </body>
+
+-------------app.component.html-----------------------
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <a class="navbar-brand text-white">R-APP</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/all">VIEW ALL </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/create">REGISTER</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle text-white"
+          href="#"
+          role="button"
+          data-toggle="dropdown"
+          aria-expanded="false"
+        >
+          OPERATIONS
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/all">VIEW ALL</a>
+          <a class="dropdown-item" routerLink="/create">REGISTER</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+========================Stage#1 END=========================
+> ng serve --open
+
+*****************************************************************
+========================Stage#2 START=========================
+> At backend application, on top of RestController add annotation
+@CrossOrigin("http://localhost:4200/")
+
+-> Entity/Model class
+export class Student {
+  constructor(
+    public stdId: number,
+    public stdName: string,
+    public stdGen: string,
+    public stdCourse: string,
+    public stdAddr: string
+  ) {}
+}
+---------------------------------------
+-> student service (student.service.ts)
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Student } from '../entities/student';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StudentService {
+  baseUrl = 'http://localhost:9690/v1/api/student';
+
+  constructor(private http: HttpClient) {}
+
+  getAllStudents(): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.baseUrl}/all`);
+  }
+
+  createStudent(student: Student): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, student, {
+      responseType: 'text',
+    });
+  }
+
+  deleteStudent(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/remove/${id}`, {
+      responseType: 'text',
+    });
+  }
+
+  getOneStudent(id: number): Observable<Student> {
+    return this.http.get<Student>(`${this.baseUrl}/find/${id}`);
+  }
+
+  updateStudent(student: Student): Observable<any> {
+    return this.http.put(`${this.baseUrl}/modify`, student);
+  }
+}
+
+------------------------(View and Delete)--------------------------------
+> student-list.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/app/entities/student';
+import { StudentService } from 'src/app/services/student.service';
+
+@Component({
+  selector: 'app-student-list',
+  templateUrl: './student-list.component.html',
+  styleUrls: ['./student-list.component.css'],
+})
+export class StudentListComponent implements OnInit {
+  students: Student[] = [];
+  message: any = '';
+
+  constructor(private service: StudentService) {}
+
+  ngOnInit() {
+    this.getAllStudents();
+  }
+
+  getAllStudents() {
+    this.service.getAllStudents().subscribe({
+      next: (data) => (this.students = data),
+      error: (err) => console.log(err),
+      complete: () => console.info('complete'),
+    });
+  }
+
+  deleteStudent(id: number) {
+    this.service.deleteStudent(id).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.message = data;
+        this.getAllStudents();
+      },
+      error: (err) => console.log(err),
+      complete: () => console.info('complete'),
+    });
+  }
+}
+
+===> student-list.component.html (View page)--------------
+<h3 class="text-center">STUDENTS LIST PAGE</h3>
+<table class="table table-hover">
+  <tr class="bg-info text-white">
+    <th>ID</th>
+    <th>NAME</th>
+    <th>GENDER</th>
+    <th>COURSE</th>
+    <th>ADDRESS</th>
+    <th>OPERATIONS</th>
+  </tr>
+  <tr *ngFor="let sob of students">
+    <td>{{ sob.stdId }}</td>
+    <td>{{ sob.stdName }}</td>
+    <td>{{ sob.stdGen }}</td>
+    <td>{{ sob.stdCourse }}</td>
+    <td>{{ sob.stdAddr }}</td>
+    <td>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteStudent(sob.stdId)"
+      >
+        DELETE
+      </button>
+      &nbsp;&nbsp;
+      <button type="button" class="btn btn-warning">EDIT</button>
+    </td>
+  </tr>
+</table>
+<div class="text-center">
+  <strong>{{ message }}</strong>
+</div>
+========================Stage#2 END=========================
+************************************************************
+
+=======================Stage#3 START=========================
+> Student Register Process
+---student-add.component.html----------
+import { Component } from '@angular/core';
+import { Student } from 'src/app/entities/student';
+import { StudentService } from 'src/app/services/student.service';
+
+@Component({
+  selector: 'app-student-add',
+  templateUrl: './student-add.component.html',
+  styleUrls: ['./student-add.component.css'],
+})
+export class StudentAddComponent {
+  student: Student = new Student(0, '', '', '', '');
+  message: string = '';
+
+  constructor(private service: StudentService) {}
+
+  createStudent() {
+    this.service.createStudent(this.student).subscribe({
+      next: (data) => {
+        this.message = data;
+        this.student = new Student(0, '', '', '', '');
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+}
+
+--------------------student-add.component.html-----------
+<h3 class="text-center">STUDENTS REGISTER PAGE</h3>
+<form (ngSubmit)="createStudent()">
+  NAME :
+  <input
+    type="text"
+    name="stdName"
+    id="stdName"
+    [(ngModel)]="student.stdName"
+    class="form-control"
+  />
+  GENDER :
+  <input
+    type="radio"
+    name="stdGen"
+    id="stdGen"
+    [(ngModel)]="student.stdGen"
+    value="Male"
+  />
+  Male
+  <input
+    type="radio"
+    name="stdGen"
+    id="stdGen"
+    [(ngModel)]="student.stdGen"
+    value="Female"
+  />
+  Female
+  <br />
+  COURSE :
+  <select
+    name="stdCourse"
+    id="stdCourse"
+    [(ngModel)]="student.stdCourse"
+    class="form-control"
+  >
+    <option value="JAVA">JAVA</option>
+    <option value="DOT NET">DOT NET</option>
+    <option value="DEVOPS">DEVOPS</option>
+    <option value="SALESFORCE">SALESFORCE</option>
+  </select>
+  ADDRESS:
+  <textarea
+    name="stdAddr"
+    id="stdAddr"
+    [(ngModel)]="student.stdAddr"
+    class="form-control"
+  ></textarea>
+  <br />
+  <button type="submit" class="btn btn-success">ADD STUDENT</button>
+</form>
+<div class="text-center">
+  <strong>{{ message }}</strong>
+</div>
+
+
+			 Date : 01-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+Full Code Links:
+https://github.com/javabyraghu/SpringBootRestCrudMySQLEx
+
+			Angular Edit Operation
+
+=> Generate a new component to show edit page
+ng g c components/student-edit --skip-tests
+
+=> In List Component TS File use Router to navigate to EditComponent
+-------------------StudentListComponent.ts-----------
+constructor(private service: StudentService, private router: Router) {}
+
+
+editStudent(id: number) {
+    this.router.navigate(['/edit', id]);
+}
+
+=> At List HTML File , configure edit button(similer to delete)
+<button
+        type="button"
+        class="btn btn-warning"
+        (click)="editStudent(sob.stdId)"
+      >
+
+=> Configure in Router Array : app-routing.module.ts
+{ path: 'edit/:id', component: StudentEditComponent },
+
+======================================================================
+Student Edit Page HTML Code:-
+
+<h3 class="text-center">STUDENTS EDIT PAGE</h3>
+<form (ngSubmit)="updateStudent()">
+  ID :
+  <input
+    type="text"
+    name="stdId"
+    id="stdId"
+    [(ngModel)]="student.stdId"
+    class="form-control"
+    readonly
+  />
+  NAME :
+  <input
+    type="text"
+    name="stdName"
+    id="stdName"
+    [(ngModel)]="student.stdName"
+    class="form-control"
+  />
+  GENDER :
+  <input
+    type="radio"
+    name="stdGen"
+    id="stdGen"
+    [(ngModel)]="student.stdGen"
+    value="Male"
+  />
+  Male
+  <input
+    type="radio"
+    name="stdGen"
+    id="stdGen"
+    [(ngModel)]="student.stdGen"
+    value="Female"
+  />
+  Female
+  <br />
+  COURSE :
+  <select
+    name="stdCourse"
+    id="stdCourse"
+    [(ngModel)]="student.stdCourse"
+    class="form-control"
+  >
+    <option value="JAVA">JAVA</option>
+    <option value="DOT NET">DOT NET</option>
+    <option value="DEVOPS">DEVOPS</option>
+    <option value="SALESFORCE">SALESFORCE</option>
+  </select>
+  ADDRESS:
+  <textarea
+    name="stdAddr"
+    id="stdAddr"
+    [(ngModel)]="student.stdAddr"
+    class="form-control"
+  ></textarea>
+  <br />
+  <button type="submit" class="btn btn-success">UPDATE STUDENT</button>
+</form>
+-------------------------------------------------------
+
+Student Edit TS Code
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Student } from 'src/app/entities/student';
+import { StudentService } from 'src/app/services/student.service';
+
+@Component({
+  selector: 'app-student-edit',
+  templateUrl: './student-edit.component.html',
+  styleUrls: ['./student-edit.component.css'],
+})
+export class StudentEditComponent implements OnInit {
+  student: Student = new Student(0, '', '', '', '');
+  message: string = '';
+
+  constructor(
+    private service: StudentService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
+  ngOnInit() {
+    let id = this.activatedRoute.snapshot.params['id'];
+    this.loadStudent(id);
+	/* this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+	let id = parseInt(params.get(id));
+	this.loadStudent(id);
+	});*/ Try this as well, this is by me from Telugu Angular youtube channel			
+  }
+
+  loadStudent(id: number) {
+    this.service.getOneStudent(id).subscribe({
+      next: (data) => {
+        this.student = data;
+      },
+      error: (err) => console.log(err),
+      complete: () => console.info('Student received successfully'),
+    });
+  }
+
+  updateStudent() {
+    this.service.updateStudent(this.student).subscribe({
+      next: (data) => {
+        this.message = data;
+        alert(this.message);
+        this.router.navigate(['/all']);
+      },
+      error: (err) => console.log(err),
+      complete: () => console.info('Student updated successfully'),
+    });
+  }
+}
+------------------in service TS code--------------------
+ updateStudent(student: Student): Observable<any> {
+    return this.http.put(`${this.baseUrl}/modify`, student, {
+      responseType: 'text',
+    });
+  }
+===================================================================
+*******************************************************************
+			ReactJS APP
+1. Create new ReactJS Project
+npx create-react-app student-rjs-app
+
+2. Enter into Application
+cd student-rjs-app
+
+3. Start Project
+npm start
+
+=================================
+ReactJS Clean Setup: (ECMA)
+	npm uninstall -g create-react-app
+	npx clear-npx-cache
+	npm i create-react-app
+================================
+*) Install Bootstrap
+npm install bootstrap@4 --save
+
+*) open index.js file and add import
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+=================================
+---------- Install AXIOS-----------
+npm add axios
+---------- Install React Router-----------
+npm install react-router-dom
+
+=============code files==============================
+1. HOC 
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const withNavigateHook = (Component) => {
+  return (props) => {
+    const navigation = useNavigate();
+
+    return <Component navigation={navigation} {...props} />;
+  };
+};
+
+export default withNavigateHook;
+
+2. List Component
+import React, { Component } from "react";
+import StudentService from "../services/StudentService";
+import withNavigateHook from "./withNavigateHook";
+
+class StudentListComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      students: [],
+      message: "",
+    };
+  }
+
+  deleteStudent(id) {
+    StudentService.deleteStudent(id).then((response) => {
+      this.setState({
+        students: this.state.students.filter((student) => student.stdId !== id),
+        message: response.data,
+      });
+    });
+  }
+
+  editStudent(id) {
+    this.props.navigation("/edit/" + id);
+  }
+
+  componentDidMount() {
+    StudentService.getAllStudents().then((response) => {
+      this.setState({ students: response.data });
+    });
+  }
+
+  render() {
+    return (
+      <>
+        <h3 className="text-center">STUDENTS DATA PAGE</h3>
+        <table className="table table-hover">
+          <thead>
+            <tr className="bg-info text-white">
+              <th>ID</th>
+              <th>NAME</th>
+              <th>GENDER</th>
+              <th>COURSE</th>
+              <th>ADDRESS</th>
+              <th>OPERATION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.students.map((student) => (
+              <tr key={student.stdId}>
+                <td>{student.stdId}</td>
+                <td>{student.stdName}</td>
+                <td>{student.stdGen}</td>
+                <td>{student.stdCourse}</td>
+                <td>{student.stdAddr}</td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => this.deleteStudent(student.stdId)}
+                  >
+                    DELETE
+                  </button>
+                  &nbsp;
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => this.editStudent(student.stdId)}
+                  >
+                    EDIT
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {this.state.message && (
+          <div className="text-center">
+            <strong>{this.state.message}</strong>
+          </div>
+        )}
+      </>
+    );
+  }
+}
+
+export default withNavigateHook(StudentListComponent);
+
+3. Create Component
+import React, { Component } from "react";
+import StudentService from "../services/StudentService";
+import withNavigateHook from "./withNavigateHook";
+
+class StudentCreateComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      stdName: "",
+      stdGen: "",
+      stdCourse: "",
+      stdAddr: "",
+      message: "",
+    };
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  saveStudent = (event) => {
+    event.preventDefault();
+    let student = {
+      stdName: this.state.stdName,
+      stdGen: this.state.stdGen,
+      stdCourse: this.state.stdCourse,
+      stdAddr: this.state.stdAddr,
+    };
+    StudentService.createStudent(student).then((response) => {
+      alert(response.data);
+    });
+    this.props.navigation("/all");
+  };
+  render() {
+    return (
+      <div>
+        <h3 className="text-center">STUDENTS REGISTER PAGE</h3>
+        <form>
+          NAME :
+          <input
+            type="text"
+            name="stdName"
+            id="stdName"
+            value={this.state.stdName}
+            className="form-control"
+            onChange={(event) => this.handleChange(event)}
+          />
+          GENDER :
+          <input
+            type="radio"
+            name="stdGen"
+            id="stdGen"
+            value="Male"
+            onChange={(event) => this.handleChange(event)}
+          />
+          Male
+          <input
+            type="radio"
+            name="stdGen"
+            id="stdGen"
+            value="Female"
+            onChange={(event) => this.handleChange(event)}
+          />
+          Female
+          <br />
+          COURSE :
+          <select
+            name="stdCourse"
+            id="stdCourse"
+            onChange={(event) => this.handleChange(event)}
+            className="form-control"
+          >
+            <option value="">SELECT</option>
+            <option value="JAVA">JAVA</option>
+            <option value="DOT NET">DOT NET</option>
+            <option value="SALESFORCE">SALESFORCE</option>
+            <option value="DEVOPS">DEVOPS</option>
+          </select>
+          ADDRESS :
+          <textarea
+            name="stdAddr"
+            id="stdAddr"
+            onChange={(event) => this.handleChange(event)}
+            className="form-control"
+          ></textarea>
+          <br />
+          <button
+            className="btn btn-success"
+            onClick={(event) => this.saveStudent(event)}
+          >
+            CREATE
+          </button>
+        </form>
+        {this.state.message && (
+          <div className="text-center">
+            <strong>{this.state.message}</strong>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default withNavigateHook(StudentCreateComponent);
+
+4. NavBar Component
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import StudentListComponent from "./StudentListComponent";
+import StudentCreateComponent from "./StudentCreateComponent";
+function NavBarComponent() {
+  return (
+    <Router>
+      <nav className="navbar navbar-expand-lg navbar-light bg-primary">
+        <a className="navbar-brand text-white" href="#">
+          R-APP
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item ">
+              <Link to="/all" className="nav-link text-white">
+                VIEW ALL
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/add" className="nav-link text-white">
+                REGISRTER
+              </Link>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle text-white"
+                href="#"
+                role="button"
+                data-toggle="dropdown"
+                aria-expanded="false"
+              >
+                OPERATIONS
+              </a>
+              <div className="dropdown-menu">
+                <Link to="/all" className="nav-link">
+                  VIEW ALL
+                </Link>
+                <Link to="/add" className="nav-link">
+                  REGISRTER
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/all" element={<StudentListComponent />}></Route>
+        <Route path="/add" element={<StudentCreateComponent />}></Route>
+        <Route path="/" element={<StudentListComponent />}></Route>
+        <Route path="*" element={<StudentListComponent />}></Route>
+      </Routes>
+    </Router>
+  );
+}
+
+export default NavBarComponent;
+
+
+5. Service class
+import axios from "axios";
+
+const baseUrl = "http://localhost:9690/v1/api/student";
+
+class StudentService {
+  getAllStudents() {
+    return axios.get(`${baseUrl}/all`);
+  }
+
+  createStudent(student) {
+    return axios.post(`${baseUrl}/create`, student);
+  }
+
+  deleteStudent(id) {
+    return axios.delete(`${baseUrl}/remove/${id}`, id);
+  }
+
+  getOneStudent(id) {
+    return axios.get(`${baseUrl}/find/${id}`, id);
+  }
+
+  updateStudent(student) {
+    return axios.put(`${baseUrl}/modify`, student);
+  }
+}
+
+export default new StudentService();
+
+6. App Component
+import "./App.css";
+import NavBarComponent from "./components/NavBarComponent";
+
+function App() {
+  return (
+    <div className="container">
+      <NavBarComponent />
+    </div>
+  );
+}
+
+export default App;
+
+
+====================================================================
+At backend application: @CrossOrigin("http://localhost:3000/")
+
+*) We can even provide multiple URLs for @CrossOrigin.
+Ex:
+@CrossOrigin({
+	"http://localhost:3000/",
+	"http://localhost:4200/"
+})
+
+			 Date : 02-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+*) AT Rest Controller class level:
+@CrossOrigin({
+	"http://localhost:3000/",
+	"http://localhost:4200/"
+})
+-------------------------------------------------------------------
+ReactJS using TypeScript:
+https://www.typescriptlang.org/docs/handbook/react.html
+
+HOC
+Hooks
+LifeCycleMethods
+Redux
+Testing
+------------------------------------------------------------------------
+Backend Application Code:
+https://github.com/javabyraghu/SpringBootRestCrudMySQLEx
+
+Frontend (Angular)
+https://github.com/javabyraghu/student-ang-app
+
+Frontend (ReactJS)
+https://github.com/javabyraghu/student-rjs-app
+
+===================================================================
+*) Web page is a collection of  Components (ex: header, NavBar,
+   Body, Side Panel, Footer..etc)
+
+*) A Component is a logical part (or) one part of web page.
+
+*) ReactJS : Two types components.
+  A. class component : Stateful components (Data/Dynamic data)
+  B. Functional component : Statless components (no Dynamic Data or no State)
+
+*) React Hooks are a new addition in React 16.8.
+ They let you use state and other React features without writing a class.
+
+*) in Functional component we do not use this keyword.
+======================================================================
+1. useState() : This is used to store State object (JSON/String..etc)
+const [variable, setVariable] = useState(__);
+Ex:
+const [student, setStudent] = useState(initialFormState);
+
+2. useNavigate(): This is part of routing. To move from one component to
+	another component use this. 
+
+const navigate = useNavigate();
+Ex:
+ navigate("path")
+
+3. useParams(): To read path parameters (Dynamic values from URL)
+ If URL contains n-path params we can read all of them even.
+
+Name of param must be same as <Route> Config
+
+Syntax:
+const { paramname1, paramname2,... } = useParams();
+Ex:
+const { id } = useParams();
+=====================================================================
+useEffect(callBackFun,dependencies) :
+  This one is used to execute function based on dependencies modified.
+
+useEffect(() => {
+    StudentService.getOneStudent(id).then((response) =>
+      setStudent(response.data)
+    );
+  }, [id, setStudent]);
+
+//when id is modified allow setStudent to execute.
+
+*) Try to use one/single component for both EDIT and REGISTER.
+
+
+Q) What is the difference between Route path / and * in ReactJS?
+A)
+ Default Home Page is indicated using /
+  <Route path="/" element={<StudentListComponent />}></Route>
+ If No Path is matched (for request URL)
+  <Route path="*" element={<NotFoundComponent />}></Route>
+
+========================================================================
+
+			 Date : 03-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+POSTMAN : 
+>> It is tool used to Test our application, by making HTTP Request.
+>> Here, we need to enter detail manually
+  Method Type, URL, Headers, Body, Type..etc
+
+-------------------------------------------------------------------------
+Swagger : (Programmer one time configuration)
+
+>> Open Source API used to document all Endpoint details.
+ie Need not to enter details manually. Just enter data.
+>> For this we need to code one time configuration
+----------------------------------------------------------------------
+Open API: (NO Configuration)
+>> Open Source API used to document all Endpoint details.
+ie Need not to enter details manually. Just enter data.
+>> we need not to code any configuration
+
+
+===Swagger Configuration Steps===================================
+1. Add Two Dependencies, they are Swagger-configuration and Swagger-ui
+
+springfox-swagger2
+springfox-swagger-ui
+
+
+Spring Boot 2.7.x
+NullPointerException: Cannot invoke "org.springframework.web.servlet.mvc.condition.PatternsRequestCondition.toString()" because the return value of "springfox.documentation.spi.service.contexts.Orderings.patternsCondition(springfox.documentation.RequestHandler)" is null
+
+Add in properties file
+spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+
+Spring Boot 2.6.x (or before)
+No Exception
+
+http://localhost:9690/swagger-ui.html
+
+
+-> Full Document(webpage) displayed at UI
+Docket(DocumentationType.SWAGGER_2)
+
+-> Find RestControllers from given basePackage
+.select()
+.apis(RequestHandlerSelectors.basePackage("com.app.raghu.rest"))
+
+--> Starts with common path /v1/api/_________
+
+.paths(PathSelectors.regex("/v1/api.*"))
+
+-> URLs starts with / (must or not?)
+.pathMapping("/")
+
+-> Metadata to display at Document.
+.apiInfo(apiInfo());
+
+--------Coding steps--------------------------------
+1. pom.xml
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+2. Swagger Config class
+package com.app.raghu.config;
+
+import java.util.Collections;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+	@Bean
+	public Docket createDocket() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.app.raghu.rest"))
+				//.paths(PathSelectors.any())
+				.paths(PathSelectors.regex("/v1/api.*"))
+				.build()
+				.pathMapping("/")
+				.apiInfo(apiInfo());
+	}
+
+	private ApiInfo apiInfo() {
+		return new ApiInfo("STUDENT APP", 
+				"SAMPLE APP", 
+				"3.2GA", 
+				"http://sample.com", 
+				new Contact("RAGHU", "http://github.com/javabyraghu", "javabyraghu@gmail.com"), 
+				"APACHE", 
+				"http://apache.com", 
+				Collections.emptyList());
+	}
+}
+
+
+3. Properties file
+spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+
+4. Run App and Enter URL:
+http://localhost:9690/swagger-ui.html
+===============================================================
+OPEN API:
+Step#1 Add Below Dependency
+<dependency>
+  <groupId>org.springdoc</groupId>
+  <artifactId>springdoc-openapi-ui</artifactId>
+  <version>1.6.13</version>
+</dependency>
+
+Step#2
+Annotation at Starter class:
+@OpenAPIDefinition
+
+Step#3 Enter URL:
+http://localhost:9690/swagger-ui/index.html
+
+			 Date : 05-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Connection Pooling
+
+Pool  : Group of Objects of sametype (one class type)
+	Ex: Student Pool (Student class Objects)
+	    Connection Pool (Database Connections class objects)
+
+Cache : Group of Objects of different types 
+	(employeeobjs, productsobjs..etc)
+
+*) Connection Pool : It is a group of Database Connection objects
+    	   created while starting application.
+
+=> One Connection reads a Statement(Query) from Server, send to DB
+  executes it and finally returns response/output back to server.
+
+=> If more no.of Statements(Query) comes from server to DB.
+  Then it will process one by one, which is time consuming.
+
+=> In this case CP, reduces wait time by processing statements in parallel.
+
+=> Spring Boot supports Vendors like ***HikariCP, TomcatCP, Apache-DBCP2.x
+  .etc...
+
+=> When ever we add Spring Boot Data JPA/Spring Boot JDBC dependency
+   then it internally provides HikariCP dependency with Configuration too.
+
+Like:
+<dependency>
+	<groupId>com.zaxxer</groupId>
+	<artifactId>HikariCP</artifactId>
+</dependency>
+
+=> Spring Boot has given all configurations to connection pool
+	using class: HikariConfig
+
+=> We can provide our custom values for properties using keys with prefix
+   spring.datasource.hikari.<keyName>=<value>
+
+# To provide custom connection pool name
+spring.datasource.hikari.pool-name=HikariCP-Test
+# Provide timeout for a connection request
+spring.datasource.hikari.connection-timeout=10000
+# Max Pool size
+spring.datasource.hikari.maximum-pool-size=20
+# Min No work/idle connections
+spring.datasource.hikari.minimum-idle=15
+# Check Connection by executing a query at startup
+spring.datasource.hikari.connection-init-sql=select * from stdtab
+# ENable Autocommit
+spring.datasource.hikari.auto-commit=false
+# How long idle connection need be kept..
+spring.datasource.hikari.idle-timeout=5000
+
+			 Date : 06-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			 Connection Pooling
+
+Pool  : Group of Objects of sametype (one class type)
+	Ex: Student Pool (Student class Objects)
+	    Connection Pool (Database Connections class objects)
+
+*) SCP : String Constant Pool : All String Objects are stored.
+
+Cache : Group of Objects of different types 
+	(employeeobjs, productsobjs..etc)
+
+*) Connection Pool : It is a group of Database Connection objects
+    	   created while starting application.
+
+=> One Connection reads a Statement(Query) from Server, send to DB
+  executes it and finally returns response/output back to server.
+
+=> If more no.of Statements(Query) comes from server to DB.
+  Then it will process one by one, which is time consuming.
+
+=> In this case CP, reduces wait time by processing statements in parallel.
+
+=> Spring Boot supports Vendors like ***HikariCP, TomcatCP, Apache-DBCP2.x
+  .etc...
+
+=> When ever we add Spring Boot Data JPA/Spring Boot JDBC dependency
+   then it internally provides HikariCP dependency with Configuration too.
+
+Like:
+<dependency>
+	<groupId>com.zaxxer</groupId>
+	<artifactId>HikariCP</artifactId>
+</dependency>
+
+=> Spring Boot has given all configurations to connection pool
+	using class: HikariConfig
+
+=> We can provide our custom values for properties using keys with prefix
+   spring.datasource.hikari.<keyName>=<value>
+
+# To provide custom connection pool name
+spring.datasource.hikari.pool-name=HikariCP-Test
+# Provide timeout for a connection request
+spring.datasource.hikari.connection-timeout=10000
+# Max Pool size
+spring.datasource.hikari.maximum-pool-size=20
+# Min No work/idle connections
+spring.datasource.hikari.minimum-idle=15
+# Check Connection by executing a query at startup
+spring.datasource.hikari.connection-init-sql=select * from stdtab
+# ENable Autocommit
+spring.datasource.hikari.auto-commit=false
+# How long idle connection need be kept..
+spring.datasource.hikari.idle-timeout=5000
+-----------------------------------------------------------------------
+Full application.properties file:-
+-----------------------------------
+#Port number
+server.port=9690
+
+#Database config
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+#CP Config
+spring.datasource.hikari.pool-name=HikariCP-Test
+spring.datasource.hikari.connection-timeout=10000
+spring.datasource.hikari.maximum-pool-size=20
+spring.datasource.hikari.minimum-idle=15
+spring.datasource.hikari.connection-init-sql=select * from stdtab
+spring.datasource.hikari.auto-commit=false
+spring.datasource.hikari.idle-timeout=5000
+#spring.datasource.hikari.driver-class-name= default copied from spring.datasource
+
+#JPA Configuration
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=create
+
+#Swagger Config
+spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+======================================================================
+Unit Test: Testing A part of Application/ Module which is implemented
+		by a Programmer.
+
+Jenkins(CI/CD) --> Read Source Code from Github --> Download Jars -> Compile
+ -> Unit Test --> Build(.jar/.war) --> Deploy(server)
+
+*) Test applciation using code.
+*) JUnit [Test F/w] and Mockito [Mocking F/w]
+  JUnit-5 is used to check our actual code working or not?
+  But it may have some dependencies which are un-implemented
+  those can be mocked using Mocking F/w Mockito-4.
+
+Mocking can be done over - DB Connection, Server Setup, Request, Response,
+     Container Runtime, collection, class/object..etc
+==============================================================
+JUnit contains Test Methods, which are implemented using:
+JUnit Annotations : @Test, @BeforeEach, @AfterEach, @Ignore,..etc
+JUnit Assert API : assetEquals, assertTrue, assertNotNull
+  (assert -- expected)
+
+** JUnit will compare Expected Result with actual output and says
+    TEST PASS or FAIL.
+====================Basic JUnit Example===========================================
+1) pom.xml
+<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+	</dependencies>
+
+2. src/main/java  (Application code)
+package com.app.raghu;
+
+public class MathService {
+
+	public int add(int a, int b) {
+		return a + b;
+	}
+
+	public boolean isEven(int a) {
+		return a % 2 == 0;
+	}
+}
+
+3. src/test/java (JUnit test case)
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class MathServiceTest {
+	
+	MathService ms = null;
+	int expected ;
+	
+	@BeforeEach
+	public void setup() {
+		ms = new MathService();
+		expected = 30;
+	}
+
+	@Test
+	public void testAdd() {
+		int actual = ms.add(10, 20);
+		assertEquals(expected, actual);
+		boolean result = ms.isEven(51);
+		assertTrue(result);
+	}
+	
+	@AfterEach
+	public void clean() {
+		ms = null;
+	}
+}
+=====================================================================
+*) Mocking will not do Test, it creates Environment. 
+  Dummy objects, Dummy Logic, Dummy Request..etc 
+*) @Mock : Create Dummy object for given classes.
+   @InjectMocks: Will find all required objects for current clas object
+     and inject.
+
+*) By using Mocking we can define dummy implementation to a method.
+ Sample code
+
+   when(methodCall()).thenReturn(output)
+   when(methodCall()).thenThrow(exceptionObj)
+
+*) Mocking Environment is activated using 
+	@ExtendWith(MockitoExtension.class)
+
+----------SAMPLE CODE---------------------------------
+*) src/main/java
+package com.app.raghu;
+
+import java.sql.SQLException;
+import java.util.List;
+
+public class Repository {
+
+	public List<String> getData() throws SQLException {
+		return null;
+	}
+}
+------------------
+package com.app.raghu;
+
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Service {
+
+	private Repository repo;
+
+	public Service(Repository repo) {
+		this.repo = repo;
+	}
+
+	public List<String> getDataByLen() {
+		try {
+			return repo.getData().stream()
+					.filter(d -> d.length() < 5)
+					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			return Arrays.asList();
+		}
+		
+	}
+}
+
+===src/test/java======================
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+//Activate JUnit with Mock
+@ExtendWith(MockitoExtension.class)
+public class ServiceTest {
+
+	// One dummy object is created by Mockito
+	@Mock
+	private Repository repository;
+
+	// it will find all dependencies and inject them (like Autowired)
+	@InjectMocks
+	private Service service;
+
+	@Test
+	public void testSuccess() {
+		try {
+			// dummy implement given using Mocking
+			when(repository.getData()).thenReturn(Arrays.asList("A", "B", "RAGHU", "12345", "1234"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Test using JUnit
+		List<String> actual = service.getDataByLen();
+		assertNotNull(actual);
+		assertEquals(3, actual.size());
+	}
+
+	@Test
+	public void testException() {
+		try {
+			// dummy implement given using Mocking
+			when(repository.getData()).thenThrow(new SQLException("CONNECTION ISSUE"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// Test using JUnit
+		List<String> actual = service.getDataByLen();
+		assertNotNull(actual);
+		assertEquals(0, actual.size());
+	}
+
+}
+==================================================================
+
+
+			 Date : 07-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+JUnit 5.x: Testing API / assert our results / PASS/FAIL
+
+Mockito 4.x: Mocking API / Create Supported Environment / 
+	Dummy Objs, container, server, request..etc
+==========================================================================
+		Spring Boot Rest - Unit Testing
+
+*) Spring Boot provides by default all required dependencies(JARs)
+ for Unit testing using starter:
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-test</artifactId>
+</dependency>
+
+*) This starter provides all required jars for JUnit and Mockito setup
+   with Spring Boot Rest testing Environment.
+
+*) Spring Boot test F/w is used to create a Mock Request and execute with
+   application by creating Mocked Container setup, check finally
+   respose with assertAPI.
+  (This request is not coming from actual client/browser)
+
+=======================2 steps====================================
+1. Create Test Environment using Mocking.
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+=> Activates Server/Container setup to start application (Like Main class work)
+
+@AutoConfigureMockMvc
+=> Activates MVC/HTTP protocol and annotations @RequestBody, @RestController
+
+@TestPropertySource("classpath:application.properties")
+=> Load External Properties file (with any name)
+*) Even if we do not provide, default application.properties is loaded.
+
+2. Test each Rest Method using Mock Request.
+=> Here A Request is created of Type HttpServletRequest
+   by using Builder pattern with Mocking type.
+
+=> here we need to provide HttpMethod (POST), URL, Headers and Body.
+Ex#1
+	MockHttpServletRequestBuilder request = 
+		MockMvcRequestBuilders.post("/product/create")
+		.contentType("application/json")
+		.content("{\"pname\":\"A\",\"cost\":200}");
+
+Ex#2
+    MockHttpServletRequestBuilder request = 
+               MockMvcRequestBuilders.get("/product/all")
+	       .accept("application/xml");
+
+*) To execute request we need container (ApplicationContext) for that
+   we use MockMvc Which is internally Mocked "webAppContextSetup"
+
+======================================================================
+*) under src/test/java , one default class is given , just modify that as
+
+
+
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:application.properties")
+public class SpringBootRestCrudMySqlExApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+	
+	/** 
+	 * Test save Operation
+	 */
+	@Test
+	@Disabled
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS")
+	@Order(1)
+	public void testCreateStudent() 
+		throws Exception
+	{
+		//1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request =
+				MockMvcRequestBuilders.post("http://localhost:9690/v1/api/student/create")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+		
+		//2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+		
+		//3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+		
+		//4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if(! response.getContentAsString().contains("CREATED")) {
+			fail("STUDENT NOT CREATED!!");
+		}
+		
+	}
+	
+	//This is short format
+	@Test
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS IN SHORT")
+	@Order(1)
+	public void testCreateStudentShort() 
+		throws Exception
+	{
+		
+		mockMvc.perform(
+				post("http://localhost:9690/v1/api/student/create")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}"))
+		.andExpect(
+				status().isCreated()			
+				);
+		
+		
+	}
+
+}
+
+
+			 Date : 09-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Unit Testing
+
+MvcResult: It is a Wrapper Type class object that holds details of
+  " Request + Response + Exception (if raised) "
+
+*) Here, Request --> MockHttpServletRequestBuilder.
+         Response --> MockHttpServletResponseBuilder
+	 Exception -> Throwable type.
+
+*) Once we get Response after executing request, always result
+   -> http status
+   -> content-type
+   -> content-size
+   -> other ouput(messages, list empty or not?)
+
+==================test class full code=========================
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:application.properties")
+public class SpringBootRestCrudMySqlExApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	/**
+	 * Test save Operation
+	 */
+	@Test
+	// @Disabled -- Skip the test method
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS")
+	@Order(1)
+	public void testCreateStudent() throws Exception {
+		// 1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.post("http://localhost:9690/v1/api/student/create").contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+
+		// 2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if (!response.getContentAsString().contains("CREATED")) {
+			fail("STUDENT NOT CREATED!!");
+		}
+
+	}
+
+	// This is short format
+	/*
+	 * @Test
+	 * 
+	 * @DisplayName("TESTING STUDENT SAVE OPERATIONS IN SHORT")
+	 * 
+	 * @Order(1) public void testCreateStudentShort() throws Exception {
+	 * 
+	 * mockMvc.perform( post("http://localhost:9690/v1/api/student/create")
+	 * .contentType(MediaType.APPLICATION_JSON)
+	 * .content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}"
+	 * )) .andExpect( status().isCreated() );
+	 * 
+	 * 
+	 * }
+	 */
+
+	@Test
+	@Order(2)
+	@DisplayName("GET ALL STUDENTS")
+	public void testGetAllStudents() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("http://localhost:9690/v1/api/student/all");
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+
+	}
+
+	@Test
+	@Order(3)
+	@DisplayName("GET ONE STUDENT BY ID")
+	public void testGetOneStudent() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(
+				"http://localhost:9690/v1/api/student/find/{id}",1);
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+	}
+
+	@Test
+	@DisplayName("TESTING STUDENT UPDATE OPERATIONS")
+	@Order(4)
+	public void testupdateStudent() throws Exception {
+		// 1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put("http://localhost:9690/v1/api/student/modify")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdId\":1,\"stdName\":\"AA\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+
+		// 2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if (!response.getContentAsString().contains("UPDATED")) {
+			fail("STUDENT NOT UPDATED!!");
+		}
+
+	}
+	
+	
+	@Test
+	@Order(5)
+	@DisplayName("TEST DELETE STUDENT BY ID")
+	public void testDeleteStudent() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(
+				"http://localhost:9690/v1/api/student/remove/{id}",1);
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+	}
+}
+=======================================================================
+Embedded Database: NO DOWNLOAD AND NO INSTALL REQUIRED
+These are In-Memory databases, used for Dev/Testing purpose only.
+Not recomanded to use in Production.
+
+3 DBs are given by Spring Boot
+1) H2
+2) Apache Derby
+3) HSQL(Hyper SQL)
+
+*) These DBs are created when application started and destoryed
+   once application are stopped. 
+
+*) We need to choose H2 Dependency (Do not choose any other Mysql/Oracle..etc)
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+*) NO Connection or Pooling configuration required.
+  (driver class, url, username..etc not required).
+  Those are all present in class : H2ConsoleProperties
+   and H2ConsoleAutoConfiguration
+
+*) We can modify default by adding our custom properties.
+Defaults are:
+ H2 console available at '/h2-console'. 
+ Database available at 'jdbc:h2:mem:ccec3847-fe26-4651-bea5-d31209382c9d'
+
+---application.properties--------
+server.port=9090
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.datasource.url=jdbc:h2:mem:testdb
+-------------------------------------
+
+>> After starting app : URL http://localhost:9090/h2-console
+>> Default ddl-auto is : create-drop (Create all tables when we start app
+   and destory them when we stop server)
+
+==============code=============================================
+Name : SpringBootRestH2Ex
+Dep : Web, Lombok, Devtools, Data JPA, H2
+
+*) properties file
+server.port=9090
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.datasource.url=jdbc:h2:mem:testdb
+
+*) Entity class
+package com.app.raghu.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Data;
+
+@Data
+@Entity
+public class Book {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer bid;
+	private String bname;
+	private String bauth;
+}
+
+*) repo
+package com.app.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.Book;
+
+public interface BookRepository extends JpaRepository<Book, Integer>{
+
+}
+
+*) RestController
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Book;
+import com.app.raghu.repo.BookRepository;
+
+@RestController
+@RequestMapping("/book")
+public class BookRestController {
+
+	@Autowired
+	private BookRepository repo;
+	
+	@PostMapping("/create")
+	public String createBook(@RequestBody Book book) {
+		repo.save(book);
+		return "BOOK CREATED";
+	}
+}
+
+*) POSTMAN REQUEST
+POST   http://localhost:9090/book/create  
+	BODY
+		(*) raw  [JSON]
+{
+    "bname" : "JAVA",
+    "bauth" : "TEST"
+}
+
+*) Enter URL: http://localhost:9090/h2-console
+Modify JDBC URL as : jdbc:h2:mem:testdb
+
+			 Date : 10-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+		       Spring Boot - Redis Cache
+
+*) Problem:
+ If No.of Network calls Between Server(App) and Database are increased
+ then that results application performance down.
+ (Which takes more time to execute all N/w calls)
+
+*) Cache : It is a process of storing data at server side to reduce
+  no.of network calls for commonly accessed data.
+
+Like Top 50 Emails, Top 30 user posts, commonly searched mobiles,..etc
+
+-> Cache Exist at server side.
+-> Cache is a also one type of database.
+-> Cache reduces network calls from 100% to 80%/90%/99%...etc
+-> Cache can store any type of objects(products, Inbox...etc)
+-> Cache is handled by Operations (getOne/updateOne/deleteOne)
+  ie Cache and DB must be in Sync.
+-> Cache should never be used to store all DB Data.
+   (dont use for findAll() and save() operations)
+=================================================================
+*) Redis (NoSQL Database/Cache/Message Queues)
+=> Redis Open Source Vendor provides Cache concept integrated with
+   Spring Boot. 
+
+=> To use Redis Cache concept in Spring boot we need to add 
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+
+=> Also we need to run Redis Server (local/cloud)
+https://github.com/tporadowski/redis/releases
+
+=> Download Redis server from above link
+=> Extract to a folder and double click "redis-server"
+=> In Spring Boot application we need to provide details like:
+
+Type : Redis cache
+IP   : localhost / 192.168.63.12(ex)
+PORT : 6379
+
+===Coding PART=================================
+@EnableCaching : To Activate Cache Concept (add at Main class)
+
+@Cacheable  : Store object in cache  [find/get]
+@CachePut   : Modify existed object in cache  [update]
+@CacheEvict : Remove existed object from cache [remove/delete]
+
+=> For Every cache type we need to provide one namespace and key
+   to put/delete/get operations.
+
+=> class must implement Serializable (I), bcoz this is writing/reading
+   object to/from network.
+=============Code===================================================
+Name : SpringBootRestRedisCacheEx
+Dep: Web, Lombok, DevTools, Data JPA, MySQL, Redis
+
+> At main class:  @EnableCaching
+
+> application.properties
+# Server 
+server.port=9090
+
+#Cache details
+spring.cache.type=redis
+spring.redis.host=localhost
+spring.redis.port=6379
+
+#Database Connection
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+# JPA Details
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=create
+-----------------------------------------------
+> Entity class : Must implement Serializable interface.
+
+package com.app.raghu.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import lombok.Data;
+
+@Data
+@Entity
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	private Integer id;
+	private String name;
+	private String role;
+}
+-------------Repository------------------------------
+package com.app.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Integer>{
+
+}
+
+------------------Service--------------------------------------
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.User;
+import com.app.raghu.repo.UserRepository;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository repo;
+
+	public Integer saveUser(User user) {
+		return repo.save(user).getId();
+	}
+
+	@Cacheable(value = "users", key = "#userId")
+	public User getOneUser(Integer userId) {
+		return repo.findById(userId).get();
+	}
+
+	@CachePut(value = "users", key = "#userId")
+	public void updateUser(Integer userId, User user) {
+		User userDb = repo.findById(userId).get();
+		userDb.setName(user.getName());
+		userDb.setRole(user.getRole());
+		repo.save(userDb);
+	}
+
+	@CacheEvict(value = "users", allEntries = true)
+	public void deleteUser(Integer userId) {
+		repo.deleteById(userId);
+	}
+
+}
+---------------------RestController---------------------------
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.User;
+import com.app.raghu.service.UserService;
+
+@RestController
+@RequestMapping("/v1/api/users")
+public class UserRestController {
+
+	@Autowired
+	private UserService service;
+	
+	@PostMapping("/create")
+	public String createUser(@RequestBody User user) {
+		Integer id = service.saveUser(user);
+		return "User '"+id+"' created!";
+	}
+	
+	@GetMapping("/find/{id}")
+	public User findOneUser(@PathVariable Integer id) {
+		return service.getOneUser(id);
+	}
+	
+	@DeleteMapping("/remove/{id}")
+	public String deleteUser(@PathVariable Integer id) {
+		service.deleteUser(id);
+		return "User Deleted!";
+	}
+	
+	@PutMapping("/modify")
+	public String updateUser(@RequestBody User user) {
+		service.updateUser(user.getId(), user);
+		return "User Updated!";
+	}
+	
+	
+}
+============================================================
+POSTMAN REQUEST:
+1. CREATE ONE ROW
+POST  http://localhost:9090/v1/api/users/create
+	Body
+		(*) raw [JSON]
+{
+    "name" : "RAJ",
+    "role" : "HR"
+}
+
+2. FETCH ONE ROW MULTIPLE TIME
+GET http://localhost:9090/v1/api/users/find/1
+
+Q) What is the use of Cache?
+A) To reduce network calls between app and db, that stores common accessed
+  data
+
+Q) Can we implement cache for all operations/findAll ?
+A) No. Use cache for getOne, delete, updateOne
+
+Q) What are caching annotations given by Spring Boot ?
+A)
+
+Q) Which Cache vendor you implemented in Application?
+A) Redis
+
+*) if a object/data is cached, it wont be removed until CacheEvit is
+   called. ie never remove default. 
+*) We can use key "spring.cache.redis.time-to-live". SO that after
+   some time object is removed from cache(not from DB)
+
+ex: 
+  spring.cache.redis.time-to-live=60000
+
+

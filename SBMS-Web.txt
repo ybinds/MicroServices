@@ -1,0 +1,2412 @@
+			Date : 19-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+		      Spring Boot - Web Applications 
+
+MVC : It is a Design Pattern to develop a web application.
+
+M = Model (Data)
+V = View (Display)
+C = Controller ( class / Request Processing Code)
+
+=> Spring has provided WEB MVC Module, to implement Web Applications
+   using any UI(Java UI) [JSP, Thymeleaf, Velocity, JSF,...etc].
+
+------------------------------------------------------------------
+1. Client (Machine) makes request to server.
+  Using s/w Browser. (Enduser means person who operates Client).
+
+2. Request can be made in 3 simple ways from client.
+ a. Enter URL in Addressbar (GET)
+    ex: www.google.com
+ b. HTML Form Submit (GET/POST)
+    ex: Register Form, Login Form, Feedback Form, Comment Form..etc
+ c. Click on HyperLink (<a>) (GET)
+    ex: Read More, logout, View Here, Menubar options..etc
+    <a href="__">___</a>
+
+3. For every request, processing code exist inside a method 
+   [Request processing method] present under a class (Controller)
+
+Ex: UserController (addUser,login, logout, viewProfile) 
+    DashBoardController(addLike, ViewPost)
+
+4. HandlerMapper holds details of controller methods like a Map.
+  [For which request , where to Goooo]
+ +-------------------------------------------------------------+
+         Key                             value
+ +-------------------------------------------------------------+
+   /emp/show + GET             EmployeeController#showData()
+   /product/save + POST        ProductController#saveProd()
+ +-------------------------------------------------------------+
+
+5. FrontController (Dispatcher Servlet) is a pre-defined Servlet.
+   it will dispatch request b/w multiple components.
+
+6. Controller method returns ViewName(A file name without extension
+    and location).
+    ex: Home, Profile, Inbox 
+
+  If data is present stores in Model(Memory--Map)
+
+7. FC uses ViewResolver (prefix, suffix) to get full UI Name.
+
+  ex: pageName = prefix    + viewName + suffix
+               = /mypages/    Home      .jsp
+
+8. FC executes UI page and UI reads data from model using EL
+  (Expression Language). ie called as Data Rendering
+    (Replace expressions with actual data).
+
+ ex: Hello User ${name} --> Hello User Ajay!
+
+9. (UI)That is finally converted into HTML content and given back to
+   Browser by FC as Response.
+
+===========Flow : Request- Response==================
+1. Enduser opens any one browser/client
+2. Browser makes request
+3. Request Goes to FC (FrontController)
+4. FC connecting with HandlerMapper
+  gives Path and httpMethod as input
+5. Gets Controller class and method details
+6. FC will call controller method (execute)
+7. Controller#method will process the request
+8. Controller#method returns ViewName
+   and gives Data(Model) if present.
+
+9. FC uses ViewResolver to find full PageName
+10.  VR adds prefix=Folder of UI Pages
+             suffix = extension of UI pages
+11. FC will get Full page name and executes it.
+12. UI Page reads data from Model (Rendering)
+
+13. UI Page output is given as HTML to FC.
+14. FC returns HTML data as Response back to browser
+15. Browser will display output.
+
+			Date : 20-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+		      Spring Boot - Web Applications 
+Q) In how many ways browser can make request?
+  a. Enter URL in Addressbar (GET)
+    ex: www.google.com
+ b. HTML Form Submit (GET/POST)
+    ex: Register Form, Login Form, Feedback Form, Comment Form..etc
+ c. Click on HyperLink (<a>) (GET)
+    ex: Read More, logout, View Here, Menubar options..etc
+    <a href="__">___</a>
+
+=> FrontController is concept that dispatch the request to the actual
+   place where it can get details/service.
+=> It is a Servlet named as DispatchServlet. In Spring F/w we need to
+   configure using web.xml, in Spring boot it is Auto-Configured.
+
+=> Controller is a class, that contains request processing methods.
+   For every module we define one controller.
+Project: Gmail
+Modules: User, Inbox, Sent, Draft, Settings, Profile ..etc
+Project: Amazon
+Modules: User, Search, Cart, Payment, Feedback, Returns, ...etc
+
+ex: UserController (addUser,loginUser,viewMyData)
+    PaymentController(checkStatus, tryRepay, validateOtp)
+
+Q) Why HandlerMapper is used in Spring WEB MVC?
+A) It is a map internally. It holds all controller method details.
+   Like for which path ---> where to Go.
+
+=> Controller Method Returns a ViewName which has no location and extension
+   details. To be independent of UI Technologies.
+
+=> ViewResolver helps to find ViewPage by adding location and extension
+   details.
+
+   ViewPage = Prefix + ViewName + Suffix
+             /mypages/  Inbox      .jsp
+** In Spring F/w we need to define one <bean> for ViewResolver.
+   In Spring Boot it is autoconfigured. Just pass prefix and suffix
+   using properties/yaml file.
+---Example--------------
+   spring.mvc.view.prefix=/WEB-INF/mypages/
+   spring.mvc.view.suffix=.jsp
+------------------------
+
+=> View(UI) Page will display final result to EndUser inside a Browser.
+   Our View Page will be executed and output is given as:HTML(CSS, JS)
+   returned back to FC.
+
+=> EL : Expression Language is used to read data from Model(memory).
+   Syntax: ${keyName}.
+   At runtime all expressions are replaced with their data taken from
+   Model is called as Rendering.
+=======================================================================
+SpringBoot WEB Module:-
+=> This module provides all annotations , configurations to work with WebApps
+=> Spring Boot Web MVC provided Embedded Server(No Download + No Install)
+  Apache Tomcat(default), Eclipse Jetty, JBoss Undertow.
+
+=> Application package format is : WAR (Web Archive)
+   Archive = Group of files as one bundle.
+
+**** Even we can use JAR Format also for webapp.
+
+Q) Which option we need to choose for Web Application Packaing?
+A) We can use JAR if we want to work with embedded Server.
+   For external Deployment use : WAR option only.
+
+*) EAR: Enterprise Archive = EJB + WEB APP TYPE (It is removed).
+
+----------------------------------------------------------------
+Port Number: 0-65535 (65536)
+A Logical number assigned by OS, to identify a service.
+At a time two different services can not use same port number.
+=> 0-1024 are called as reserved port numbers.
+=> Http - 80, https-443.
+
+*) Default port number for Spring Boot app is : 8080
+  We can modify using key : server.port=9090
+
+			Date : 21-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+Http Methods:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+Http Status Codes:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+
+=> Tomcat is given as Embedded Server (Default) runs at port 8080.
+=> This Embedded Tomcat is also called as light weight container service.
+  By default JASPER is not given, it comes with only CATALINA(Servlets).
+  If we want to use JSP then add Tomcat-Embedded-JASPER(JSP->Servlets).
+
+
+========First Web Application using Spring boot + JSP ================
+1. Create one Spring boot application with dependency "Spring Web"
+
+2. For JSP Pages support, add this:
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+
+3. Create Folder System for UI Pages
+> Right click on src > main folder > new > folder option
+> Enter name as "webapp" > finish
+
+|-src
+   |-main
+      |-webapp
+          |-WEB-INF
+	      |-pages
+
+4. Create JSP file under pages folder
+> Right click on pages folder > new > File Option > Enter name
+ex: UserHome.jsp
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<h2>WELCOME TO FIRST APPLICATION! </h2>
+	</body>
+</html>
+
+5. application.properties
+#Port number details
+server.port=9090
+
+#View Resolver details
+#---prefix must starts with / and ends with /
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+6. *** Controller class *****
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller 
+public class UserController {
+	//@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@GetMapping("/home")
+	public String showHomePage() {
+		return "UserHome";
+	}
+}
+
+7. Run main class and enter URL:
+http://localhost:9090/home
+================================================================
+
+
+Q) Why we need to add @Controller over class insted of @Component?
+A) 
+  @Component will inform container to create object. 
+  It will not support any HTTP Operations.
+
+  @Controller in simple creating object + HTTP Protocol support.
+
+Q) Who will execute controller method and when?
+A) FC will call/execute our method when request comes.
+  for 1 request -- 1 method call.
+  Container creates object only once.
+
+Q) How can we map/link one java method with Request Details(PATH/HttpMethod)?
+A) We can use annotation @RequestMapping() or Specific annotations
+  like @GetMapping @PostMapping ..etc
+
+======================Got White Label Error Page?===========
+1. Remove spaces at properties file (if added)
+2. Check Folder system
+3. UI/View Page name is case-sensitive
+4. Check did you add Tomcat Embedded JASPER?
+5. Check BasePackage Rule for controller class
+ [must be in same package or subpackage of main class]
+=======================================================
+
+
+			Date : 22-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+Github Link:
+https://github.com/javabyraghu/SpringBootDataJpaExamples
+Old Workspace:
+https://github.com/javabyraghu/Workspace7AM_082022
+
+Http Methods:
+GET  : Fetch Resource(Data) from Application/Server.
+POST : Create new Resource(Data) at Application/Server.
+PUT  : Update existed Resource(Data) at Application/Server.
+DELETE : Remove existed Resource(Data) at Application/Server.
+
+Q) Can't we use only POST for all Types of Operations?
+A) Yes We can. But Http has set universal rules for providers/consumers
+   to access services over internet.
+
+*) When we are working with WEB MVC, 
+  our app supports/uses only GET and POST.
+
+=====================================================================
+	      Model (I) | Map (I) | ModelMap(C) 
+=====================================================================
+*) To send data from controller to View(UI), we can use Model Memory.
+*) This is internally one Map (Model(I) Impl class). 
+   [Stores data in Key=Val].
+*) Key is String type, Value is Object (any thing is fine)
+*) Model Impl class object is used to share data from Controller to View
+  at runtime.
+
+*) Spring container creates this memory and handle it.
+  We can just add data using method addAttribute(key,val)
+  and read data at UI using EL ${key}.
+
+
+*) ModelMap(C) is legacy. It is a class, Loosecoupling rule says
+  "Always work with interface, F/w takes care of Impl class object".
+  In future if a better impl class comes, your code remains same.
+
+*) Here, if we use Model(I) [or] ModelMap(C) [or] Map<String,Object>
+  Then Spring container goes to new impl class [BindingAwareModelMap].
+
+============code====================================================
+Name : SpringBootWebMvcModelEx
+Dep  : Spring web, Lombok, JSTL, Tomcat Embedded JASPER
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+2. Spring Bean
+package com.app.raghu.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+
+	private Integer userId;
+	private String userName;
+	private String userRole;
+	
+}
+
+3. Controller class
+package com.app.raghu.controller;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.app.raghu.bean.User;
+
+@Controller
+public class UserController {
+	// Path /info , Method: GET
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
+	public String showUserPage(
+			//Model model
+			//ModelMap model
+			Map<String,Object> model
+			) 
+	{
+		System.out.println(model.getClass().getName());
+		
+		//model.addAttribute("uname", "AJAY RAJ");
+		//model.addAttribute("cname", "SBMS");
+		
+		model.put("uname", "AJ");
+		model.put("cname", "SBCDE");
+		return "UserHome";
+	}
+	
+	
+	//Sending one User Object
+	@RequestMapping(value = "/obj",method = RequestMethod.GET)
+	public String showUserOb(Model model) {
+		User user = new User(10,"AJAY RAJ!","TAG-SY");
+		model.addAttribute("obj",user);
+		
+		
+		List<User> list = Arrays.asList(
+				new User(10,"AA","XYZ"),
+				new User(11,"AB","XYZ"),
+				new User(12,"AC","MNO"),
+				new User(13,"AD","MNO")
+				);
+		model.addAttribute("listObj", list);
+		
+		return "UserData";
+	}
+	
+	
+}
+
+4. UI (View Pages)
+-------UserHome.jsp---------------
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<h2>WELCOME TO FIRST APPLICATION! </h2>
+		<p>
+			Hello : ${uname} ! <br/>
+			Your course is : ${cname}.
+		</p>
+	</body>
+</html>
+
+------------UserData.jsp--------------
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<h2>WELCOME TO APPLICATION! </h2>
+		<p>
+			Id  : ${obj.userId} <br/>
+			Name: ${obj.userName} <br/>
+			Role : ${obj.userRole} <br/>
+			Full Data : ${obj}
+		</p>
+		<table border=1>
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>ROLE</th>
+			</tr>
+			<c:forEach var="ob" items="${listObj}">
+				<tr>
+					<td>${ob.userId}</td>
+					<td>${ob.userName}</td>
+					<td>${ob.userRole}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</body>
+</html>
+
+*) application.properties
+#Port number details
+server.port=9090
+
+#View Resolver details
+#---prefix must starts with / and ends with /
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+			Date : 23-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+Workspaces:-
+#1 Spring Core and Spring Boot Basics
+https://github.com/javabyraghu/Workspace7AM_082022
+#2 Spring Boot Data JPA
+https://github.com/javabyraghu/SpringBootDataJpaExamples
+
+		Spring Boot Web MVC HTML Forms
+		          [Part-1]
+Html Forms:- It is used to take end user input data.
+ Ex: Register Form, Login Form, Comment Form, Payment Form, 
+     Feedback Form, ..etc
+
+Form : It is a collection of Inputs (Text, Radio, Checkbox, DropDown..etc)
+
+*** Model : Send data from Controller to View(UI)
+*** Form  : Send data from View(UI) to Controller.
+
+===================================================================
+*) When Enduser enters data and submit the form, Spring container
+   creates one object and set data to that object.
+
+*** Spring container is creating Form object in 4 steps
+1. create object to form class using default constructor.
+2. Read form data from one by one input (req.getParameter)
+3. Parse data if required ( Integer.parseInt)
+4. set data to variable using setter method (obj.setId(10))
+
+*) But, Programmer has to define one class for one FORM.
+
+1. Write one public class with any name
+2. Define variables (no.of inputs = no.of variables)
+   with setters.
+3. Form Input name must match with variable Name
+   <input type="" name="<variableName>" .../>
+   <select        name="<variableName>"   ...
+   <textarea      name="<variableName>" ...
+
+
+*)Note:
+1. Object name will be className first letter lowercase
+2. This Object is called as Model Attribute.
+   it is created for every request and present in container
+   until response committed.
+3. This object we can read inside controller method using 
+  Syntax#1 @ModelAttribute("ObjName") ClassName localVariable
+           @ModelAttribute("employee") Employee emp
+  Syntax#2 @ModelAttribute ClassName ObjName
+           @ModelAttribute Employee employee
+
+============code=============================================
+name : SpringBootWebMVCFormBasicEx
+Dep  : Web, Lombok, Tomcat-Embedded JASPER
+
+1. Bean class
+package com.app.raghu.bean;
+
+import lombok.Data;
+
+@Data
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	
+	private String empPwd;
+	private String empDept;
+	private String empAddr;
+}
+
+2. Controller class
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.app.raghu.bean.Employee;
+
+@Controller
+public class EmployeeController {
+
+	//1. To display HTML Form inside browser
+	// PATH: show, HTTP method : GET
+	@GetMapping("/show")
+	public String showForm() {
+		return "EmpRegister";
+	}
+	
+	
+	//2. To Read data from HTML FORM (ModelAttribute)
+	// PATH: register, HTTP method : POST
+	@PostMapping("/register")
+	public String readData(
+			@ModelAttribute Employee employee,
+			Model model
+			) 
+	{
+		System.out.println(employee);
+		model.addAttribute("obj",employee);
+		return "EmpData";
+	}
+	
+	
+	
+}
+
+3. UI Pages
+--------EmpRegister.jsp---------------------
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<pre>
+		<h2>WELCOME TO REGISTER FORM </h2>
+		<form action="register" method="POST">
+			ID  : <input type="text" name="empId"/>
+			NAME: <input type="text" name="empName"/>
+			SAL : <input type="text" name="empSal"/>
+			PWD : <input type="password" name="empPwd"/>
+			DEPT: <select name="empDept">
+					<option value="DEV">DEV</option>
+					<option value="QA">QA</option>
+					<option value="BA">BA</option>
+				  </select>
+		    ADDR: <textarea name="empAddr"></textarea>
+			<input type="submit" value="CREATE"/>
+		</form>
+		</pre>
+	</body>
+</html>
+
+
+--------------EmpData.jsp----------------
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<pre>
+		<h2>WELCOME TO DATA  : ${obj} </h2>
+		</pre>
+	</body>
+</html>
+
+4. application.properties
+#Port number details
+server.port=9090
+
+#View Resolver details
+#---prefix must starts with / and ends with /
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+
+*) Run application and enter URL:
+http://localhost:9090/show
+=====================================================================
+Q) Who will create Form class object when we submit Form?
+A) Spring container (in 4 steps)
+
+Q) Do we need to define Form class in application?
+A) Yes. for 1 Form , we must define 1 class
+
+Q) How can we bind variable name with Form Input?
+A) By using name attribute
+    <input name=""
+    <select name=""
+
+Q) How can we read Form object in controller?
+A) @ModelAttribute
+
+Q) What if we miss data binding (ie variable with Form names)?
+A) No Error/Exception. Data can not be read (variable holds default values)
+
+For POST
+http://localhost:9090/register
+(Data is sent using Request Body -hidden)
+
+For GET (Data is sent using URL)
+http://localhost:9090/register?empId=10&empName=AA&empSal=200&empPwd=ABC&empDept=QA&empAddr=HYD
+
+			Date : 25-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Web MVC
+
+*) Rules to work with Controller class:
+1. We must provide annotation @Controller
+  (it is subtype of @Component and support HTTP Protocol).
+
+2. Every Method exist in controller class must be connected with
+   Path and HttpMethod.
+
+ @RequestMapping(value="/path",method=RequestMethod.GET/POST)
+ @GetMapping("/path")
+ @PostMapping("/path")
+
+3. Path(URL) is case-sensitive. ex: /show, /SHOW, /Show are different.
+
+4. No Duplicate Paths are allowed.
+   m1() -- @GetMapping("/show")
+   m2() -- @GetMapping("/show")
+
+IllegalStateException: Ambiguous mapping. Cannot map m2()
+to {GET [/show]}: There is already m1() mapped.
+
+5.*** Same Path can be used with different httpMethod Type combination.
+   m1() -- @GetMapping("/show")
+   m2() -- @PostMapping("/show")
+
+
+6. Multi-Level Path is allowed at method level.
+
+  @GetMapping("/find/name/data")
+  m1() {}
+
+7*** Even only / is valid Path. (ie like welcome page)
+
+        @GetMapping("/")
+	public String showForm() {}
+
+8. Http Protocol default port number is '80'.
+  If we set to server.port=80 in our app, then URL will be:
+     http://localhost:80
+       which is equals to :  http://localhost
+
+
+9. We can provide path at class level (Controller level) which is optional.
+ex:
+@Controller
+@RequestMapping("/emp")
+public class EmployeeController {
+
+}
+
+10.*** We can define multiple controllers in project.
+Ex:
+@Controller
+@RequestMapping("/emp")
+public class EmployeController {}
+
+@Controller
+@RequestMapping("/product")
+public class ProductController {}
+
+** A good approch to define common path at class level.
+
+========Example for Multiple Controllers========================
+1. Name: SpringBootWebMvcMultiControllerEx
+   Dep : Web, Tomcat Embedded Jasper
+
+2. Controllers
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp")
+public class EmployeController {
+
+	@GetMapping("/home")
+	public String showEmp() {
+		return "EmpHome";
+	}
+}
+--------------
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/prod")
+public class ProductController {
+
+	@GetMapping("/home")
+	public String showProd() {
+		return "ProdData";
+	}
+}
+
+3. UI Pages
+---------EmpHome.jsp------------
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<pre>
+		<h2>WELCOME TO EMP HOME</h2>
+		</pre>
+	</body>
+</html>
+------------ProdData.jsp-----------
+<html>
+	<head>
+		<title>WELCOME TO APP</title>
+	</head>
+	<body>
+		<pre>
+		<h2>WELCOME TO PRODUCT DATA</h2>
+		</pre>
+	</body>
+</html>
+
+4. application.properties
+#Port number details
+server.port=9090
+#server.port=80
+
+#View Resolver details
+#---prefix must starts with / and ends with /
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+======================================================================
+Q)*** How can provide multiple paths (or/and) http-methods for single
+   controller method?
+A) By Using @RequestMapping with array format {}.
+ex:
+@RequestMapping(
+	value = {"/login","/home"},
+	method = {
+		RequestMethod.GET,
+		RequestMethod.POST
+	})
+public String showEmp() { .... }
+  
+ 
+But using new Annotations, we can provide only multiple paths with
+one HttpMethod type.
+@GetMapping({"/info","/data"})
+(or)
+@PostMapping({"/info","/data"})
+=================================================================
+Q) *** Can we define one Controller#method without any Path and HttpMethod?
+A) Yes. We can define. But it can never be executed for any request.
+   In general this kind of methods are used to have common code for
+   multiple methods.
+
+Ex: m1(), m2() methods common code is written in m3() method.
+void m3(){ 345}
+
+@GetMapping("/a")
+String m1(){
+1
+2
+m3();
+}
+
+@GetMapping("/b")
+String  m2(){
+m3();
+6
+7
+}
+
+Q)* What if I provide only @Component inplace of @Controller?
+A) Object is created for our class but it can never be executed for
+   any request.
+
+======================================================================
+task:
+1. Define one Student Controller and display HomePage if we enter URL
+  /student/home (GET type)
+
+2. Write UserController and display LoginPage, if we enter /login or
+   /home or / (all GET Type only).
+=======================================================================
+Q) What is DevTools why it is used ?
+A) DevTool is a LiveReload Server, that is used in development environment.
+  It avoids manual re-start for code changes.
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-devtools</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+			Date : 27-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+UI(User Interface) / View:-
+*) JSP (Java Server Page)
+ JSP is called as Heavyweight UI Technology.
+ Every JSP File internally converted into Servlet Code,
+ then compiled and object created inside Servlet container.
+
+=> Even if we define static content (ex: <p> hello </p>) 
+   that is converted into Servlet code ( out.write("<p> hello </p>") ),
+   not only dynamic content ( ex: <c:forEach/>).
+=======================================================================
+			  Thymeleaf
+*) Thymeleaf UI is light weight Java UI Engine used to design 
+  Dynamic web pages in web application/pages.
+*) JSP internally servlet (heavy weight) but Thymeleaf is simple 
+  (core) java code so, compared to JSP, Thymeleaf is lightweight 
+  (less memory).
+
+*) it is a simple HTML File which contains static tags[HTML tags]
+   and Thymeleaf Tags[dynamic tags].
+
+=> Only Thymeleaf Tags are converted into Java Code => executed
+   => place result back to Same file (Rendering).
+
+*) https://www.thymeleaf.org/ is a server/namespace[location of tag definition]
+  which gives all pre-defined tags/attributes.
+
+*) prefix "th", indicates Thymeleaf Tags/attributes, only those are
+   processed by Thymeleaf Engine.
+
+*) This file extension is .html only.
+
+---------------------Home.html-------------------------------
+<html xmlns:th="https://www.thymeleaf.org/">
+  <head>
+
+  </head>
+  <body>
+
+
+  </body>
+</html>
+============================================================
+3 symbols mainly:
+$ -- Read data from Model/ModelMap/Map
+@ -- URL/Path/Location
+* -- Only for Forms (Input name binding)
+
+Example Code snippets:-
+th:text="${emp.empName}"  //th:text --> print data
+   (or)
+[[ ${emp.empName} ]]         
+
+<form th:action="@{/employee/save}"
+
+<script type="text/javascript" th:src="@{/myjs/sample.js}"
+
+<tr th:each ="ob:${list}">
+----------------------------------------------------------------
+*) Note: ctrl+shift+T : ThymeleafProperties
+When we add thymeleaf dependency(spring-boot-starter-thymeleaf)
+then by default it gives Auto-Configuration (Detect/Load/Trasilate/execute)
+for Thymeleaf files and also prefix/suffix details.
+
+Default prefix is : /templates/ folder (in classpath)
+Default suffix is : .html
+
+[ProjectName]
+ |
+ |-src/main/resources
+    |- static -----> Images/CSS Files/ Java Script Files
+    |- templates
+       |-Home.html
+====================================================================
+<div th:text="${keyName}">       println
+<span th:text="${keyName}">      print
+
+
+============code================================================
+Name : SpringBootWebAppThymeleafEx
+Dep  : Spring Web, Lombok, Devtools, Thymeleaf
+
+1. Controller class
+package com.app.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/product")
+public class ProductController {
+
+	@GetMapping("/data")
+	public String showData(Model model) {
+		model.addAttribute("prodCode", "SAMPLE ABCD!");
+		return "ProductData";
+	}
+}
+
+2. UI Page: ProductData.html
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title> WEB APP </title>
+		<!--To Link a CSS File -->
+		<link rel="stylesheet" th:href="@{/mycss/design.css}"></link>
+		<!--To Link a JS File -->
+		<script type="text/javascript" th:src="@{/myjs/setup.js}"></script>
+	</head>
+	<body>
+		<!--To Display Image -->
+		<img th:src="@{/images/doctor.png}" width="100" height="150"/>
+		<h2>WELCOME TO SPRING BOOT + THYMELEAF EXAMPLE </h2>
+		
+		<p class="mydesign"> SAMPLE CSS </p>
+		
+		<!--To Read and Print Model Data -->
+		<p> This is product code <span th:text="${prodCode}"></span> </p>
+		<p> This is product code [[${prodCode}]] </p>
+	</body>
+</html>
+
+3. CSS File
+.mydesign{
+			color :green;
+			background-color: yellow
+		}
+
+4. JS File
+alert("WELCOME TO ALL!!!");
+
+5. Place one image under static folder
+
+6. application.properties
+server.port=9090
+
+7. Run app, enter URL
+http://localhost:9090/product/show
+
+			 Date : 28-10-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+Thymeleaf:-
+> Light weight (Less Memory)
+> Uses prefix - th
+> Connects to namespace -- xmlns:th="https://www.thymeleaf.org/"
+> Symbols used
+  $ -- Read data from Model
+  @ -- URL (Location)
+  * -- Form Input
+
+
+Bootstrap : It is a CSS API used to design UI page using pre-defined
+   classes. This is given by Twitter.
+Ref Link:
+https://www.w3schools.com/bootstrap4/bootstrap_colors.asp
+
+*)Note:
+1. th:each="ob:${list}"
+ Syntax: th:each="tempvariable:${CollectionName}"
+ Here th:each is like forEach loop.
+ ob is tempvariable, ${} read data from Model
+ list is keyname sent from Controller class
+
+2. th:text="${ob.bookId}"
+  th:text -- print data at Web page
+  ${ob.bookId} --> Reading data from Model
+
+========code======================================================
+Name : SpringBootThymeleafExTwo
+Dep  : Spring Web, Lombok, Devtools, Thymeleaf
+
+1. Bean
+package com.app.raghu.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bookId;
+	private String bookName;
+	private String bookAuth;
+	private Double bookCost;
+}
+
+2. Controller class
+package com.app.raghu.controller;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.app.raghu.bean.Book;
+
+
+@Controller
+@RequestMapping("/book")
+public class BookController {
+
+	//1. display book object at UI
+	@GetMapping("/show")
+	public String showData(Model model) {
+		Book b1 = new Book(101, "Core Java", "RAGHU", 200.0);
+		model.addAttribute("bob", b1);
+		return "BookData";
+	}
+	
+	
+	//2. display book collection at UI
+	@GetMapping("/list")
+	public String showColl(Model model) {
+		List<Book> list = Arrays.asList(
+				new Book(10, "AA", "XYZ", 200.0),
+				new Book(11, "AB", "XYZ", 300.0),
+				new Book(12, "AC", "XYZ", 400.0),
+				new Book(13, "AD", "MNO", 500.0)
+				);
+		model.addAttribute("list", list);
+		return "BookList";
+	}
+	
+}
+
+3. UI Pages
+--------------------BookData.html-----------------
+<html xmlns:th="https://www.thymeleaf.org/">
+ <head>
+ 	<title> WELCOME </title>
+ </head>
+ <body>
+ 	<h3>DATA IS </h3>
+ 	<span th:text="${bob}"></span> <br/>
+ 	<span th:text="${bob.bookId}"></span> <br/>
+ 	[[${bob}]],[[${bob.bookName}]]
+ </body>
+</html>
+
+
+-----------BookList.html (NO UI Design) ------------------
+<html xmlns:th="https://www.thymeleaf.org/">
+ <head>
+ 	<title> WELCOME </title>
+ </head>
+ <body>
+ 	<h3> BOOKS DETAILS </h3>
+ 	<table>
+ 		<tr>
+ 			<th>ID</th>
+ 			<th>NAME</th>
+ 			<th>AUTHOR</th>
+ 			<th>COST</th>
+ 		</tr>
+ 		<tr th:each="ob:${list}">
+ 			<td th:text="${ob.bookId}"></td>
+ 			<td th:text="${ob.bookName}"></td>
+ 			<td>[[${ob.bookAuth}]]</td>
+ 			<td>[[${ob.bookCost}]]</td>
+ 		</tr>
+ 	</table>
+ </body>
+</html>
+
+----------------BookList.html (Using bootstrap UI)---------------
+<html xmlns:th="https://www.thymeleaf.org/">
+ <head>
+ 	<title> WELCOME </title>
+ 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+ </head>
+ <body>
+  <div class="container">
+ 	<h3 class="bg-info text-white text-center"> BOOKS DETAILS </h3>
+ 	<table class="table table-hover">
+ 		<tr class="bg-primary text-white">
+ 			<th>ID</th>
+ 			<th>NAME</th>
+ 			<th>AUTHOR</th>
+ 			<th>COST</th>
+ 			<th>OPERATIONS</th>
+ 		</tr>
+ 		<tr th:each="ob:${list}">
+ 			<td th:text="${ob.bookId}"></td>
+ 			<td th:text="${ob.bookName}"></td>
+ 			<td>[[${ob.bookAuth}]]</td>
+ 			<td>[[${ob.bookCost}]]</td>
+ 			<td>
+ 				<button class="btn btn-danger">DELETE</button> | 
+ 				<button class="btn btn-info">EDIT</button> 
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	</div>
+ </body>
+</html>
+
+4. application.properties
+server.port=9090
+
+5. Run App and Enter URL:
+http://localhost:9090/book/show
+http://localhost:9090/book/list
+=====================================================================
+
+			 Date : 01-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+		Application Design : Layers Concept
+
+*) Any code in java is : class/interface
+
+Repository	class - Database Operations
+Service		class - For Calcualtions/Operations
+Controller	class - Request Processing
+Entity		class - To hold DB Data (Row -- Object)
+Util		class - Common Logics
+..etc
+
+*) It is a common approch/method followed by Lot of developers.
+*) Testing/Maintaining(Find Errors and Fix) is easy in this case.
+*) In simple meaning Layer means type of work/code/method.
+   One Layer indicates one type of work.
+
+Q) How many layers required to develop one simple web application
+  using spring boot?
+A) 3 Layers
+   Presentation Layer : PL -- Implemented using Spring boot web mvc
+   				To write display logic, request
+				processing code.
+
+   Service Layers : SL -- to write calculations, Transaction Management
+   			aka : Business Layer
+
+   Data Access Layer : DAL -- To Define Database operations(CRUD)
+   		aka: Repository Layer
+
+*) SpringBoot MVC, Entity, UTIL are not layers.
+   Entity : A class Mapped with Database table
+   Util   : To write common/generic logics
+   MVC    : Used in Presentation Layer.
+
+Q) What are Java relations used in Layers Conncetion?
+A) In between Layers : HAS-A ( + @Autowired)
+   Within Layers     : IS-A (extends/implements)
+
+======================================================================
+*) This Layers Design is used to develop application using modules concept.
+Ex: Amazon App
+    Search, Cart, Payment, Feedback, Tracking..etc (Modules)
+    Gmail App
+    User(Register, Login), Inbox, Sent ...(Modules)
+    Facebook App
+    ______________________________________________
+*) For One Module, different code files are:
+a. Entity
+b. Repository Interface
+c. Service Interface
+d. Service Impl class
+e. Util class
+f. Controller class
+ex:
+a. EmployeeEntity
+b. EmployeeRepository 
+c. IEmployeeService 
+d. EmployeeServiceImpl
+e. EmployeeUtil
+f. EmployeeController 
+
+--------------------------------------------------------------------
+Struts F/w Design:-
+DTO - Request contains some data (Form-Object) ---> Store as one Object
+	(Data Trasfer Object)
+BO/VO - Business object (DTO-->BO and used at Service)
+
+BO--VO (Used at DAO and JDBC to perform database operations)
+
+Mapper (C) : This one converts DTO-BO-VO.
+--------------------------------------------------------------------
+Simple Task: Module Name : Student
+Can you write code files?
+
+			 Date : 05-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+  CrudOperations - Spring Boot WEB MVC + Thymeleaf + Data JPA + MySQL
+
+Recomanded Coding Order:-
+1. Entity	= DB Table (Schema)
+2. Repository	= Curd DB
+3. Service	= Calculations/Transactions/Exceptions throwing
+4. Controller	= Request processing code
+
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  |                          Employee Module                          |
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Step#1 Create Project with all required dependencies
+Name : SpringBootWebMvcThymeleafMySQLCrudEx
+Dep  : Spring Web, Lombok, MySQL, Data JPA, Thymeleaf, Devtools
+---------------------------------------------------------------------
+Step#2 application.properties
+# Server details
+server.port=9696
+
+# DB Connection details
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot7am
+spring.datasource.username=root
+spring.datasource.password=root
+
+# JPA Details
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=validate
+
+-------------application.yml----------------
+server:
+  port: 9696
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/boot7am
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+---------------------------------------------------------------------
+3. Entity class
+package com.app.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Table(name="emptab")
+@Entity
+public class Employee {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="eid")
+	private Integer empId;
+	
+	@Column(name="ename")
+	private String empName;
+	
+	@Column(name="esal")
+	private Double empSal;
+	
+	@Column(name="ehra")
+	private Double empHra;
+	
+	@Column(name="eta")
+	private Double empTa;
+	
+	@Column(name="edept")
+	private String empDept;
+}
+
+
+4. Repository
+package com.app.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.raghu.entity.Employee;
+
+public interface EmployeeRepository
+	extends JpaRepository<Employee, Integer>
+{
+
+}
+--------------------------------------------------------
+5. Service Interface
+
+package com.app.raghu.service;
+
+import java.util.List;
+
+import com.app.raghu.entity.Employee;
+
+public interface IEmployeeService {
+
+	Integer saveEmployee(Employee e);
+	void updateEmployee(Employee e);
+	void deleteEmployee(Integer id);
+	Employee getOneEmployee(Integer id);
+	List<Employee> getAllEmployees();
+}
+
+-------------------------------------------------------------
+6. Service Impl
+package com.app.raghu.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.entity.Employee;
+import com.app.raghu.repo.EmployeeRepository;
+import com.app.raghu.service.IEmployeeService;
+
+@Service
+public class EmployeeServiceImpl implements IEmployeeService {
+
+	@Autowired
+	private EmployeeRepository repo;
+	
+	public Integer saveEmployee(Employee e) {
+		e = repo.save(e);
+		return e.getEmpId();
+	}
+
+	public void updateEmployee(Employee e) {
+		repo.save(e);
+	}
+
+	public void deleteEmployee(Integer id) {
+		repo.deleteById(id);
+	}
+
+	public Employee getOneEmployee(Integer id) {
+		Optional<Employee> opt = repo.findById(id);
+		return opt.get();
+	}
+
+	public List<Employee> getAllEmployees() {
+		List<Employee> list = repo.findAll();
+		return list;
+	}
+
+}
+------------------------------------------------------------------
+7. Controller and View Pages
+package com.app.raghu.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.app.raghu.entity.Employee;
+import com.app.raghu.service.IEmployeeService;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+	
+	@Autowired
+	private IEmployeeService service;
+
+	/***
+	 * 1. SHOW REGISTER PAGE
+	 * This method is used to display Register Page
+	 * when end-user enters /register with GET Type
+	 */
+	@GetMapping("/register")
+	public String showRegPage() {
+		return "EmployeeRegister";
+	}
+	
+	
+	/**
+	 * 2. ON CLICK FORM SUBMIT, READ DATA (@MODELATTRIBUTE)
+	 * This method is used to read Form data as Model Attribute
+	 * It will make call to service method by passing same form object
+	 * Service method returns PK(ID). 
+	 * Controller returns String message back to UI using Model
+	 * @param employee
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("/save")
+	public String saveFormData(
+			@ModelAttribute Employee employee,
+			Model model
+			) 
+	{
+		Integer id = service.saveEmployee(employee);
+		String message = new StringBuffer().append("EMPLOYEE '")
+				.append(id).append("' CREATED").toString();
+				//"EMPLOYEE '"+id+"' CREATED";
+		
+		model.addAttribute("message", message);
+		return "EmployeeRegister";
+	}
+	
+	//3. Display all rows as a table
+	
+	//4. Delete based on id
+	
+	//5. On Click Edit Link(HyperLink) Show data in Edit Form
+	
+	//6. Update Form data and submit
+}
+--------------------------------------------------------------
+*** EmployeeRegister.html ***
+
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME TO EMPLOYEE REGISTER PAGE</title>
+	</head>
+	<body>
+		<h2>EMPLOYEE REGISTER PAGE </h2>
+		<form th:action="@{/employee/save}" method="POST">
+		<pre>
+			Name  : <input type="text" name="empName"/>
+			Salary: <input type="text" name="empSal"/>
+			Dept  : <select name="empDept">
+						<option value="DEV">DEV</option>
+						<option value="QA">QA</option>
+						<option value="BA">BA</option>
+					</select>
+			<button type="submit">Create</button>				
+		</pre>
+		</form>
+		<div th:text="${message}"></div>
+	</body>
+</html>
+
+========================================================================
+*)Note:
+create - creates new table (old table exist? drop it)
+update - create new table (old table exist ? use it)
+validate - just check entity class and db table matchings
+none - do nothing
+create-drop : drop old tables if exist-- create new table --at the end
+			again drop new tables also.
+
+
+Q) Why Strings are immutable ?
+A) 
+
+----------------------------------------------------------------
+Output: DB
+mysql> use boot7am;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_boot7am |
++-------------------+
+| emptab            |
++-------------------+
+
+mysql> select * from emptab;
++-----+-------+------+-------+------+------+
+| eid | edept | ehra | ename | esal | eta  |
++-----+-------+------+-------+------+------+
+|   1 | QA    | NULL | AJAY  | 2000 | NULL |
++-----+-------+------+-------+------+------+
+
+			 Date : 06-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+  CrudOperations - Spring Boot WEB MVC + Thymeleaf + Data JPA + MySQL
+  			     [PART-2]
+
+*) Simple Calculation Added in Service Layer, under save method:
+		double hra = e.getEmpSal() * (12.0/100);
+		double ta = e.getEmpSal() * (4.0/100);
+		e.setEmpHra(hra);
+		e.setEmpTa(ta);
+
+************************************************************************
+		Fecth DB Data to UI (View Page)
+************************************************************************
+  repo               SL                  PL(Controller--> View)
+  findAll()  repo.findAll() ->List  Model.addAttribute   forEach->HTMLTable
+
+Step#1 JpaRepository has given a method findAll() that returns List<T>
+       Call that method in service Layer(DONE)
+
+Step#2 Define one controller method that gets data from service and 
+	send to ui using Model memory.
+
+-------EmployeeController-----------------
+	@GetMapping("/all")
+	public String showData(Model model) {
+		List<Employee> list = service.getAllEmployees();
+		model.addAttribute("list", list);
+		return "EmployeeData";
+	}
+
+
+Step#3 At UI Page display List data as HTML table format using th:each
+	[For Each loop]
+
+-----------EmployeeData.html-----------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME TO DATA PAGE</title>
+	</head>
+	<body>
+		<h2>EMPLOYEE DATA PAGE </h2>
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>SALARY</th>
+				<th>HRA/TA</th>
+				<th>DEPT</th>
+				<th>OPERATIONS</th>
+			</tr>
+			<tr th:each="ob:${list}">
+				<td>[[${ob.empId}]]</td>
+				<td>[[${ob.empName}]]</td>
+				<td>[[${ob.empSal}]]</td>
+				<td>[[${ob.empHra}]] / [[${ob.empTa}]]</td>
+				<td>[[${ob.empDept}]]</td>
+				<td>
+					<a href="#">DELETE </a> | <a href="#"> EDIT</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+
+==========================================================
+URL - Rewriting :-
+ Creating one URL using "static path and dynamic path" is called as
+ URL - Rewriting.
+
+Ex:
+ /employee/delete?id=3
+ /employee/delete?id=2
+ /employee/delete?id=1
+
+Here static path is : /employee/delete?id=
+Dynamic path is : <id>
+
+<a th:href="
+ @{                        ---> Path/URL Starts here
+   /employee/delete        ---> path
+   (id=${ob.empId})        ---> Request Param
+ }                         ---> Path/URL Ends here
+
+">
+   DELETE
+</a>
+
+===================Controller code upto (6th Nov)================
+package com.app.raghu.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.app.raghu.entity.Employee;
+import com.app.raghu.service.IEmployeeService;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+	
+	@Autowired
+	private IEmployeeService service;
+
+	/***
+	 * 1. SHOW REGISTER PAGE
+	 * This method is used to display Register Page
+	 * when end-user enters /register with GET Type
+	 */
+	@GetMapping("/register")
+	public String showRegPage() {
+		return "EmployeeRegister";
+	}
+	
+	
+	/**
+	 * 2. ON CLICK FORM SUBMIT, READ DATA (@MODELATTRIBUTE)
+	 * This method is used to read Form data as Model Attribute
+	 * It will make call to service method by passing same form object
+	 * Service method returns PK(ID). 
+	 * Controller returns String message back to UI using Model
+	 * @param employee
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("/save")
+	public String saveFormData(
+			@ModelAttribute Employee employee,
+			Model model
+			) 
+	{
+		Integer id = service.saveEmployee(employee);
+		String message = new StringBuffer().append("EMPLOYEE '")
+				.append(id).append("' CREATED").toString();
+				//"EMPLOYEE '"+id+"' CREATED";
+		
+		model.addAttribute("message", message);
+		return "EmployeeRegister";
+	}
+	
+	/***
+	 * 3. Display all rows as a table
+	 * This method is executed for request URL /all + GET.
+	 * It will fetch data from Service as List<T>
+	 * Send this data to UI(View) using Model(I)
+	 * In UI use th:each="tempVariable:${collectionName}" to read data 
+	 * and print as HTML Table.
+	 */
+	@GetMapping("/all")
+	public String showData(Model model) {
+		List<Employee> list = service.getAllEmployees();
+		model.addAttribute("list", list);
+		return "EmployeeData";
+	}
+	
+	//4. Delete based on id
+	
+	//5. On Click Edit Link(HyperLink) Show data in Edit Form
+	
+	//6. Update Form data and submit
+}
+
+
+---------------------------Full UI : EmployeeData.html---------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME TO DATA PAGE</title>
+	</head>
+	<body>
+		<h2>EMPLOYEE DATA PAGE </h2>
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>SALARY</th>
+				<th>HRA/TA</th>
+				<th>DEPT</th>
+				<th>OPERATIONS</th>
+			</tr>
+			<tr th:each="ob:${list}">
+				<td>[[${ob.empId}]]</td>
+				<td>[[${ob.empName}]]</td>
+				<td>[[${ob.empSal}]]</td>
+				<td>[[${ob.empHra}]] / [[${ob.empTa}]]</td>
+				<td>[[${ob.empDept}]]</td>
+				<td>
+					<a th:href="@{/employee/delete(id=${ob.empId})}">DELETE </a> 
+					| <a th:href="@{/employee/edit(id=${ob.empId})}"> EDIT</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+======================================================================
+
+			 Date : 07-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+			Operation#3 DELETE EMPLOYEE
+
+Step#1 Call Delete method in Service 
+	repo.deleteById(id)
+Step#2 Call service Method in Controller 
+      and pass "id"
+
+=> Read data from URL using
+  @RequestParam("key")DataType variableName
+
+--equals to ---------
+String var = request.getParameter("key")
+-------------------------
+=> use redirect concept to execute /all method after delete.
+
+: To view all rows URL:
+http://localhost:9696/employee/all
+
+: To view all rows URL after Delete:
+http://localhost:9696/employee/all?message=Employee 101 Deleted
+
+=> While redirect, to pass data from one Controller method to another
+   controller method use RedirectAttributes.
+   But read data as Optional Request Param.
+   @RequestParam(value="", required=false) DT variable.
+
+===========Handle Exception ================
+Problem: If end user / any enters URL for delete manually
+   ex: http://localhost:9696/employee/delete?id=3
+
+Solution:
+1. define one custom exception.
+-> Exception, checked Exception, unchecked Exception, custom exception.
+
+2. Throw exception at service if employee not found
+
+3. catch that exception at controller and return error message to UI
+  (or redirect URL)
+
+===Code for Delete================================================================
+1. Custom Exception
+package com.app.raghu.exception;
+
+public class EmployeeNotFoundException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public EmployeeNotFoundException() {
+		super();
+	}
+	
+	public EmployeeNotFoundException(String message) {
+		super(message);
+	}
+
+}
+
+
+2. Service Method delete code
+     public void deleteEmployee(Integer id) {
+		//repo.deleteById(id);
+		/*Optional<Employee> opt = repo.findById(id);
+		if(opt.isPresent()) {
+			repo.delete(opt.get());
+		} else {
+			throw new EmployeeNotFoundException("EMPLOYEE '"+id+"' NOT FOUND");
+		}*/
+		repo.delete(
+				repo.findById(id)
+				.orElseThrow(
+						()->new EmployeeNotFoundException("EMPLOYEE '"+id+"' NOT FOUND"))
+				);
+	}
+
+3. Controller methods ( showData / deleteData) 2 methods
+
+        @GetMapping("/all")
+	public String showData(
+			Model model,
+			@RequestParam(value = "message", required = false) String message
+			) 
+	{
+		List<Employee> list = service.getAllEmployees();
+		model.addAttribute("list", list);
+		model.addAttribute("message", message);
+		return "EmployeeData";
+	}
+
+	@GetMapping("/delete")
+	public String deleteData(
+			@RequestParam("id")Integer empId,
+			RedirectAttributes attributes 
+			) 
+	{
+		String msg = null;
+		try {
+			service.deleteEmployee(empId);
+			msg = "Employee '"+empId+"' Deleted";
+		} catch (EmployeeNotFoundException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		attributes.addAttribute("message", msg);
+		return "redirect:all";
+	}
+
+*) Task: Modify RuntimeException type to Exception in code.
+Error and Exception Pages in Spring Boot app:
+Step#1 create error folder under templates
+Step#2 create <errorcode>.html file under error folder
+
+ [Project]
+  |
+  |-src/main/resources
+     |-templates
+          |-error
+	     |-404.html
+
+ex: 404.html
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME TO DATA PAGE</title>
+	</head>
+	<body>
+		<h3> SERVER FAILED TO PROCESS YOUR REQUEST </h3>
+		<img th:src="@{/images/error_image.png}"></img>
+	</body>
+</html>
+Ref for servlets Error and Exception:
+https://www.digitalocean.com/community/tutorials/servlet-exception-and-error-handling-example-tutorial
+
+
+			 Date : 08-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+https://github.com/javabyraghu/Workspace7AM_082022
+https://github.com/javabyraghu/SpringBootDataJpaWebMvcExamples
+
+		Operation #4 Edit and Update data
+
+Stage#1 Fetch DB Data to Thymeleaf Edit Form (DB to UI)
+Stage#2 Update Form data back to Database. (UI to DB).
+================================================================
+Stage#1 Fetch DB Data to Thymeleaf Edit Form (DB to UI)
+1. For Register Operation at UI, we used HTML Form tags.
+  It is uni-directional ( Form Data ---> Object[ModelAttribute] )
+
+2. But this time We want to fetch data from DB and show/display/fill
+   at Form. We need to Thymeleaf Form.
+
+   <form  .....    th:object="${objectName}">
+
+   <input .... th:field="*{variableName}">
+
+3. At Service Layer use findById(id) method that gets data from db.
+
+==============================================================
+Stage#2 Update Form data back to Database. (UI to DB).
+
+*) it is similer to save operation, just use @ModelAttribute 
+  call service layer update method.
+
+Code upto Edit Operations:
+https://github.com/javabyraghu/SpringBootDataJpaWebMvcExamples/tree/main/21SpringBootWebMvcThymeleafMySQLCrudEx
+======================================================
+Task# Bootstrap 4:
+https://getbootstrap.com/docs/4.6/getting-started/introduction/
+https://www.youtube.com/results?search_query=bootstrap
+
+Q) What is the use of thymeleaf Form over HTML Form?
+A) HTML Form is uni-directional , Form data can be converted into Object
+    but not reverse.
+
+Q) Why can't we use simple form concept (Thymeleaf Form) for both 
+    register and  edit ?
+A) Yes we can use. But in case of HTML, inputs are static like
+   DropDown, checkboxes ..etc.
+   Even form details/inputs you want to make dynamic then use Thymeleaf Form.
+
+=======Dynamic DropDown task==============
+1. Util
+package com.app.raghu.util;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.ui.Model;
+
+import com.app.raghu.entity.Employee;
+
+//after java 8 (static methods and default methods)
+//@Component
+//public class EmployeeUtil {
+public interface EmployeeUtil {
+
+	public static void commonCal(Employee e) {
+		double hra = e.getEmpSal() * (12.0/100);
+		double ta = e.getEmpSal() * (4.0/100);
+		e.setEmpHra(hra);
+		e.setEmpTa(ta);
+	}
+	
+	public static void createDeptList(Model model) {
+		List<String> list = Arrays.asList("DEV","QA","BA","ADMIN","IT");
+		model.addAttribute("deptList", list);
+	}
+}
+
+
+2. Controller
+package com.app.raghu.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.app.raghu.entity.Employee;
+import com.app.raghu.exception.EmployeeNotFoundException;
+import com.app.raghu.service.IEmployeeService;
+import com.app.raghu.util.EmployeeUtil;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+	
+	@Autowired
+	private IEmployeeService service;
+
+	/***
+	 * 1. SHOW REGISTER PAGE
+	 * This method is used to display Register Page
+	 * when end-user enters /register with GET Type
+	 */
+	@GetMapping("/register")
+	public String showRegPage(Model model) {
+		EmployeeUtil.createDeptList(model);
+		return "EmployeeRegister";
+	}
+	
+	
+	/**
+	 * 2. ON CLICK FORM SUBMIT, READ DATA (@MODELATTRIBUTE)
+	 * This method is used to read Form data as Model Attribute
+	 * It will make call to service method by passing same form object
+	 * Service method returns PK(ID). 
+	 * Controller returns String message back to UI using Model
+	 * @param employee
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("/save")
+	public String saveFormData(
+			@ModelAttribute Employee employee,
+			Model model
+			) 
+	{
+		Integer id = service.saveEmployee(employee);
+		String message = new StringBuffer().append("EMPLOYEE '")
+				.append(id).append("' CREATED").toString();
+				//"EMPLOYEE '"+id+"' CREATED";
+		
+		model.addAttribute("message", message);
+		//for dynamic dropdown
+		EmployeeUtil.createDeptList(model);
+		return "EmployeeRegister";
+	}
+	
+	/***
+	 * 3. Display all rows as a table
+	 * This method is executed for request URL /all + GET.
+	 * It will fetch data from Service as List<T>
+	 * Send this data to UI(View) using Model(I)
+	 * In UI use th:each="tempVariable:${collectionName}" to read data 
+	 * and print as HTML Table.
+	 */
+	@GetMapping("/all")
+	public String showData(
+			Model model,
+			@RequestParam(value = "message", required = false) String message
+			) 
+	{
+		List<Employee> list = service.getAllEmployees();
+		model.addAttribute("list", list);
+		model.addAttribute("message", message);
+		return "EmployeeData";
+	}
+	
+	/**
+	 * 4. Delete based on id
+	 * On Click Delete HyperLink, a Request is made by browser looks like 
+	 * /employee/delete?id=someVal.
+	 * Read data using Annotation @RequestParam and call service to delete from db.
+	 * 
+	 * Just redirect to /all with one message (RedirectAttribute)
+	 * that will display all rows with message. 
+	 */
+	@GetMapping("/delete")
+	public String deleteData(
+			@RequestParam("id")Integer empId,
+			RedirectAttributes attributes 
+			) 
+	{
+		String msg = null;
+		try {
+			service.deleteEmployee(empId);
+			msg = "Employee '"+empId+"' Deleted";
+		} catch (EmployeeNotFoundException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		attributes.addAttribute("message", msg);
+		return "redirect:all";
+	}
+	
+	/** 
+	 * 5. On Click Edit Link(HyperLink) Show data in Edit Form.
+	 * When end user clicks on EDIT Link, internal request looks like /edit?empId=10
+	 * Read DB Row using service call, that may return employee object else throw exception
+	 * (if not found).
+	 * If object is present use Model to send that object to Form(UI).
+	 * Else redirect to /all with ErrorMessage(Redirect Attributes).
+	 */
+	@GetMapping("/edit")
+	public String showEdit(
+			@RequestParam("id") Integer empId,
+			Model model,
+			RedirectAttributes attributes
+			) 
+	{
+		String page = null;
+		try {
+			Employee employee = service.getOneEmployee(empId);
+			model.addAttribute("employee", employee);
+			//for dynamic drop down
+			EmployeeUtil.createDeptList(model);
+			page = "EmployeeEdit";
+		} catch (EmployeeNotFoundException e) {
+			e.printStackTrace();
+			attributes.addAttribute("message", e.getMessage());
+			page = "redirect:all";
+		}
+		return page;
+	}
+	
+	
+	//6. Update Form data and submit
+	@PostMapping("/update")
+	public String updateData(
+			@ModelAttribute Employee employee,
+			RedirectAttributes attributes
+			) 
+	{
+		service.updateEmployee(employee);
+		attributes.addAttribute("message", "Employee '"+employee.getEmpId()+"' Updated!");
+		return "redirect:all";
+	}
+	
+	
+	
+	
+}
+
+3. UI Pages
+EmployeeEdit.html
+
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME TO EMPLOYEE EDIT PAGE</title>
+	</head>
+	<body>
+		<h2>EMPLOYEE EDIT PAGE </h2>
+		<form th:action="@{/employee/update}" method="POST" th:object="${employee}">
+		<pre>
+			ID    : <input type="text" th:field="*{empId}" readonly="true"/>
+			NAME  : <input type="text" th:field="*{empName}"/>
+			SALARY: <input type="text" th:field="*{empSal}"/>
+			DEPT  : <select th:field="*{empDept}">
+						<option value="">--SELECT--</option>
+						<option th:each="dob:${deptList}" 
+						th:value="${dob}" th:text="${dob}"></option>
+					</select>
+			<button type="submit">UPDATE</button>				
+		</pre>
+		</form>
+	</body>
+</html>
+
+			 Date : 09-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+Bootstrap UI:-
+*) To Design one web page we use CSS (Cascading Style Sheet).
+*) Bootstrap is given by twitter. It is a Pre-defined CSS API.
+   We can directly use them for our HTML Tags.
+   <input   class="<css-className1> <css-className2> <css-className3>"
+   <a       class="<css-className>"
+   <p       class="<css-className>"
+   <body    class="<css-className>"
+   <select  class="<css-className>"
+
+Ref Link:
+https://getbootstrap.com/docs/4.6/components/alerts/
+https://www.w3schools.com/bootstrap4/
+
+*) Bootstrap CSS (CDN) Link:
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+
+*) th:if="${message}" means do work/task/display if message is present
+  (not null / not empty).
+
+==================EmployeeRegister.html=========================
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>WELCOME TO EMPLOYEE REGISTER PAGE</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h2>WELCOME TO EMPLOYEE REGISTER PAGE </h2>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/employee/save}" method="POST">
+					NAME <input type="text" name="empName" class="form-control" />
+					GENDER <br/>
+					<input type="radio" name="empGen" value="Male"/> Male
+					<input type="radio" name="empGen" value="Female"/> Female <br/>
+					SALARY <input type="text" name="empSal" class="form-control" />
+					DOJ <input type="date" name="empDate" class="form-control" />
+					DEPARTMENT <select name="empDept" class="form-control">
+						<option value="">--SELECT--</option>
+						<option th:each="dob:${deptList}" th:value="${dob}" th:text="${dob}"></option>
+					</select>
+					ADDRESS
+					<textarea name="empAddr" class="form-control"></textarea>
+					<button type="submit" class="btn btn-success">Create</button>
+				</form>
+			</div>
+			<div th:if="${message}" class="card-footer bg-info text-white text-center">
+				<b> [[${message}]] </b>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+
+=============EmployeeData.html===========================
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>WELCOME TO DATA PAGE</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h2>WELCOME TO EMPLOYEE DATA PAGE </h2>
+			</div>
+			<div class="card-body">
+				<table class="table table-hover">
+					<tr class="bg-info text-white">
+						<th>ID</th>
+						<th>NAME</th>
+						<th>GENDER</th>
+						<th>DOJ</th>
+						<th>SALARY</th>
+						<th>HRA/TA</th>
+						<th>DEPT</th>
+						<th>ADDRESS</th>
+						<th>OPERATIONS</th>
+					</tr>
+					<tr th:each="ob:${list}">
+						<td>[[${ob.empId}]]</td>
+						<td>[[${ob.empName}]]</td>
+						<td>[[${ob.empGen}]]</td>
+						<td>[[${ob.empDate}]]</td>
+						<td>[[${ob.empSal}]]</td>
+						<td>[[${ob.empHra}]] / [[${ob.empTa}]]</td>
+						<td>[[${ob.empDept}]]</td>
+						<td>[[${ob.empAddr}]]</td>
+						<td>
+							<a class="btn btn-danger" th:href="@{/employee/delete(id=${ob.empId})}">DELETE </a>
+							<a class="btn btn-warning" th:href="@{/employee/edit(id=${ob.empId})}"> EDIT</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div th:if="${message}" class="card-footer bg-success text-white text-center">
+				<b> [[${message}]] </b>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+===========================EmployeeEdit.html========================
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>WELCOME TO EMPLOYEE EDIT PAGE</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h2>WELCOME TO EMPLOYEE EDIT PAGE </h2>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/employee/update}" method="POST" th:object="${employee}">
+					ID <input type="text" th:field="*{empId}" class="form-control" readonly="true"/>
+					NAME <input type="text" th:field="*{empName}" class="form-control" />
+					GENDER <br/>
+					<input type="radio" th:field="*{empGen}" value="Male"/> Male
+					<input type="radio" th:field="*{empGen}" value="Female"/> Female <br/>
+					SALARY <input type="text" th:field="*{empSal}" class="form-control" />
+					DOJ <input type="date" th:field="*{empDate}" class="form-control" />
+					DEPARTMENT <select th:field="*{empDept}" class="form-control">
+						<option value="">--SELECT--</option>
+						<option th:each="dob:${deptList}" th:value="${dob}" th:text="${dob}"></option>
+					</select>
+					ADDRESS
+					<textarea th:field="*{empAddr}" class="form-control"></textarea>
+					<button type="submit" class="btn btn-success">UPDATE</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+===================================================================
+	Pagination using Spring boot Data JPA + Thymeleaf
+===================================================================
+Use PaginingAndSortingRepository method findAll(pageable):Page<T>
+
+Here Pageable means combination of page number and page size.
+We can use @PageableDefault to provide default values from application.
+
+Ex URL:
+http://localhost:9696/employee/all?page=1
+http://localhost:9696/employee/all?page=0&size=5
+
+*) Page numbers are Index numbers. So they starts from zero.
+
+At Data Page:
+
+<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><a class="page-link" th:if="${!page.isFirst()}" th:href="@{/employee/all(page=0)}">First</a></li>
+				<li class="page-item"><a class="page-link" th:if="${page.hasPrevious()}" th:href="@{/employee/all(page=${page.getNumber()-1})}">Previous</a></li>
+				
+				<th:block th:each="i: ${#numbers.sequence(0, page.getTotalPages()- 1)}">
+					<li class="page-item">
+						<a class="page-link" th:href="@{/employee/all(page=${i})}">[[${i+1}]]</a>
+					</li>
+				</th:block>
+				
+				<li class="page-item"><a class="page-link" th:if="${page.hasNext()}" th:href="@{/employee/all(page=${page.getNumber()+1})}">Next</a></li>
+				<li class="page-item"><a class="page-link" th:if="${!page.isLast()}" th:href="@{/employee/all(page=${page.getTotalPages()-1})}">Last</a></li>
+			</ul>
+		</nav>
+*) service interface
+Page<Employee> getAllEmployees(Pageable pageable);
+
+*) service impl
+public Page<Employee> getAllEmployees(Pageable pageable) {
+	Page<Employee> pages = repo.findAll(pageable);
+	return pages;
+}
+
+*) new Controller method 
+//.../all?page=3&size=10
+	@GetMapping("/all")
+	public String showData(
+			Model model,
+			@PageableDefault(page = 0, size = 3) Pageable pageable,
+			@RequestParam(value = "message", required = false) String message
+			) 
+	{
+		//List<Employee> list = service.getAllEmployees();
+		Page<Employee> page = service.getAllEmployees(pageable);
+		model.addAttribute("list", page.getContent());
+		model.addAttribute("page", page);
+		model.addAttribute("message", message);
+		return "EmployeeData";
+	}
+
+
+			 Date : 11-11-2022
+		    Spring Boot and Microservices			    
+		             Mr. Raghu
+			     (ASHOK IT)
+  ---------------------------------------------------------------------
+1. Switch-case using thymeleaf
+
+<div th:switch="input">
+
+ <div th:case="value1">
+    ....task todo
+ </div>     
+
+ .
+ .
+ .
+ .
+ <div case="*">   //like default
+  ...task todo
+ </div>
+</div>
+
+2. To modify background color "active" css class is used.
+
+			<th:block th:each="i: ${#numbers.sequence(0, page.getTotalPages()- 1)}">
+					<div th:switch="${i}">
+						<div th:case="${page.getNumber()}">
+							<li class="page-item active">
+								<a class="page-link" th:href="@{/employee/all(page=${i})}">[[${i+1}]]</a>
+							</li>
+						</div>
+
+						<div th:case="*">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/employee/all(page=${i})}">[[${i+1}]]</a>
+							</li>
+						</div>
+					</div>
+				</th:block>
+
+For totals (Code that I fouund and works):
+					<tfoot>
+						<tr>
+							<td><b th:text="${#aggregates.sum(depts.![deptId])}" /></td>
+							<td colspan="3" />
+						</tr>
+					</tfoot>
+=======================================================================
