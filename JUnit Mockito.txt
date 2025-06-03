@@ -1,0 +1,543 @@
+Unit Test: Testing A part of Application/ Module which is implemented
+		by a Programmer.
+
+Jenkins(CI/CD) --> Read Source Code from Github --> Download Jars -> Compile
+ -> Unit Test --> Build(.jar/.war) --> Deploy(server)
+
+*) Test applciation using code.
+*) JUnit [Test F/w] and Mockito [Mocking F/w]
+  JUnit-5 is used to check our actual code working or not?
+  But it may have some dependencies which are un-implemented
+  those can be mocked using Mocking F/w Mockito-4.
+
+Mocking can be done over - DB Connection, Server Setup, Request, Response,
+     Container Runtime, collection, class/object..etc
+==============================================================
+JUnit contains Test Methods, which are implemented using:
+JUnit Annotations : @Test, @BeforeEach, @AfterEach, @Ignore,..etc
+JUnit Assert API : assetEquals, assertTrue, assertNotNull
+  (assert -- expected)
+
+** JUnit will compare Expected Result with actual output and says
+    TEST PASS or FAIL.
+====================Basic JUnit Example===========================================
+1) pom.xml
+<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+	</dependencies>
+
+2. src/main/java  (Application code)
+package com.app.raghu;
+
+public class MathService {
+
+	public int add(int a, int b) {
+		return a + b;
+	}
+
+	public boolean isEven(int a) {
+		return a % 2 == 0;
+	}
+}
+
+3. src/test/java (JUnit test case)
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class MathServiceTest {
+	
+	MathService ms = null;
+	int expected ;
+	
+	@BeforeEach
+	public void setup() {
+		ms = new MathService();
+		expected = 30;
+	}
+
+	@Test
+	public void testAdd() {
+		int actual = ms.add(10, 20);
+		assertEquals(expected, actual);
+		boolean result = ms.isEven(51);
+		assertTrue(result);
+	}
+	
+	@AfterEach
+	public void clean() {
+		ms = null;
+	}
+}
+=====================================================================
+*) Mocking will not do Test, it creates Environment. 
+  Dummy objects, Dummy Logic, Dummy Request..etc 
+*) @Mock : Create Dummy object for given classes.
+   @InjectMocks: Will find all required objects for current clas object
+     and inject.
+
+*) By using Mocking we can define dummy implementation to a method.
+ Sample code
+
+   when(methodCall()).thenReturn(output)
+   when(methodCall()).thenThrow(exceptionObj)
+
+*) Mocking Environment is activated using 
+	@ExtendWith(MockitoExtension.class)
+
+----------SAMPLE CODE---------------------------------
+*) src/main/java
+package com.app.raghu;
+
+import java.sql.SQLException;
+import java.util.List;
+
+public class Repository {
+
+	public List<String> getData() throws SQLException {
+		return null;
+	}
+}
+------------------
+package com.app.raghu;
+
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Service {
+
+	private Repository repo;
+
+	public Service(Repository repo) {
+		this.repo = repo;
+	}
+
+	public List<String> getDataByLen() {
+		try {
+			return repo.getData().stream()
+					.filter(d -> d.length() < 5)
+					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			return Arrays.asList();
+		}
+		
+	}
+}
+
+===src/test/java======================
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+//Activate JUnit with Mock
+@ExtendWith(MockitoExtension.class)
+public class ServiceTest {
+
+	// One dummy object is created by Mockito
+	@Mock
+	private Repository repository;
+
+	// it will find all dependencies and inject them (like Autowired)
+	@InjectMocks
+	private Service service;
+
+	@Test
+	public void testSuccess() {
+		try {
+			// dummy implement given using Mocking
+			when(repository.getData()).thenReturn(Arrays.asList("A", "B", "RAGHU", "12345", "1234"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Test using JUnit
+		List<String> actual = service.getDataByLen();
+		assertNotNull(actual);
+		assertEquals(3, actual.size());
+	}
+
+	@Test
+	public void testException() {
+		try {
+			// dummy implement given using Mocking
+			when(repository.getData()).thenThrow(new SQLException("CONNECTION ISSUE"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// Test using JUnit
+		List<String> actual = service.getDataByLen();
+		assertNotNull(actual);
+		assertEquals(0, actual.size());
+	}
+
+}
+==================================================================
+
+
+			 Date : 07-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+JUnit 5.x: Testing API / assert our results / PASS/FAIL
+
+Mockito 4.x: Mocking API / Create Supported Environment / 
+	Dummy Objs, container, server, request..etc
+==========================================================================
+		Spring Boot Rest - Unit Testing
+
+*) Spring Boot provides by default all required dependencies(JARs)
+ for Unit testing using starter:
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-test</artifactId>
+</dependency>
+
+*) This starter provides all required jars for JUnit and Mockito setup
+   with Spring Boot Rest testing Environment.
+
+*) Spring Boot test F/w is used to create a Mock Request and execute with
+   application by creating Mocked Container setup, check finally
+   respose with assertAPI.
+  (This request is not coming from actual client/browser)
+
+=======================2 steps====================================
+1. Create Test Environment using Mocking.
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+=> Activates Server/Container setup to start application (Like Main class work)
+
+@AutoConfigureMockMvc
+=> Activates MVC/HTTP protocol and annotations @RequestBody, @RestController
+
+@TestPropertySource("classpath:application.properties")
+=> Load External Properties file (with any name)
+*) Even if we do not provide, default application.properties is loaded.
+
+2. Test each Rest Method using Mock Request.
+=> Here A Request is created of Type HttpServletRequest
+   by using Builder pattern with Mocking type.
+
+=> here we need to provide HttpMethod (POST), URL, Headers and Body.
+Ex#1
+	MockHttpServletRequestBuilder request = 
+		MockMvcRequestBuilders.post("/product/create")
+		.contentType("application/json")
+		.content("{\"pname\":\"A\",\"cost\":200}");
+
+Ex#2
+    MockHttpServletRequestBuilder request = 
+               MockMvcRequestBuilders.get("/product/all")
+	       .accept("application/xml");
+
+*) To execute request we need container (ApplicationContext) for that
+   we use MockMvc Which is internally Mocked "webAppContextSetup"
+
+======================================================================
+*) under src/test/java , one default class is given , just modify that as
+
+
+
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:application.properties")
+public class SpringBootRestCrudMySqlExApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+	
+	/** 
+	 * Test save Operation
+	 */
+	@Test
+	@Disabled
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS")
+	@Order(1)
+	public void testCreateStudent() 
+		throws Exception
+	{
+		//1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request =
+				MockMvcRequestBuilders.post("http://localhost:9690/v1/api/student/create")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+		
+		//2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+		
+		//3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+		
+		//4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if(! response.getContentAsString().contains("CREATED")) {
+			fail("STUDENT NOT CREATED!!");
+		}
+		
+	}
+	
+	//This is short format
+	@Test
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS IN SHORT")
+	@Order(1)
+	public void testCreateStudentShort() 
+		throws Exception
+	{
+		
+		mockMvc.perform(
+				post("http://localhost:9690/v1/api/student/create")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}"))
+		.andExpect(
+				status().isCreated()			
+				);
+		
+		
+	}
+
+}
+
+
+			 Date : 09-12-2022
+		    Spring Boot and Microservices
+			7AM | Mr. Raghu | (ASHOK IT)
+  ---------------------------------------------------------------------
+			Spring Boot Unit Testing
+
+MvcResult: It is a Wrapper Type class object that holds details of
+  " Request + Response + Exception (if raised) "
+
+*) Here, Request --> MockHttpServletRequestBuilder.
+         Response --> MockHttpServletResponseBuilder
+	 Exception -> Throwable type.
+
+*) Once we get Response after executing request, always result
+   -> http status
+   -> content-type
+   -> content-size
+   -> other ouput(messages, list empty or not?)
+
+==================test class full code=========================
+package com.app.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:application.properties")
+public class SpringBootRestCrudMySqlExApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	/**
+	 * Test save Operation
+	 */
+	@Test
+	// @Disabled -- Skip the test method
+	@DisplayName("TESTING STUDENT SAVE OPERATIONS")
+	@Order(1)
+	public void testCreateStudent() throws Exception {
+		// 1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.post("http://localhost:9690/v1/api/student/create").contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+
+		// 2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if (!response.getContentAsString().contains("CREATED")) {
+			fail("STUDENT NOT CREATED!!");
+		}
+
+	}
+
+	// This is short format
+	/*
+	 * @Test
+	 * 
+	 * @DisplayName("TESTING STUDENT SAVE OPERATIONS IN SHORT")
+	 * 
+	 * @Order(1) public void testCreateStudentShort() throws Exception {
+	 * 
+	 * mockMvc.perform( post("http://localhost:9690/v1/api/student/create")
+	 * .contentType(MediaType.APPLICATION_JSON)
+	 * .content("{\"stdName\":\"AJAY\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}"
+	 * )) .andExpect( status().isCreated() );
+	 * 
+	 * 
+	 * }
+	 */
+
+	@Test
+	@Order(2)
+	@DisplayName("GET ALL STUDENTS")
+	public void testGetAllStudents() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("http://localhost:9690/v1/api/student/all");
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+
+	}
+
+	@Test
+	@Order(3)
+	@DisplayName("GET ONE STUDENT BY ID")
+	public void testGetOneStudent() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(
+				"http://localhost:9690/v1/api/student/find/{id}",1);
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+	}
+
+	@Test
+	@DisplayName("TESTING STUDENT UPDATE OPERATIONS")
+	@Order(4)
+	public void testupdateStudent() throws Exception {
+		// 1. CREATE MOCKED REQUEST
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put("http://localhost:9690/v1/api/student/modify")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"stdId\":1,\"stdName\":\"AA\",\"stdGen\":\"Male\",\"stdCourse\":\"JAVA\",\"stdAddr\":\"HYD IND\"}");
+
+		// 2. EXECUTE IT AND READ RESULT(REQUEST + RESPONSE + EXCEPTION)
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. READ RESPONSE FROM RESULT
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. ASSERT RESULT USING JUNIT
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if (!response.getContentAsString().contains("UPDATED")) {
+			fail("STUDENT NOT UPDATED!!");
+		}
+
+	}
+	
+	
+	@Test
+	@Order(5)
+	@DisplayName("TEST DELETE STUDENT BY ID")
+	public void testDeleteStudent() throws Exception {
+		// 1. create request
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(
+				"http://localhost:9690/v1/api/student/remove/{id}",1);
+
+		// 2. execute it
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		// 3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		// 4. assert result
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+	}
+}
+=======================================================================

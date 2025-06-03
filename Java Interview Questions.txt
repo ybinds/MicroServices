@@ -1,0 +1,39 @@
+1. What are all the different ways to create an object in Java? Or How to create an object in java without using a new Keyword? Or
+In which way of Object creating the constructor does not get called?
+Ans:
+	1. Using new Keyword ex. Student s = new Student();
+		This method calls Student class default constructor
+	2. Using newInstance() method of Class class which is available in java.lang.Class package
+		ex. Student s = (Student) Class.forName("test.Student").newInstance(); 
+		or Student s = Student.class.newInstance()
+		The above lines throws ClassNotFoundException, InstantiationException, IllegalAccessException
+		The above method also calls Student default constructor
+		This method internally calls the Constructor class newInstance method to create the object. So it is preferred to use Constructor class 
+		newInstance() method.
+	3. Using newInstance() method of Constructor Class
+		There is a newInstance() method in java.lang.reflect.Constructor class. Using this you can create an Object
+		Differences between
+		Class.newInstance()								Constructor.newInstance()
+		1. This can only invoke the no-arg constructor				1. This can invoke any constructor (any args or no-arg)
+		2. This requires the constructor to be visible (public)		2. This can invoke private constructors also in certain cases
+		3. This throws any kind of exception thrown by the constructor	3. This always wraps the thrown exception with an InvocationTargetException
+		Constructor.newInstance() is widely used in frameworks. This way of object creation is called reflective way of object creation in java.
+		ex. Constructor<Student> constructor = Student.class.getConstructor(); // throws NoSuchMethodException, SecurityException
+		    Student s = constructor.newInstance();  	// IllegalArgumentException
+		Even this method calls default constructor
+	4. By using java clone() method (What is Object cloning in Java and How to create Object with clone()?
+		Coyping of contents of one object to another object is called cloning. But their references are different/two different addresses.
+		For the object to be cloned, you need to implement Cloneable interface and override the clone method in the Student class. 
+		Student student = (Student)s.clone(); //throws CloneNotSupportedException and here s is a Student Object
+		This method does not invoke the constructor
+	5. By using Deserialization
+		ex. Serialize and Deserialize
+			FileOutputStream fos = new FileOutputStream("test.txt");
+		    	ObjectOutputStream oos = new ObjectOutputStream(fos);
+		    	Student s = new Student();
+		    	oos.writeObject(s);
+
+			FileInputStream fis = new FileInputStream("test.txt");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Student s = (Student)ois.readObject();
+		This method also does not call constructor.

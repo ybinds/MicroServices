@@ -1,0 +1,12 @@
+1. Why do we need Comparator or Comparable?
+Ans: Arrays.sort cannot sort custom objects like Student, Employee etc., like it does with primitive types like int, double etc.,
+
+2. What is the difference between Comparator and Comparable
+Ans: Comparable is a functional interface that has one abstract method which is compareTo. In order to sort an array of custom objects
+you can implement Comparable interface and override compareTo method in the class and then you can sort the array based on the property 
+you used in compareTo method. For ex.
+
+public int compareTo(Employee e){
+	return thid.id - e.id;
+}
+

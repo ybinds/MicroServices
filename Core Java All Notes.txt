@@ -1,0 +1,4491 @@
+================
+What is Fullstack
+=================
+
+Fullstack Development = Frontend Development + Backend Development
+
+
+Frontend : User interface 
+
+-> Clients / Users will interact with s/w application using frontend 
+
+Backend : The hidden part of our application which contains business logic
+
+-> When use perform some operation on frontend then backend logic will execute to handle that operation
+
+-> The programmer who can develop frontend and backend of application is called as fullstack developer
+
+=====================
+Frontend Technologies
+=====================
+HTML & CSS
+Java script
+Bootstap
+Angular 
+React
+
+
+===================
+Backend Technologies
+====================
+Java
+Python
+PHP
+.Net
+Node JS
+
+===============
+Servers
+===============
+Tomcat
+JBoss
+Glassfish
+Oracle Weblogic 
+IBM WebSphere
+IIS
+
+===========
+Databases
+===========
+Oracle
+MySQL
+SQL Server
+Postgres
+Mongo DB
+Casandra
+Hbase
+Hive
+
+========
+Tools
+=========
+Git Hub : For Code Integration
+
+JIRA : Project Management / Bug Tracking / Work Assignment
+
+SonarQube : For Code Quality Checking
+
+JUnit : For Unit Testing
+
+JMETER : For Performance Testing 
+
+JENKINS : For Deployment (Automated Deployment)
+
+==========
+Cloud
+===========
+Amazon  ---> AWS
+Microsoft  ---> Azure
+Google -----> GCP
+Oracle Cloud
+IBM Cloud
+VM Ware Cloud
+Alibaba CLoud etc.....
+
+=======================================
+Roles & Responsibilities of Fullstack Developer
+=======================================
+
+1) Understand Requirements of Project
+2) Analyze requirements 
+3) Design / Planning
+4) Database Design
+5) Development (Backend development)
+6) Unit Testing
+7) Code Review
+8) Code Integration (Git Hub)
+9) Frontend Development
+10) Frontend + Backend Integration
+11) Deployment
+12) Support / Maintenence
+
+===========
+What is Java 
+===========
+
+-> Java is a  programming language
+
+-> Java language developed by Sun Microsystem in 1991  (OAK)
+
+-> James Gosling is the lead for the team who developed Java Language
+
+-> The first version of java came into market in 1995 
+
+Note: Oracle Corporation acquired Sun Microsystem
+
+-> Now java is under license of Oracle corporation
+
+-> Java is a free software & open source
+
+
+=======================
+Java is divided into 3 parts
+=======================
+
+1) J2SE 
+2) J2EE 
+3) J2ME 
+
+
+J2SE / JSE  ---> JAVA STANDARD EDITION
+
+		-> STAND-ALONE APPS
+		-> RUNS ONLY IN ONE MACHINE
+
+		EX: CALC, GAMES, NOTEPAD ETC......
+
+
+J2EE / JEE ---> JAVA ENTERPRISE EDITION
+
+
+		-> web applications
+
+		-> Everybody can access web applications using internet
+
+		ex: gmail, youtube, facebook, naukri, irctc etc.........
+
+
+J2ME / JME ---> JAVA MICRO / MOBILE EDITION
+
+		 -> Mobile apps
+
+		Ex: whatsapp, messgender, phonepay, gpay etc.....
+
+=======================
+What we can do using Java
+=======================
+
+1) Stand-alone applications
+
+2) Web applications
+
+3) Mobile Applications
+
+
+==============
+Java Features
+==============
+
+1) Simple : The complex topics of C & C++ are eliminated in Java
+
+	Ex: Operators overloading, pointers, memory mgmt etc...
+
+2) Platform Independent
+
+	-> Java programs can be executed on any machine
+	-> JVM made java as platform independent
+	-> JVM stands for Java Virtual Machine
+	-> JVM is responsible to run/execute java programs
+
+3) Robust (Strong)
+
+	-> Automatic Memory Management
+	-> Exception Handling
+
+4) OOPS (Object Oriented Programming System)
+
+	-> Everything will be represented in objects format
+	-> Code Re-Usability
+
+5) Secure
+
+6) Distributed 
+
+7) Portable
+
+8) Dynamic
+
+Java Slogan : WORA (Write Once Run Anywhere)
+
+==================
+Environment Setup
+==================
+
+1) Download and Install Java Software
+
+		- JDK (Java Development Kit)
+		- JRE (Java Runtime Environment)
+
+Q) What is the difference between JDK, JRE & JVM ?
+
+		- JDK contains set of tools to develop java programs
+		- JRE providing a platform to run our java programs
+		- JVM will take care of program execution
+
+2) Set Path for Java
+
+		Path = C:\Program Files\Java\jdk1.8.0_202\bin
+	
+		-> Go To Environment Variables
+		-> Go To System Environment Variables
+		-> Edit Path
+		-> Add JDK BIN path
+
+
+=========================
+Java Programs Development
+========================
+
+-> We can write java programs in any text editor
+
+			- Note Pad
+			- Note Pad++
+			- Edit Plus
+
+-> In companies we will use IDE to develop java programs/projects
+
+			- Integrated Development Environment
+
+					- Eclipse
+				        - MyEclipse
+				        - Netbeans
+					- STS (Spring Tool Suite)
+					- IntelliJ
+
+========================
+Java Program Structure
+=========================
+
+package statements
+
+import statements
+
+class declaration
+
+variables
+
+methods
+
+
+
+-----------hello.java---------
+class hello {
+
+ public static void main(String... args) {
+     System.out.println("Welcome To Ashok IT...!!");
+
+    System.out.println("Welcome to Java");
+ }
+
+}
+----------------------------
+
+javac hello.java
+
+java hello
+
+---------------------------
+class demo {
+ 
+   public static void main (String... args){
+		System.out.println("Hello World");
+	      System.out.println("Welcome to Java");
+   }
+}
+
+-----------------------------------
+
+-> javac means java compiler which is used to compile java programs
+
+-> java compiler is called as translator
+
+
+===============
+Translators
+===============
+
+-> It is used to convert from one format to antoher format
+
+-> 3 types of translators available
+
+		1) Interpreter
+	
+		2) Compiler
+
+		3) Assembler
+
+
+->  Interpreter will convert the program line by line  ( performance is slow )
+
+-> Compiler will convert all the lines of program at a time ( performance is fast )
+
+-> Assembler is used to convert assembler programming languages into machine language
+
+
+========
+JVM
+========
+
+-> JVM stands for Java Virtual Machine (We can't see with our eyes)
+
+-> JVM will be part of JRE
+
+-> JVM is responsible for executing java programs
+
+-> JVM will allocate memory required for program execution & de-allocate memory when it is not used
+
+-> JVM will convert byte code into machine understandable format
+
+
+================
+JVM Architecture
+===============
+
+1) Classloader subsystem : It will load .class file into JVM
+
+2) Method Area   : Class code will be stored here
+
+3) Heap area : Objects will be stored into heap area
+
+4) Java Stack : Method execution information will be stored here
+
+5) PC Register : It will maintain next line information to execute
+
+6) Native Stack : It will maintain non-java code execution information
+
+7) Execution Engine   ( Interpreter + JIT ) : It is responsible to execute the program and provide output/result
+
+8) Native Interface : It will load native libraries into jvm
+
+9) Native Libraries : Non-java libraries which are required for native code execution
+
+
+=======
+variables
+========
+
+-> variables are used to store the data
+
+			name   -  ashok
+       
+                        age - 30
+
+                        gender - m
+
+                        isStudent - false
+
+			mysalary - 400.56
+
+
+-> We need to specify type of the variable to store the data
+
+-> To specify type of data we will use 'data types'
+
+
+=========
+data types
+=========
+
+-> Data types are used to specify type of the data
+
+-> Data types are divided into 2 categories
+
+1) Primitive / Pre-Defined Data Types 
+
+		1) Integral
+				- byte
+				- short
+				- int
+				- long
+
+		2) Decimal
+				- float
+				- double
+
+		3) Character
+				- char
+
+		4) Boolean
+			       - boolean
+
+2)  Non-Primitive / Referenced Data Types
+
+			- Arrays
+			- Strings
+			- Classes
+
+
+================
+Integral data types
+=================
+
+--> Integral data types are used to store numbers without decimal points
+
+-->  We can store both positive and negative numbers using integral data types
+
+
+Ex:
+
+age = 30
+
+phno = 66868686868
+
+studentscnt = 40
+
+balance = - 3000
+
+-> We have 4 data types in this category
+
+-> For These 4 data types memory & range is different
+
+		1)  byte   ----> default value is 0  ----> 1 byte
+
+		2)  short	----> default value is 0  ----> 2 bytes
+	
+		3)  int    ----> default value is 0  ----> 4 bytes
+
+		4)  long   ----> default value is 0l   ----> 8 bytes
+
+
+=================
+Decimal data types
+==================
+
+-> Decimal data types are used to store numbers with decimal values
+
+-> We can store both postive and negative values
+
+
+Ex: 
+
+petrol price  = 110.567979
+stockPrice = 334.3279797979797979
+percentage = 9.8
+weight = 55.6
+height = 5.6
+length = 10.2
+
+-> In this category we have 2 data types
+
+			1) float   ----> 4 bytes ---> upto 6 decimal points
+
+			2) double  -----> 8 bytes  --> upto 15 decimal points
+
+
+================
+character data type
+=================
+
+-> Character data type is used to store single character
+
+-> Any single character ( alphbet / digit / special character ) we can store using 'char' data type
+
+-> char datatype will occupy 2 bytes of memory
+
+-> When we are storing data into 'char' data type  single quote is mandatory
+
+-> default value is 'u0002'
+
+gender = 'm'
+
+rank = '1'
+
+Note: In C language 'char' will take only 1 byte where as in java 'char' will take 2 bytes
+
+==============
+boolean data type
+==============
+
+-> It is used to store true or false values only
+
+-> It will occupy 1 bit memory
+
+Note:  8 bits = 1 byte
+
+-> default value for boolean is false
+
+Ex:
+
+isPass;
+isFail
+isMarried
+isOdd
+isEven
+
+
+===========
+Variables
+===========
+->  Variables are used to store the data / value
+
+-> To store the data into variable we need to specify data type
+
+-> To store data into variables we need to perform 2 steps
+
+			1)  Variable Declaration  (defining variable with data type)
+
+				Ex:     byte age ;
+
+			2) Variable Intialization (storing value into variable)
+
+				Ex:   age = abc;
+
+
+-> We can complete declaration and intialization in single line
+
+					byte age = 20;
+
+
+=============================== Variables Program ==================================
+
+class var {
+
+      public static void main (String... args) {
+
+			int age = 20;
+			System.out.println(age);
+
+			float a = 25.01f;
+			System.out.println(a);
+
+			double price = 120.87;
+			System.out.println(price);
+	
+			char gender = 'm';
+			System.out.println(gender);
+		
+			boolean pass = true;
+			System.out.println(pass);
+					
+      }
+}
+
+
+
+1) Identifiers
+
+2) Keywords
+
+3) Java Naming Conventions
+
+
+===========
+Identifiers
+==========
+
+-> All java components requires a name
+
+-> For variables, for classes and for methods we need a name
+
+			int age ;
+
+			class Hello {
+				// code 
+			}
+
+			main ( ) {
+				//logic
+			}
+
+
+-> The name which we are using for packages, variables, classes  & methods is  called as identifier
+
+-> We can use any name for identifiers but we need to follow below rules to work with identifiers
+
+Rule-1 : Java will allow only below characters for identifiers
+
+				1) a - z
+				2) A - Z
+				3) 0 to 9
+				4) $ (dollar)
+				5) _ (underscore)
+
+		Ex:
+
+				name   -----> valid
+				name@ -----> invalid
+				age#   ------> invalid
+
+Rule-2  : Identifier should not start with digit (first character shouldn't be digit)
+
+				1age --------> invalid
+				age2  ------> valid				
+				name3  -----> valid
+				_name -----> valid
+				$name ------> valid
+				@name ------> invalid
+				$_amt   --------> valid
+				_1bill -----------> valid
+
+Rule-3 :  Java reserved words shouldn't be used as identifier   (53 reserved words)
+
+					int byte = 20;    -------> invalid bcz byte is a reserved word
+
+					byte for = 25;   -------> invalid bcz for is a reserved word
+
+					int try = 30; 	------> invalid bcz try is a reserved word
+
+					long phno = 797979799 -----> valid
+			
+
+Rule-4 : Spaces are not allowed in identifiers
+
+				int mobile bill = 400;   // invalid
+
+				int mobile_bill = 400 ;   // valid
+
+
+Rule-5 : Java is case sensitive language 'name' & 'NAME' both are not same
+
+
+==============================================
+Java Naming Conventions  ( Java Coding Standards )
+===============================================
+
+-> Java language followed some standards/conventions for pre-defined packages, classes and methods....
+
+-> Java language suggested java programmers also to follow same standards / conventions
+
+-> Following these standards/conventions is not mandatory but highly recommended.
+
+===============================
+Naming Convention For Class Name
+===============================
+
+-> A class name can contain any no.of words without spaces
+-> Recommended to write every word first character as uppercase in class name
+
+Examples:
+
+class Hello  {
+}
+
+class HelloWorld {
+}
+
+class UserManagementService{
+}
+
+class WelcomeRestController {
+}
+
+Note: Class Names & Interface Names conventions are same.
+
+=========================
+Variables Naming Convention
+=========================
+
+-> Variable name can have any no.of words without spaces
+
+-> Recommended to start variable name with lowercase letter
+
+-> If variable name contains multiple words then recommended to write firstword all characters in lowercase and from second word onwards every word first character in Uppercase
+
+Examples:
+
+int age ;
+
+int  userAge;
+
+long creditCardNumber ;
+
+=========================
+Method Naming Convention
+=========================
+
+> Method name can have any no.of words without spaces
+
+-> Recommended to start method name with lowercase letter
+
+-> If method name contains multiple words then recommended to write firstword all characters in lowercase and from second word onwards every word first character in Uppercase
+
+main ( )  {
+}
+
+save ( ) {
+
+}
+
+saveUser( ) {
+
+}
+
+getWelcomeMsg ( ) {
+
+}
+
+
+Note: Variables & Methods naming conventions are same. But methods will have parenthesis ( () ) variables will not have parenthesis.
+
+
+==============================
+Naming Conventions for Constants
+=============================
+
+-> Constant means fixed value (value will not change, it is fixed)
+
+-> Recommended to write constant variable all characters in uppercase
+
+-> If constant variable contains multiple words recommended to use _ (underscore) with all uppercase characters
+
+
+		final int MIN_AGE = 21;
+
+		final int MAX_AGE = 60 ;
+
+		int PI = 3.14;
+
+
+===============================
+Naming Conventions for Packages
+==============================
+
+-> Package name can have any no.of characters & any of words
+
+-> Recommended to use only lowercase letters in package names
+
+-> If package name conatins multiple words then we will use . (dot) to seperate words
+
+Eamples:
+
+java.lang
+java.io
+java.util
+in.ashokit
+com.oracle
+com.ibm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==========
+Chaper-1
+==========
+
+1) What is Java
+2) Java Features
+3) Java Environment Setup
+4) JDK vs JRE vs JVM
+5) Java Programs Execution Flow
+6) Java Programs Development (Compilation & Execution)
+7) Variables
+8) Data Types
+9) Identifiers
+10) Reserved Words (53)
+11) Java Coding Standards (Naming Conventions)
+12) Java Comments
+
+
+
+
+
+
+======================================
+Chapter-2 : Operators & Control Statements
+======================================
+
+==========
+Operators
+==========
+
+-> Operator is a symbol which performs some operation on operands
+
+			int a  = 10 ;
+
+			int b = 20 ;
+
+			int c = a + b;
+
+-> We have below operators in java
+
+				1) Arithematic Operators
+				2) Logical Operators
+				3) Relational Operators
+				4) Assignment Operators
+				5) new operator
+				6) dot (.)  operator
+				7) ternary operator ( Conditional Operator )
+
+
+-> Arithmetic Operators are used to perform Arithmetic Operations ( Calculations )
+
+				1) Addition -----> +
+				2) Subtraction ---->  -
+				3) Division ------------>  /  ( quotient)
+				4) Multiplication ----------> *
+				5) Modulus ---------> %  (reminder)
+				
+				6) Increment -------> ++
+				7) Decrement ------> --			
+					
+
+--> Increment ( ++ ) is used to increase the value of variable by 1
+
+-> Increment is divided into 2 types
+
+			1) Post Increment   ( a ++ )
+			2) Pre Increment  ( ++ a)
+
+--> Decrement ( -- ) is used to decrease the value of variable by 1
+
+-> Decrement is divided into 2 types
+
+			1) Post Decrement ( a -- )
+
+			2) Pre-Decrement ( --a )
+
+
+
+class PostIncrement {
+
+   public static void main(String... args){
+			
+			int a = 5;
+
+			System.out.println(a++); // it will print 5 then it will become 6
+
+			a++;  // it will become 7
+
+			System.out.println(a++); // it will print 7 then it will become 8
+
+			System.out.println(a); // it will print 8 
+   }
+
+}
+
+
+class PreIncrement {
+
+   public static void main(String... args){
+			
+			int a = 5;
+			System.out.println ( ++ a );  // it will become 6 then it will print
+
+			++ a ;  // it will become 7
+
+			System.out.println(++a);  // it will become 8 then it will print
+
+			System.out.println(a); // it will print 8
+   }
+
+}
+
+
+class PostPreIncrement {
+
+   public static void main(String... args){			
+			int a = 5;
+			
+			int b = ++a  + a++ + a++  + ++a;
+
+			// int b = 6 + 6 + 7 + 9 ==> 28
+			System.out.println(b);
+   }
+}
+
+
+class Decrement {
+
+   public static void main(String... args){			
+			int a = 5;			
+			System.out.println( a -- );  // it will print 5 then it will become 4
+			System.out.println( -- a);  // it will become 3 then it will print 3
+   }
+}
+
+class PostPreDecrement {
+
+   public static void main(String... args){			
+			int a = 5;			
+			int b =  a-- + --a + a--;
+
+			// int b = 5 + 3 + 3
+			System.out.println ( b );
+   }
+}
+
+===================
+Relational Operators
+=====================
+
+-> Relations Operators are used to check relation between two Operands
+
+> , < , >= , <=, !=, ==
+
+================
+Logical Operators
+================
+
+-> To check more than one condition then we will use Logical operators
+
+AND  ---->  &&
+
+OR -----> ||
+
+NOT -----> !
+
+
+=====================
+Assignment Operator
+======================
+
+-> Equals ( = ) is called as assignment operator
+
+-> It is used to assign the value for a variable
+
+		int a  = 10 ;
+
+===============
+new operator
+===============
+
+-> It is used to create the object for a class
+
+		ClassName refVar = new ClassName  (  );
+
+Note: Creating object means allocating memory in heap area
+
+=================
+Dot (.) Operator
+=================
+
+-> Dot operator is used to access class variables & methods
+
+System.out.println ( );
+
+
+java.lang.String
+
+java.util.ArrayList
+
+==================================
+Ternary Operator / Conditional Operator
+==================================
+
+
+-> Ternary operator is used for decision making
+
+Syntax:
+
+	
+		( condition ) ? expression-1 : expression-2
+
+
+-> If condition satisifed then expression-1 will execute otherwise expression-2 will execute
+
+
+
+==================
+instanceof operator
+==================
+
+- > It is used to check object reference belong to a class or not
+
+
+		String str = "ashokit";
+
+		if (str instanceof String ) {
+			//logic
+		}
+
+================
+Control Statements
+================
+-> Java program code will execute line by line sequentially (this is default behaviour)
+-> In project code should execute based on user operation
+-> To satisfy user requirement our code should execute based on some conditions
+->  Using Control Statements we can control program execution flow
+-> Control Statements are divided into 3 types
+
+	1) Decision Making Statements  / Conditional Statements
+	2) Looping Statemetns
+	3) Transfer / Branching Statements
+
+=====================
+Conditional Statements
+=====================
+
+=> Execute the code only once based on condition
+
+
+1) simple if
+2) if - else 
+3) if - else - if - else -if - else (if else ladder)
+4) switch
+
+=================
+Looping Statements
+==================
+
+=> To execute the code repeatedly
+
+1) while loop
+2) do-while loop
+3) for loop
+4) for-each loop
+
+===========================
+Branching / Transfer Statements
+============================
+
+1) break;
+2) continue;
+3) return
+
+
+
+
+
+===========
+Simple if
+===========
+
+-> To execute the statemetns based on condition
+
+syntax
+-------------
+if ( condition ) 
+{
+    // stmt - 1
+    // stmt - 2
+    // stmt - 3
+}
+
+or
+
+if (condition )
+    //stmt
+
+------------------------------------
+class SimpleIf{
+
+   public static void main(String... args){
+			int a = 100;
+
+			int b = 20;
+
+			if( a > b ) {
+				System.out.println("a is greater than b"); 
+				System.out.println("Completed"); 
+			}
+			System.out.println("Bye");
+   }
+}
+---------------------
+
+class IfElseDemo {
+
+      public static void main (String... args){	
+			int age = 16 ;
+
+			if ( age >= 18 ) {
+				System.out.println("Eligible For Vote") ;
+			} else {
+				System.out.println("Not eligible for Vote");
+			}
+      }
+}
+
+-------------------
+Requirement : 
+-----------------------
+int  a = 20;
+
+if a > 0 -----> display msg as 'a is positive number'
+
+if a < 0 ----> display msg as 'a is negative number'
+
+When above both conditions are failed then display msg as 'a is zero'
+
+----------
+syntax
+---------
+
+if ( condition_1 ) {
+		// stmt - 1
+} else if ( condition_2 ) {
+		// stmt - 2
+} else  if ( condition_3 ) { 
+		//stmt - 3
+} else {
+	 	//stmt-4
+}
+
+
+-> if condition_1 is pass then it will execute only stmt-1
+
+-> if condition_1 is fail then it will check condition_2
+
+-> If condition_2 is pass then it will execute only stmt-2
+
+-> If condition_2 is fail then it will check condition_3
+
+-> If condition_3 is pass then it will execute only stmt-3
+
+-> If condition_3 is fail then directley stmt-4 will be executed
+
+--------------------------------------------------------------------------
+class IfElseLadderDemo {
+
+	public static void main(String... args){
+			
+			int a = 0;
+
+			if( a > 0) {
+				System.out.println(" a is positive number ");
+			} else if ( a < 0 ) {
+				System.out.println("a is negative number");
+			} else { 
+				System.out.println("a is zero");
+			}
+		}
+}
+----------------------------------------------------------------------------------------------------------------------------------------------
+Assignment : Develop a java program to decide role of software engineer based on his/her experience
+-----------------------------------------------------------------------------------------------------------------------------------------------
+0 - 2  year exp  -----> Associate Engineer
+
+3 - 5 years exp -----> Software Engineer
+
+6 - 9 years exp -----> Sr.Software Engineer
+
+10 - 13 years exp ----> Manager
+
+------------------------------------------------------------------------------------------------
+
+class RoleFinder {
+
+	public static void main(String... args) {
+
+			int exp = 13;
+
+			if( exp >= 0 && exp <= 2 ){
+					System.out.println("Associate Engineer");
+			}else if ( exp >= 3 && exp <=5 ){
+					System.out.println("Software Engineer");
+			}else if(  exp >= 6 && exp <=9 ){
+					System.out.println("Sr. Software Engineer");
+			}else if( exp >= 10 && exp <=13 ){
+					System.out.println("Manager");
+			}else {
+					System.out.println("Role Not Found");
+			}
+
+      }
+}
+
+
+=> In above program we have hardcoded value for the variable
+=> If we want to test our program with different values we need compile and execute every time
+=> To overcome this problem we can read the data from keyboard
+
+===================================
+How to read data from keyboard In Java
+===================================
+
+1) BufferedReader    ( java.io )
+
+2) Scanner ( java.util )
+
+3) Command Line Arguments (input for main method)
+
+
+---------------------BufferedReader Program-----------------------
+import java.io.*;
+
+class RoleFinder {
+
+	public static void main(String... args)  throws Exception {
+			
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+			String str = br.readLine ( );
+			int exp = Integer.parseInt(str);
+
+			if( exp >= 0 && exp <= 2 ){
+					System.out.println("Associate Engineer");
+			}else if ( exp >= 3 && exp <=5 ){
+					System.out.println("Software Engineer");
+			}else if(  exp >= 6 && exp <=9 ){
+					System.out.println("Sr. Software Engineer");
+			}else if( exp >= 10 && exp <=13 ){
+					System.out.println("Manager");
+			}else {
+					System.out.println("Role Not Found");
+			}
+
+      }
+}
+------------------------------------------------------------------------------------------------
+Requirement : Write a java program to find given number is odd or even
+Note: Read number from keyboard
+------------------------------------------------------------------------------------------------------
+import java.io.*;
+
+class OddOrEven {
+
+    public static void main(String... args) throws Exception {
+
+			InputStreamReader isr = new InputStreamReader(System.in);
+
+			BufferedReader br = new BufferedReader ( isr );
+			System.out.println("Enter Number");
+
+			String str = br.readLine ( );
+
+			int num = Integer.parseInt (str);	
+		
+			if( num % 2 == 0){
+				System.out.println("It is even");
+			}else{
+				System.out.println("It is odd");
+			}
+    }
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------
+Assignment -1 : Write a java program to check given number is a prime number or not
+
+Assignment -2 : Write a java program to check given year is a leap year or not
+-------------------------------------------------------------------------------------------------------------------------
+=============
+swtich case
+==============
+
+-> Using switch case we can make decision
+
+-> When we have upto 5 conditions test then if-else is recommended
+
+-> When we have 10 or 20 conditions to test then switch is recommended
+
+syntax
+----------
+
+switch ( case ) {
+
+case 1 :  // stmt - 1
+	break;
+
+case 2 : // stmt - 2
+	break;
+case 3 : // stmt - 3
+	break;
+...
+default : // stmt - default
+
+}
+
+-------------------------------------------------------------------------------------------------------
+
+Requirement : Write a java program to read a number from keyboard.
+
+Based on the given number print week of the day using 'switch' case
+
+1 - Monday
+2 - Tuesday
+3 - Wednesday
+4 - Thursday
+5- Friday
+6 - Saturday
+7 - Sunday
+>7 - No day found
+-------------------------------------------------------------------------------------------
+
+import java.io.*;
+
+class WeekDay {
+
+	public static void main(String... args) throws Exception {
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br  = new BufferedReader(isr);
+
+		System.out.println("Enter number");
+		String str = br.readLine ( );
+
+		int num = Integer.parseInt(str);
+
+		switch ( num ) {
+			case 1 : System.out.println("Monday");
+		  			 break;
+
+			case 2 : System.out.println("Tuesday");
+					  break;
+
+			case 3 : System.out.println("Wednesday");
+					 break;
+
+			case 4 : System.out.println("Thursday");
+					  break;
+
+			case 5 : System.out.println("Friday");
+					 break;			
+
+			case 6 : System.out.println("Saturday");
+					  break;
+
+			case 7 : System.out.println("Sunday");
+					 break;	
+
+			default : System.out.println("Day not found");
+		}
+
+	}
+}
+-----------------------------------------------------------------------------------------
+
+1) simple if
+
+2) if - else
+
+3) if - else if - else
+
+4) switch
+
+===========
+Conclusion
+===========
+
+1) 'if' accepts only boolean value (or) boolean expression 
+
+2) 'switch' accepts numbers, char & strings (added in java 1.7v)
+
+3) switch will not accept boolean and decimal values
+
+4) switch cases should belongs to same type
+
+5) switch case datatype and switch case input value should belongs to same datatype
+
+6) 'default' case is optional in 'switch case' 
+
+7) 'break' keyword is also optional in 'switch case'
+
+
+
+
+
+==================
+Loops  in Java
+==================
+-> Loops are used to execute statements repeatedly
+
+-> In java we have below loops
+
+1) while loop
+2) do-while loop
+3) for loop
+4) for-each loop  (arrays & collections)
+
+==================
+While loop
+==================
+-> While loop is used to execute statements until condition is true
+
+-> while loop is called as conditional based loop
+
+-> If condition is true then loop statments will execute otherwise loop will be terminated
+
+syntax
+----------
+while ( condition ){
+	//stmts
+}
+
+Q) Write a java program to print numbers from 1 to 10 using while loop
+
+class WhileDemo {
+    public static void main (String... args){
+			int i = 1;
+			while ( i <= 10 ){
+					System.out.println(i);
+					i++;				
+			}
+	}
+}
+
+============
+do-while loop
+============
+
+-> It is used to execute statements first then it will check the condition
+
+-> do-while is also called as conditional based loop only
+
+-> 
+
+Syntax:
+
+do{
+	//stmts
+}while (condition );
+
+Q) Write a java program to print numbers from 1 to 10 using do-while loop
+
+
+class DoWhile{
+	public static void main(String... args){
+			
+			int i = 1;
+			do {
+				System.out.println(i);
+				i++;
+			}while (i <= 10);
+	}
+}
+
+
+
+Q) What is the difference between while and do-while ?
+
+while ==> It will check the condition first then it will execute the statements
+
+do-while ==> It will execute statement first then it will check condition.
+
+Note: Even if condition is not satisifed our statement will execute once.
+
+
+=================
+for loop
+=================
+-> It is used to execute statements multiple times
+
+-> For loop is called as Range based loop
+
+syntax
+----------
+
+for ( initialization ; condition ; increment / decrement ) {
+
+			//stmts
+}
+
+
+Q) Write java program to print numbers from 1 to 10 using for loop
+
+class ForLoop {
+
+	public static void main(String... args){		
+			for ( int i = 1 ; i <= 10 ; i++ ) {
+					System.out.println(i);
+			}
+	}
+}
+
+=================
+Nested Loops
+================
+
+-> Writing one loop inside another loop is called as Nested loop
+
+
+		for ( int i = 1; i <= 5 ; i++ ){
+
+			for ( int j = 1; j< = 5; j++){
+
+			}
+		}
+
+-> As per above program,  for every execution of outer loop 5 times inner loop will execute
+
+
+Q) Write a java program to print below pattern using loops
+
+*
+* *
+* * *
+* * * *
+* * * * *
+
+class NestedLoop {
+
+	public static void main(String... args){
+		
+			for ( int i = 1; i <=5 ; i++ ){
+
+				for ( int j = 1; j <= i ; j++ ){
+						System.out.print("*");
+				}
+				System.out.println();
+			}
+	}
+
+}
+
+
+
+
+Q) Write a java program to print below pattern
+
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+
+class NestedLoop {
+
+	public static void main(String... args){
+		
+			for ( int i = 1; i <=5 ; i++ ){
+				for ( int j = 1; j <= i ; j++ ){
+						System.out.print(j);
+				}
+				System.out.println();
+			}
+	}
+}
+
+===========================
+Branching Statements
+=============================
+
+break  ====> It is used to come out from switch case and from loops 
+
+continue ====> It is used to skip one iteration in the loop execution then continue
+
+return ====> To come out from the method
+
+
+class Break {
+
+	public static void main(String... args){
+
+			for (int i = 1; i<= 10; i++ ){
+					if (i >= 5 ){
+						break;
+					}
+					System.out.println(i);
+			}
+	}
+}
+
+
+class Continue {
+
+	public static void main(String... args){
+
+			for (int i = 1; i<= 10; i++ ){
+				if(i == 6 ) {
+					continue;
+				}
+				System.out.println(i);
+			}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+=======================================
+Chapter-2 : Operators & Control Statements
+=======================================
+
+Operators : To perform some operations
+		- Arithmetic Operators
+		- Relational Operators
+		- Logical Operators
+		- Ternary Operator
+		- Assignment Operator
+		- New Operator
+		- Dot operator
+
+Conditional Statements : Execute the code only once based on condition
+		- simple if
+		- if - else
+		- if - else if - else ladder
+		- switch case
+
+Loops Concept : Execute the code repeatedly based on condition / range 
+		- while loop
+		- do-while loop
+		- for loop
+		- for each ( Arrays & Collections )
+
+Transfer / Branching Statements : To come out from loop, to skip loop iteration, to come out from method
+		- break
+		- continue
+		- return (used to return some value from the method)
+
+
+================================================
+Chapter-2 :: Logical Programs
+================================================
+
+
+Q-1) Write a java program to read shoes brand name from keyboard, based on brand name print brand slogan like below
+
+Nike -> Just do it
+
+Adidas -> Impossible is nothing
+
+Puma -> Forever Faster
+
+Reebok -> I Am What I Am
+
+==============================================================================
+
+import java.io.*;
+
+class Shoes {
+
+    public static void main(String... args) throws Exception {
+		
+			InputStreamReader isr = new InputStreamReader (System.in);
+			BufferedReader br = new BufferedReader ( isr );
+			System.out.println ("Enter Brand Name");
+			String brand = br.readLine ( );
+
+			switch ( brand ) {	
+	
+				case "Nike" : System.out.println("Just do it");  	 break;
+
+				case "Adidas" : System.out.println("Impossible is nothing");  break;
+
+				case "Puma" : System.out.println("Forever Faster");  break;
+
+				case "Reebok" :  System.out.println("I Am What I Am"); 	break;
+
+				default : System.out.println("Brand Not Found");
+			}
+    }
+}
+==========================================================================================
+Q-2) Write a java program to read person basic salary and calculate Provident Fund amount from the basic salary
+
+Formula : Provident Fund is 12 % of Basic Salary
+==========================================================================================
+import java.io.*;
+
+class EmpPf {
+
+	public static void main(String... args) throws Exception {
+
+			InputStreamReader isr = new InputStreamReader( System.in );
+			BufferedReader br = new BufferedReader (isr);
+			
+			System.out.println("Enter Basic Salary");
+			String str = br.readLine ( );
+
+			double basicSalary = Double.parseDouble ( str );
+
+			double pf = basicSalary * 12 / 100;
+
+			System.out.println(pf);			
+	}
+}
+==========================================================================================
+Q-3) Write a java program to read person age and person salary and print his eligibility for marriage
+
+Condtion : If person age lessthan 30 and salary greater than 1 lakh then eligible for marriage
+==========================================================================================
+import java.io.*;
+
+class Marriage {
+
+    public static void main (String... args) throws Exception {
+		
+		InputStreamReader isr = new InputStreamReader( System.in );
+		BufferedReader br = new BufferedReader(isr);
+
+		System.out.println("Enter Your Age");
+		String str1 = br.readLine ( );
+		int age = Integer.parseInt ( str1 );
+
+		System.out.println("Enter Your Salary");
+		String str2 = br.readLine ( );
+		double salary = Double.parseDouble(str2);
+
+		if ( age < 30 && salary > 100000 ) {
+				System.out.println("You are eligible for marriage");
+		} else {
+				System.out.println("You are not eligible for marriage");
+		}
+   }
+}
+==========================================================================================
+Q-5) Write a java program to print Right Triangle Star Pattern*
+
+*
+* *
+* * *
+* * * *
+* * * * *
+==========================================================================================
+
+class RightTriangle {
+
+
+		public static void main(String... args) {
+
+				for( int i = 1; i<=5 ; i ++ ){
+					
+					for( int j = 1; j<=i ; j++ ){
+							System.out.print ("* ");
+					}
+
+					System.out.println();
+				}
+		}
+}
+
+==========================================================================================
+
+Q-6) Write a java program to print left traingle start pattern*
+
+          * 
+        * * 
+      * * * 
+    * * * * 
+  * * * * * 
+
+==========================================================================================
+class LeftTriangle {
+
+
+		public static void main(String... args) {
+
+				for( int i = 1; i<=5 ; i ++ ){
+				
+					for ( int k = 5-i ; k >= 1 ; k-- ){
+						System.out.print(" ");
+					}					
+					
+					for( int j = 1; j<=i ; j++ ){
+							System.out.print ("*");
+					}
+
+					System.out.println();
+				}
+		}
+}
+==========================================================================================
+Q-7) Write a java program to print Pyramid pattern
+
+    * 
+   * * 
+  * * * 
+ * * * * 
+* * * * *
+==========================================================================================
+class Pyramid {
+
+		public static void main(String... args) {
+
+				for( int i = 1; i<=5 ; i ++ ){
+				
+					for ( int k = 5-i ; k >= 1 ; k-- ){
+						System.out.print(" ");
+					}					
+					
+					for( int j = 1; j<=i ; j++ ){
+							System.out.print ("* ");
+					}
+
+					System.out.println();
+				}
+		}
+}
+
+==========================================================================================
+
+
+
+
+
+
+
+
+
+
+=========
+Chapter-3
+=========
+
+1) Arrays
+
+2) Strings
+
+3) StringBuffer
+
+4) StringBuilder
+
+5) Command Line Arguments
+
+
+
+
+Variable ===> It is used to store the data
+
+Datatype ===> It is used to specify type of the data
+
+		
+				// variable declaration
+				int a ; 
+
+				// variable intialization
+				a = 20 ;
+
+				int i = 45; // this is valid
+
+				int b = 20, 30 ;    // this is in-valid (we can store only one value)
+
+
+// store one student subject wise marks  (we need 6 variables for 6 subjects for one student)
+
+int sub1 = 78;
+
+int sub2 = 98;
+
+int sub3 = 79;
+
+int sub4 = 90;
+
+int sub5 = 95;
+
+int sub6 = 87;
+
+// i want to store 50 students subject wise marks ( we need 300 variables to store all students marks)
+
+=> This is not recommended because so many variables we have to create
+
+=> To overcome this problem we can go for 'Arrays' concept
+
+========
+Arrays
+========
+
+-> It is a referenced data type
+
+-> It is used to store multiple values
+
+-> In Arrays, size is fixed ( we can't change the size in runtime )
+
+-> Arrays supports only Homogenious elements (same type of elements)
+
+Defination : Array is a container which is used to store collection of elements with same data type.
+
+
+Syntax
+----------
+
+// Array Declaration
+datatype [ ]  variableName;
+
+dataype variableName [ ] ;
+
+datatype  [ ]variableName ;
+
+
+// Array Creation 
+variableName = new datatype [ size ] ;
+
+
+datatype[ ] variableName = new datatype [ size ] ;
+
+
+Ex :      int[ ]  arr = new int [ 5 ];
+
+Note: At the time of creating the array the size is mandatory
+
+=> Array Size represents how many values we can store into Array
+
+=> Array will store the data based on indexes
+
+=> Array index always will start from zero (0)
+
+
+class ArrayDemo {
+
+	public static void main(String... args){
+
+			int [ ]  arr  = new int [ 3 ] ;
+
+			arr[0] = 100;
+			arr[1] = 101;
+			arr[2] = 102;
+						
+			System.out.println ( arr [ 0 ] ) ;
+			System.out.println ( arr [ 1 ] ) ;
+			System.out.println ( arr [ 2 ] ) ;
+	}
+}
+------------------------------------------------------------------------------------
+
+=> We can find size of the array using length property
+
+class ArrayDemo {
+	public static void main(String... args){
+
+			int [ ]  arr  = new int [ 5 ] ;
+			arr[0] = 100;
+			arr[1] = 101;
+			arr[2] = 102;
+			
+			System.out.println ( arr.length ) ;
+	}
+}
+
+-------------------------------------------------------------------
+class ArrayDemo {
+	
+    public static void main (String... args) {
+
+			int arr[ ]  = new int [ 3 ] ;
+
+			arr[0] = 100;
+			arr[1] = 101;
+			arr[2] = 102;
+
+			for( int i = 0 ; i < arr.length ; i ++ ) {
+					System.out.println ( arr [i] );
+			}		
+			
+	}
+}
+
+------------------------------------------------
+
+class ArrayDemo {
+
+	public static void main(String... args) {
+
+			boolean [ ]  arr  = new boolean [ 3 ] ;
+
+			arr [2] = true;
+
+			for( int i = 0 ; i < arr.length ; i ++ ) {
+					System.out.println ( arr [i] );
+			}
+	}
+}
+---------------------------------------------------------------
+
+class ArrayDemo {
+	public static void main(String... args) {
+
+			int arr [ ]  = { 101, 102, 103, 104 } ;	
+
+			for ( int i = 0; i < arr.length; i++){
+					System.out.println(arr[i]);
+			}			
+	}
+}
+
+------------------------------------------------------------------------------------------------------
+
+class ArrayDemo {
+
+	public static void main(String... args) {
+
+			int arr [ ]  = { 101, 102, 103, 104 } ;	
+
+			arr [ 0 ] = 200 ;	// it will update 0th index value from 101 to 200
+
+			arr [ 1 ] = 300 ;  // it will update 1st index value from 102 to 300
+
+			System.out.println ( arr [ 101 ] ) ;  // AIOBE ( 101 index not available in array )
+	}
+}
+-----------------------------------------------------------------------------------------------------------------
+
+Note: Array size should be positive integer only
+
+-> Decimal value can't be used for Array Size
+
+-> Negative value also can't be used for Array Size
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+1) Write a java program to find min and max elements in the array
+
+		int arr [ ] = { 15, 8, 9, 2, 11, 4 }
+
+
+============================== Program with Sort method ===============================
+import java.util.*;
+
+class ArrayDemo {
+	
+	public static void main(String... args) {
+
+			int arr [ ] = { 15, 8, 9, 2, 11, 4 } ; 
+
+			Arrays.sort(arr);
+
+			System.out.println ("Min Element : " + arr [ 0 ] );
+
+			System.out.println("Max Element : " + arr [ arr.length - 1 ] );	
+	}
+}
+=========================Program without sort method=========================================
+class ArrayDemo {
+	
+	public static void main(String... args) {
+
+			int arr [ ] = { 15, 8, 9, 2, 11, 4 } ; 
+
+			int min = arr [ 0 ]; 
+			int max = arr [ 0 ] ; 
+
+			for ( int i = 0 ; i < arr.length ; i++){
+				if ( arr [ i ] > max ) {
+					max = arr [ i ] ;
+				}
+				if ( arr [ i ] < min ){
+					min  = arr [ i ];
+				}
+			}
+			System.out.println ( " Min Element :: " + min );
+			System.out.println (" Max Element :: " + max);
+	}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Q-2 ) Write a  java program to reverse an array ?
+
+		int arr [ ] = { 15, 8, 9, 2, 11, 4 } ; 
+
+
+
+class ArrayDemo {
+	
+	public static void main(String... args) {
+
+			int arr [ ] = { 15, 8, 9, 2, 11, 4, 7 } ;
+
+			int temp = 0;
+
+			for ( int i = 0; i < arr.length / 2 ; i++ ){
+				temp = arr [ i ]; 
+				arr [ i ] = arr [ arr.length - 1 - i ]; 
+				arr [ arr.length-1 - i ] = temp;  
+			}
+
+			for( int n : arr){
+				System.out.print ( n + " " );
+			}
+			
+	}
+}
+
+============================= Array Elements Printing - 3 ways=====================================
+
+import java.util.Arrays;
+
+public class ArraySorting {
+
+	public static void main(String[] args) {
+
+		int arr[] = { 5, 8, 2, 6, 9, 3 };
+
+		for (int i = 0; i < arr.length; i++) {
+			System.out.print(arr[i] + " ");
+		}
+		System.out.println();
+
+		for (int x : arr) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+
+		System.out.println(Arrays.toString(arr));
+	}
+
+}
+=========================================================================================
+
+public class ArraySorting {
+
+	public static void main(String[] args) {
+
+		int arr[] = { 5, 8, 2, 6, 9, 3 };
+		int temp = 0;
+		
+		for (int i = 0; i < arr.length; i++) {
+			
+			for (int j = i + 1; j < arr.length; j++) {
+				if ( arr[i] < arr[j]) {
+					temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+		System.out.println(Arrays.toString(arr));
+	}
+}
+
+=================================================
+public class SumMatchingPairs {
+
+	public static void main(String[] args) {
+
+		int arr[] = { 3, 5, 1, 6, 2, 7, 9 };
+
+		int sum = 8;
+
+		for (int i = 0; i < arr.length; i++) {
+
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[i] + arr[j] == sum) {
+					System.out.println(arr[i] + "+" + arr[j] + "=" + sum);
+				}
+			}
+		}
+	}
+}
+
+=============================================================
+public class NonRepeatedElements {
+
+	public static void main(String[] args) {
+
+		int arr[] = { 2, 3, 2, 1, 3, 4, 5 };
+
+		for (int i = 0; i < arr.length; i++) {
+			int count = 0;
+
+			for (int j = 0; j < arr.length; j++) {
+				if (arr[i] == arr[j]) {
+					count++;
+				}
+			}
+			if (count == 1) {
+				System.out.print(arr[i] + " ");
+			}
+		}
+	}
+}
+
+----------------------------------------------------
+
+
+=> Arrays are divided into 2 types
+
+
+1) Single Dimensional Array
+
+				int arr [ ] =  new int [ size ] ;
+
+2) Multi Dimensional Array
+
+				int   arr [ ] [ ]  = new int [ rowsSize ]  [ columnsSize ] ;
+
+
+import java.util.*;
+
+class MutliDimensionArray{
+
+		public static void main(String... args){
+	
+					int arr [ ] [ ] = new int [ 2 ] [ 2 ];
+
+					arr [0] [0] = 100 ;
+					arr [0] [1] = 200;
+					arr [1] [0] = 300;
+					arr [1] [1] = 400;		
+
+					for (int i = 0; i < arr.length ; i ++ ){
+					
+							for ( int j = 0; j <arr.length ; j ++ ){
+									System.out.println( arr[i] [j] );
+							}				
+					}	
+
+		}
+}
+-----------------------------------------------------------------------------
+
+import java.util.Arrays;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		int arr[][] = new int[2][2];
+
+		arr[0][0] = 100;
+		arr[0][1] = 200;
+		arr[1][0] = 300;
+		arr[1][1] = 400;
+
+		for (int[] ar : arr) {
+			System.out.println(Arrays.toString(ar));
+		}
+	}
+}
+---------------------------------------------------------------------------------------------------------
+
+import java.util.Arrays;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		int arr[][] = { { 100, 200 }, { 300, 400 } };
+
+		for (int[] ar : arr) {
+			System.out.println(Arrays.toString(ar));
+		}
+	}
+}
+----------------------------------------------------------------------------------
+
+public class Demo {
+
+	public static void main(String[] args) {
+		int arr[][] = { { 100, 200 }, { 300, 400 } };
+
+		for (int[] ar : arr) {
+			for(int x : ar) {
+				System.out.println(x);
+			}
+		}
+	}
+}
+
+=======
+Strings
+=======
+
+-> String is a pre-defined class available in java.lang package
+
+-> String we can use as a data type also (Referenced Data Type)
+
+	Note: Every java class can be used as a referenced data type
+
+-> String is used to store group of characters
+
+			Ex :   String name = "abc" ;
+
+-> String is immutable  in java ( can't be modified )
+
+-> We can create String object in 2 ways
+
+				// approach - 1  (string literal)
+				String  name = "ashokit";
+
+				// approach -2 (using new operator)
+				String str = new String ("ashokit");
+
+====================
+String Constant Pool
+====================
+
+-> It is special memory in JVM to store String objects
+
+-> It will not allow us to create duplicate objects
+
+				String s1 =  "hi" ;
+
+				String s2 = "hi" ;
+
+-> s1 and s2 objects are having same content hence only one object will be created and two variables will be pointed to same object.
+
+class StringDemo {
+
+		public static void main(String[ ] args) {
+
+			String s1 =  "hi" ;
+			String s2 = "hi" ;
+
+			if ( s1 == s2 ) {
+				System.out.println (" Both are same ");
+			}else {
+				System.out.println(" Both are not same" );
+			}					
+
+		}
+}
+
+
+=> If we create String objects using 'new' operator always new object will be created in Heap area.
+
+class StringDemo {
+
+		public static void main(String[ ] args) {
+
+			String s1 =  new String ("hello") ;
+
+			String s2 = new String ("hello") ;
+
+			if ( s1 == s2 ) {
+				System.out.println (" Both are same ");
+			}else {
+				System.out.println(" Both are not same" );
+			}					
+
+		}
+}
+
+Note:  In Strings  == will compare address of the objects not content.
+
+
+Q) How many objects will be created ? 
+
+String s1 = "ashokit" ;   // 1 obj
+
+String s2  = "ashokit";  // 1 obj
+
+String s3 = new String("ashokit");  // 2 objs
+
+String s4 = new String("ashokit");  // 3 objs
+
+String s5 = new String("hello"); // 5 objs
+
+String s6 = new String("hi"); // 7 objs
+
+s1 == s2  =====> true
+
+s2 == s3  =====> false
+
+s3 == s4 =====> false
+
+s5 == s6  ====> false
+
+
+=====================
+String class Methods
+=====================
+
+charAt ( )  => To get a character based on given index
+
+					String s1 = "ashokit";
+					System.out.println(s1.charAt(0));
+
+length ( )  => To get size of string ( no.of characters available in String )
+
+						String s1 = "ashokit";
+						System.out.println(s1.length( ) );
+
+concat ( ) => To join two strings (appending)
+
+						String s1 = "ashok";
+						String s2 = "it";
+						String s3 = s1.concat(s2);
+						
+						// String s4 = s1 + s2 ;
+
+						System.out.println(s3);
+
+equals ( ) => To compare content of two Strings
+
+						String s1 = "hi";
+						String s2 = "hello";
+
+						System.out.println( s1.equals(s2) );
+
+
+Note: In Strings,  == operator will compare address of string objects where as 'equals( ) ' method will compare content of the objects.
+
+replace ( ) => To repalce chars with another chars
+
+				String s1 = "hyderabad";
+
+				String s2 = s1.replace("bad", "good");
+
+				System.out.println(s2);
+
+toUpperCase ( ) => To convert string to uppercase string
+
+					s1.toUpperCase( ) ;
+
+toLowerCase ( ) => To convert String to lowercase String
+
+					s1.toLowerCase ( ) ;
+
+indexOf ( ) => To get first occurance of char
+
+				System.out.println ( s1.indexOf('a') ) ;
+
+lastIndexOf ( ) => to get last occurance of char
+
+				System.out.println ( s1.lastIndexOf('a') ) ;
+
+Note: If given char is not available then it will return '-1'
+
+substring ( ) => It is used to get some part of the string. It will take start index & end index.
+
+			start-index : inclusive
+
+			end-index : exclusive
+
+			System.out.println( s1.substring(0,5)
+
+Note: If we don't give end index, it will print from start index to last index.
+
+split ( ) => It is used to split the string based on delimiter (seperator) 
+
+				String s2  = "hi@hello@how are@you";
+
+				String [ ] arr = s2.split ("@");
+				
+				System.out.println(Arrays.toString(arr));
+
+
+valueOf ( )  -> It is used convert any type value into String type
+
+
+					int a = 10 ;
+					int b = 20 ;
+
+					a + b   ===> 30
+
+					String s1 = "10";
+					String s2 = "20";
+
+					s1 + s2  ==> "1020"
+
+					String.valueOf (a) + String.valueOf (b) ==> 1020
+							"10"	    +  "20"     ==> 1020
+
+
+Note: valueOf ( ) is a static method in String class. Static methods will be called using classname. Non-Static methods will be called using Object.
+
+
+startsWith ( )   =>  It is used to check given String is starting with particular char(s) or not
+
+						String str = "ashokit";
+
+						str.startsWith("a") ;    =====> true
+
+						str.startsWith("z") ;     =====> false
+
+endsWith ( )   =>  It is used to check given String is ending particular char(s) or not
+
+						String str = "ashokit";
+			
+						str.endsWith("it");   ===> true
+
+						str.endsWith("good") ===> false
+
+
+trim ( )    ==>  It is used to remove starting and ending spaces of String
+
+						String str = "     hello    ";
+
+						str.trim ( ); 
+
+
+intern ( ) => It is used to access the object from scp
+
+
+String s1 = "hi";
+
+String s2 = s1.intern ( );
+
+s1 == s2 ===> true
+
+
+toString ( ) => It is used to convert object into string format.
+
+
+toCharArray ( )   :  This method is used to convert String to char array
+
+				String s1 = "java";
+
+				char arr[ ]  = s1.toCharArray ( );
+
+===============
+StringBuffer
+===============
+
+-> It is a predefined class available in java.lang package
+
+-> It is used to store group of characters
+
+-> StringBuffer is a mutable object ( We can modify the content )
+
+-> StringBuffer is thread-safe (only one thread can access at a time)
+
+
+		StringBuffer sb  = new StringBuffer ( "hello" );
+
+-----------------------------------------------
+class SBDemo {
+
+		public static void main (String[ ] args){
+				
+					StringBuffer sb = new StringBuffer("hello");
+					sb.append(" hi");
+					System.out.println(sb);
+
+					StringBuffer sb1 = new StringBuffer("java");
+					System.out.println(sb1.reverse());
+
+					String s1 = "ashok";
+					s1.concat("it");
+					System.out.println(s1);
+
+		}
+}
+
+
+=============
+StringBuilder
+=============
+
+-> StringBuilder is a predefined class available in java.lang package
+
+-> This class introduced in JDK 1.5v
+
+-> StringBuilder objects are mutable  ( content can be modified )
+
+-> StringBuilder objects are not thread safe (Multiple threads can access at a time)
+
+			StringBuilder sb = new StringBuilder ( "java" );
+
+			sb.length ( );
+
+			sb.append("program");
+
+
+---------------------------------------------------
+
+class BuilderDemo {
+
+       public static void main (String[ ]  args){
+
+			StringBuilder sb =  new StringBuilder("java") ;
+			System.out.println(sb.length());
+
+			sb.append("program");
+
+			System.out.println(sb);	
+			System.out.println(sb.length());
+		}
+}
+---------------------------------------------------------------------------------------------------
+
+Q) What is the difference between String, StringBuffer & StringBuilder ?
+
+
+String -> Immutable --> Jdk 1.0
+
+StringBuffer---> Mutable + Thread-Safe --> Jdk 1.0
+
+StringBuilder --> Mutable + Not-Thread-Safe --> Introduced in jdk 1.5v
+
+------------------------------------------------------------------------------------------------------
+
+
+=======================
+Command Line Arguments
+========================
+
+-> Arguments means Values
+
+-> Commadline args are used to supply dynamic values as input for our program
+
+-> Cmd Args will be recieved by main method
+
+-> Cmd Args default data type is String
+
+-> We can pass multiple cmd args, they will be stored into one array (String [  ] )
+
+// Program with command line arguments
+
+class CmdArgs {
+
+		public static void main (String [ ] a){
+
+				String s1 = a [0] ; 
+				String s2 = a [1];
+				String s3 = a [2];
+
+				System.out.println( s1 + s2 + s3 );
+		}
+}
+
+
+> javac CmdArgs.java
+
+> java CmdArgs  ashok it hyd
+
+
+// Write a java program to perform sum of two numbers using command line Arguments
+
+
+class CmdArgs {
+
+		public static void main (String [ ] a) {
+
+				System.out.println ("Total Cmd Args :: " + a.length );
+
+				String s1 = a [0];
+
+				String s2 = a [1];
+
+				int x = Integer.parseInt (s1);
+				int y = Integer.parseInt(s2);
+
+				System.out.println (x + y);
+				
+		}
+
+}
+
+> javac CmdArgs.java
+
+> java CmdArgs 10 20
+
+> java CmdArgs 10 20 30
+
+
+============================
+class CharOcc {
+
+		public static void main (String[ ] args){
+
+					String s = "java";
+					char ch  = 'a';
+
+					char arr[ ] = s.toCharArray ( );
+
+					int count = 0;
+	
+					for( int i = 0; i < arr.length ; i ++ ) {
+							if ( arr[i] == 'a' ) {
+									count ++ ;	
+							}
+					}
+				
+				System.out.println(count);
+		}
+}
+===========================================
+class StringReverse {
+
+			public static void main(String[ ] args){
+
+					String s = "java";
+
+					String rev = "";
+
+					for( int i = s.length( ) - 1 ; i >=0 ;  i-- ){
+
+						rev = rev + s.charAt ( i ) ; //avaj
+					}
+			}
+}
+----------------------------------------------------------
+class StringReverse {
+
+			public static void main(String[ ] args){
+
+					String s = args[0];
+
+					String rev = "";
+
+					for( int i = s.length( ) - 1 ; i >=0 ;  i-- ){
+
+						rev = rev + s.charAt ( i ) ; 
+					}
+
+				System.out.println(rev);
+			}
+}
+
+-----------------------------------------------------------------------------
+class Palindrome {
+
+	public static void main(String[ ] args){	
+
+					String s = args [0] ; 
+					String s1 = ""; 
+
+					for(int i = s.length ( ) -1 ; i >=0 ; i -- ){
+							s1 = s1 + s.charAt (i);
+					}
+
+					if( s.equals(s1) ){
+							System.out.println("Palindrome");
+					}else{
+							System.out.println("Not Palindrome");
+					}
+	}
+}
+
+----------------------------
+
+class Palindrome {
+
+	public static void main(String[ ] args){	
+
+					String s = args [0] ; 					
+					StringBuffer sb = new StringBuffer(s);
+
+					sb.reverse() ;
+
+					String s1 = sb.toString( );
+
+					if( s.equals ( s1 ) ) {
+							System.out.println ("Palindrome");
+					}else{
+							System.out.println ("Not Palindrome");
+					}				
+
+	}
+
+}
+
+------------------------------------------------------------------------
+import java.util.*;
+
+class Anagram {
+
+	public static void main(String[ ] args){
+
+			String s1 = args[ 0 ] ;
+			String s2 = args[ 1 ];
+
+			if ( s1.length ( ) != s2.length () ){
+					System.out.println("Given Strings are not anagrams");
+					return ;
+			}
+
+			char a[ ] = s1.toCharArray ( );
+
+			char b[ ] = s2.toCharArray ( ) ;
+
+			Arrays.sort ( a );
+			Arrays.sort ( b );
+
+			boolean flag = Arrays.equals(a, b);
+			if( flag  ){
+				System.out.println("Given strings are anagrams");
+			}else{
+				System.out.println("Given Strings are not anagrams");
+			}
+			
+
+	}
+
+}
+
+------------------------
+
+class SwapStrings{
+
+		public static void main(String[ ] args){
+
+
+				String a = "java";   // 4
+				String b = "program"; // 7
+
+				a = a+b; // 11
+
+				b = a.substring(0, a.length() - b.length());
+
+				a = a.substring(b.length());
+
+				System.out.println(" a = " + a);
+				System.out.println(" b = " + b);
+
+		}
+
+}
+-------------------------------------------------------
+
+class RemoveVowels {
+
+
+			public static void main(String... args){
+				
+					String s = "hello, i love my india";
+
+					s = s.replaceAll ("[aeiouAEIOU]", "");
+
+					System.out.println(s);
+			}
+
+}
+
+----------------------------------------------------------------------
+class ReverseEachWord {
+
+			public static void main(String... args){
+				
+					String s = "Hello My Friend";
+	
+					String[ ]  arr = s.split(" ");
+
+					for(int i = 0; i < arr.length ; i++){
+							String x = arr [ i ];							
+							StringBuffer sb = new StringBuffer(x);
+							sb.reverse( );
+							System.out.print (sb+" ");					
+					}					
+			}
+
+}
+----------------------------------------------------------------------
+
+class WordCount {
+
+			public static void main(String... args){
+				
+					String s = "Hello    Hello           My        Friend";
+
+					String[ ] arr = s.split("\\s+");
+						
+					System.out.println(arr.length);
+			}
+
+}
+
+---------------------------------------------------------------------------
+
+class WordCount {
+
+			public static void main(String... args){
+				
+					String s = "      Hello    Hello           My        Friend";
+
+					String[ ] arr = s.trim().split("\\s+");
+						
+					System.out.println(arr.length);
+			}
+
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+You can download *STS IDE* using below link
+
+https://www.mediafire.com/file/a47twmq8k4vperz/spring-tool-suite-3.9.6.RELEASE-e4.9.0-win32-x86_64.zip/file
+
+
+
+
+-> We used Notepad to write the java programs
+
+-> We can use any text editor to write java programs
+
+-> We compiled and executed java programs using command prompt
+
+-> If we use notepad to write programs it will take lot of time to write our code 
+    (time taking process)
+
+-> In Companies we will use IDEs to write the program
+
+==========
+IDE
+==========
+
+-> IDE means Integrated Development Environment
+
+-> There are several IDEs available in the market
+
+
+1) Eclipse IDE
+
+2) MyEclipse IDE    ( commercial )
+
+3) NetBeans IDE    (outdated)
+
+4) Spring Tool Suite (STS) IDE
+
+5) IntelliJ IDE    (commercial)
+
+6) Visual Studio (VS) Code IDE   ---> It is mostly used for front-end development
+
+===================
+Advantages with IDE
+==================
+
+-> IDE will provide all the tools which are required for development & execution
+
+-> IDE will provide  Suggestions while writing the code (Intelligence)
+
+-> IDE is providing Auto Compilation
+
+-> Using IDE we can do more work in less time (Productivity will be improved)
+
+-> We can do faster development using IDE
+
+
+
+====================
+Working with IDE
+=====================
+
+1) Download IDE as zip file
+
+2) Extract IDE zip file
+
+3) Open STS.exe  / eclipse.exe file
+
+4) Choose Workspace (location to store our projects)
+
+5) Create Java Project
+
+			-> File -> New -> Java Project -> Give Project Name -> Finish
+
+
+-> In java project we are able to below two folders
+
+			- src  (source files --> .java files we will create under src directory)
+			- bin (binaries -> .class files will be stored in bin directory)
+
+
+-> Once project created then we can create our programs / classes in that project
+
+Note: One project can contain any no.of classes
+
+
+	-> Goto src directory --> Right click on src --> select new --> select class --> Give Classname ---> Finish
+
+
+
+-> We can pass commandline arguments also in IDE
+
+Right Click on Program --> Run as -> Run Configurations -> Arguments -> Program Arguments --> Enter Arguments with space -> Apply --> Run 
+
+
+
+
+**************** Eclipse Shortcut Keys Video : https://www.youtube.com/watch?v=TvYMey5SYa8 **************************
+
+
+
+
+
+
+
+
+
+==================================================
+Chapter-4 : OOPS (Object Oriented Programming System)
+================================================
+
+-> Programming languages are divided into 2 types
+
+1) Procedure Oriented
+
+		Ex: C, Cobol, Pascal etc.....
+
+2) Object Oriented
+
+		Ex: Java, C#, Python etc.....
+
+-> In Procedure Oriented programming language, we will develop functions & procedures
+
+-> If we want to add more functionalities then we need to develop more functions
+
+-> Maintaining & Managing more functions is difficult task
+
+-> In PoP, data is exposed globally
+
+-> In Pop, there is no security
+
+
+
+-> If we want to develop a project using OOP lanaguage then we have to use Classes & Objects
+
+-> Any language which follows OOPS Principles is called as OOP Language
+
+-> Object Oriented languages provides security for our data
+
+-> The main advantage of OOPS is code re-usability
+
+===============
+OOPS Principles
+===============
+
+1) Encapsulation
+
+2) Abstraction
+
+3) Polymorphism
+
+4) Inheritance
+
+
+================
+Encapsulation
+===============
+
+-> Encapsulation is used to combine our variables & methods as single entity / unit
+
+-> Encapsulation provides data hiding
+
+-> We can achieve encapsulation using Classes
+
+class  Demo {
+
+	//variables
+
+	// methods
+}
+
+============
+Abstraction
+=============
+
+-> Abstraction means hiding un-necessary data and providing only required data
+
+-> We can achieve Abstraction using interfaces & abstract classes
+
+
+Ex : we will not bother about how laptop working internally
+	We will not bother about how car engine starting internally
+
+===============
+Polymorphism
+===============
+
+-> Exhibiting multiple behaviours based on situation is called as Polymorphism
+
+
+Ex:-1 : in below sceario + symbol having 2 diffenent behaviuours
+
+10 + 20 ===> 30    (Here + is adding)
+ 
+"hi" + "hello" ==> hihello  (here + is concatinating)
+
+
+Ex:-2: 
+
+When i come to class i will behave like a trainer
+
+When i go to ofc i will behave like a employee
+
+When i go to home i will behave like a family member
+
+
+============
+Inheritence
+============
+
+-> Extending the properties from one class to another class is called as Inheritence
+
+Ex:   child will inherit the properties from parent
+
+-> The main aim of inhertience is code re-usability
+
+
+Note: In java, one child can't inherit properties from two parents at a time
+
+
+
+
+======
+Class
+======
+
+-> Class is a plan or model or template
+
+-> Class is a blue print of object
+
+-> Class is used to declare variables & methods
+
+-> Project means collection of classes 
+
+-> Once class is created then we can create any no.of objects for a class
+
+-> 'class' keyword is used to create Classes in java
+
+
+class  <ClassName> {
+
+	// variables
+	// methods
+
+}
+
+
+-> Classes will not exist physically
+
+
+========
+Object
+========
+
+-> Any real-world entity is called as Object
+
+-> Objects exist physically
+
+-> Objects will be created based on the Classes
+
+-> Without having the class, we can' create object  (class is mandatory to create objects)
+
+-> Object creation means allocating memory in JVM
+
+-> 'new' keyword is used to create the objects
+
+		
+			ClassName   refVariable = new ClassName ( );
+
+			User  u1  = new User ( );
+
+			User u2 = new User ( ) ;
+
+
+-> Objects will be created by JVM in the runtime
+
+-> Objects will be created in heap area.
+
+-> If object is not using then garbage Collector will remove that object from heap
+
+-> Garbage Collector is responsible for memory cleanup activities in JVM heap area.
+
+-> Garbage Collector will remove un-used objects from heap.
+
+-> Garbage Collector will be managed & controlled by JVM only.
+
+Note: Programmer don't have control on Garbage Collector.
+
+=================
+What is Hash Code
+=================
+
+-> JVM will assign unique hashcode for every object
+
+-> No two objects will have same hashcode
+
+-> We can get hashcode of the object by calling java.lang.Object class hashCode () method.
+
+					u1.hashCode ( );
+
+
+Note: java.lang.Object class is by default parent class for all java classes.
+
+
+
+public class User {
+
+	public static void main(String[] args) {
+		User u1 = new User();
+		System.out.println(u1.hashCode());
+
+		User u2 = new User();
+		System.out.println(u2.hashCode());
+
+		User u3 = new User();
+		System.out.println(u3.hashCode());
+	}
+}
+
+============
+Variables
+============
+
+-> Variables are used to store the data
+
+			int a  = 10 ;
+
+			User u1 = new User ( );
+
+			Student s1 = new Student ( );
+
+-> Variables are divided into 3 types
+
+			a) Global Variables / instance variables / non-static variables
+
+			b) static variables
+
+			c) local variables
+
+
+=================
+instance variables
+=================
+
+-> Variables which are declared inside the class and outside the method are called as instance variables
+
+-> instance variables can be accessed by all the methods available in the class thats why the are called as Global Variables.
+
+-> Initialization is optional for instance variables
+
+-> Instance variables are called as Object variables
+
+-> When we create the object, then only memory will be allocated for instance variables
+
+Note: If we create 2 objects, then 2 times memory will be allocated for instace variables
+
+-> If we don't intialize instance variable, it will be intialized with default value based on datatype when the object is created
+
+-> Every Object will maintain its own copy of the instance variable
+
+
+public class User {
+
+	int age;
+
+	public static void main(String[] args) {
+		User raju = new User();
+		raju.age = 20;
+		System.out.println(raju.age);
+
+		User rani = new User();
+		rani.age = 25;
+		System.out.println(rani.age);
+		
+		User ashok = new User();
+	}
+}
+
+
+=============
+Static Variables
+=============
+
+-> The variables which are declared inside the class and outside the method with 'static' keyword are called as static variables
+
+-> Static variables are class level variables
+
+-> When class is loaded into JVM then immediatley memory will be allocated for static variables
+
+-> Memory will be allocated for static variables only once when the class is loaded into JVM
+
+-> All objects of the class will maintain same copy of the static variables
+
+-> Static variables we will access using classname
+
+
+public class Student {
+
+	String name;
+	String email;
+	long phno;
+	static String institute;
+
+	public static void main(String[] args) {
+
+		Student.institute = "ashokit";
+
+		Student ankit = new Student();
+		ankit.name = "Ankit";
+
+		Student goutham = new Student();
+		goutham.name = "Goutham";
+	}
+}
+
+
+=========================================
+When to declare variable as static or non-static ?
+=========================================
+
+-> If we want to store different value based on object then use instance variable
+
+-> If we want to store same value for all objects then use static variable
+
+==============
+Local Variables
+==============
+
+-> The variables which are declared inside the method or constructor or block are called as Local Variables
+
+-> If we declare a variable with in the method, then that variable can be used / accessed only with in that method
+
+-> Before using local variables, we have to intialize them
+
+-> If we create a variable with in the method, memory will be allocated for that variable when that method is executing. After that method execution completed, local variable will be deleted from memory
+
+
+class Demo {
+
+ public static void main(String[ ] args){
+				int a = 20;
+				int b = 20;
+
+				System.out.println(a);
+				System.out.prinltn(b);
+  }
+}
+
+========
+Methods
+========
+
+-> Methods are used to perform some operation / action
+
+-> In a class we can write any no.of methods including main method
+
+Note: JVM will always invokes main ( ) method
+
+-> If we want to execute our method then we have to invoke / call our methods from main ( ) method.
+
+returnType   <methodName>   (param1, param2, para3..... paramN) {
+
+		//logic
+
+		return value;
+
+}
+
+-> Every method contains 2 parts
+	
+		1) Method Declaration
+		2) Method Body
+
+------------------------------------------
+What is Method Declaration ?
+------------------------------------------
+Method declaration means we are going to decide what is the name of the method , what are the parameters it will take and what kind of value is return by the method.
+
+syntax:
+			returntype  methodname (list of parameters);
+--------------------------------
+What is returntype ?
+-----------------------------
+->  returntype is data type that indicates what type of value is return by the particular method.
+-> returntype can be any primitive type or array type or reference type
+-> if method does not return any value then return type must be specified using a java keyword called " void ".
+-> specifying returntype is mandatory 
+
+-----------------------------------
+What is  method name ?
+----------------------------------
+-> To identify and access the method there is a suitable name is given for a method which is called as method name.
+-> a methodname can be any valid java identifier.
+-> specifying method name is mandatory
+
+--------------------------------------------
+What are method parameters ?
+------------------------------------------
+-> parameters are the variables that will receive the values that are passed into the. particular method on which data method will perform the operations.
+
+-> we can write 0 or more number of parameters of any primitive type or array type or reference type
+
+-> specifying parameters is optional.
+
+-------------------------------------------------------------------------------
+Method body / Method Definition / Method implementation
+-------------------------------------------------------------------------------
+-> Method body means we are going to write the group of statements that are executed by the method.
+-> A method body can be written in between a pair of curly braces
+
+syntax:
+
+returntype methodname(list of parameters)
+{
+	//statements; 
+	return value;
+}
+
+-> here we can write 0 or more number of statements in between the pair of curly braces.
+-> when we write 0 statements then it is called as null implementation
+ 
+-> if the return type is specified as other than void then we must return a value from our method using java keyword called " return ".
+
+syntax:
+return value;
+
+-	the datatype of the value we return must be match with the datatype that we specify as return type.
+-	but if return type specified as void then we must not write any return value statement.
+
+-> In java we can create any number of methods which are in any of the following 4 combinations of methods
+
+1.	method without return type, without parameters
+2.	method without return type, with parameters
+3.	method with return type, without parameters
+4.	method with return type, with parameters
+
+
+
+
+// Write a method to print a msg on console
+
+void hello ( ) {
+	System.out.println("Hello My Friend");
+}
+
+
+// Take 2 numbers as input and return sum as ouput
+
+int  add ( int a, int b ) {
+
+	int c = a + b ;
+
+	return c;
+}
+
+
+
+
+
+// take 2 names as input, concat them and print on console
+
+void  fullname (String fname, String lname) {
+
+	String name = fname + lname;
+
+	S.o.p(name);
+
+}
+
+
+// take person age as input, if person age >=18 then return true else return false
+
+boolean  check (int age ){
+
+	if ( age >= 18 ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+
+=====================
+Types of Methods
+=====================
+
+=> Methods are divided into 2 types
+
+1) instance methods   ---> Object level methods
+
+2) static methods ----> Class level method
+
+
+->  instance method will be called by using Object
+
+-> static method will be called by using Class
+
+
+-> When we write methods in java class, by default jvm will not execute them
+
+-> To execute our methods we have to call them 
+
+
+Note: JVM will start our program execution from main method. Main method is called as entry point for JVM execution
+
+
+// this is valid
+void   m1 ( ) {
+
+}
+
+// this is valid
+void m1 (int a, float f){
+
+}
+
+// this is valid
+int  add (int a, int b){
+	int c = a + b;
+	return c;
+}
+
+// this is valid
+int add (int a, int b){
+	return a +  b;
+}
+
+// this is valid
+int div (int a, int b){
+	return a / b ;
+}
+
+
+// below method is invalid (method return type is int but it is trying to return string value)
+int  m1 (String name){
+
+	Stirng s1 = name.toUpperCase( ) ;
+
+	return s1;
+
+}
+
+// this is valid
+boolean   m2 ( int a, int b){
+
+	if (a > b )
+		return true;
+	else
+		return false;
+
+}
+
+// this is valid
+boolean m2 (int a, int b){
+
+	return a > b ;
+
+}
+
+
+// this is invalid because it is having 2 return types
+String void m2(){
+
+	return "hi";
+
+}
+
+// this is valid
+boolean   m3( ) {
+
+	return true ;
+}
+
+// this is valid
+void   c1 (int [ ] arr ){
+
+	System.out.println(arr);
+}
+
+
+-----------------------------------------------
+public class Student {
+
+	public static void main(String[] args) {
+		System.out.println("Hi, i am a student");
+
+		Student s1 = new Student();
+		s1.hello();
+
+		Student.greet();
+	}
+
+	void hello() {
+		System.out.println("Hello My Friend...");
+	}
+
+	static void greet() {
+		System.out.println("Good Evening..");
+	}
+}
+-------------------------------------------------------------------
+import java.util.Arrays;
+
+public class Methods {
+
+	public static void main(String[] args) {
+		
+		//object creation
+		Methods m = new Methods();
+
+		int[] ar = { 1, 2, 3 };
+		m.print(ar);
+		
+		m.fullname("ashok", "it");
+	}
+
+	void fullname(String fname, String lname) {
+		String name = fname + lname;
+		System.out.println(name);
+	}
+
+	void print(int[] arr) {
+		System.out.println(Arrays.toString(arr));
+	}
+}
+----------------------------------------------------------------------
+
+1)  Write a java method to find max element in given array
+
+		int   findMaxElement (int [ ] arr ) {	
+				// logic
+			return maxElement;
+		}
+
+2)  Write a java method to find length of given name
+
+		int findLength ( String name) {
+				
+				int length = name.length ( ) ;
+
+				retunr length;
+	 	}
+
+3) Write a java method to perform sum of two numbers
+
+		int  add (int a, int b){
+				//logic
+				return  a+b ;
+		}
+	
+
+4)  Write a java method to concat firstname and lastname
+
+		String  concatNames (String fname, String lname){
+
+				return fname + lname;
+		}
+
+
+5) Write a java method to display person is elgible for vote or not
+
+		boolean  check (int age){
+
+				return age >= 18 ;
+		}
+
+		void  check(int age){	
+			if(age > = 18){
+				s.o.p("eligible");
+			}else{
+				s.o.p("not-eligible");
+			}
+
+		}
+
+6) Write a java method to reverse given array
+
+			
+				int[ ]  reverseArray (int[ ] arr) {
+
+						//logic
+				}
+
+				void  reverseArray (int[ ] arr ) {  ... }
+
+
+6) Write a java method to convert the name into uppercase characters
+
+		String   convertUppercase ( String name ) {
+
+			return name.toUpperCase( );
+	
+		}
+
+----------------------------------------------------------
+int ar[ ]  = {1,2,3};
+
+String s= Arrays.toString ( ar ) ;
+
+
+String str = new String("hi");
+
+StringBuffer sb = new StringBuffer(str);
+
+String s1 = sb.reverse ( );
+
+String line = br.readLine ( );
+
+String name = "ashokit";
+
+// int length ( )
+int x  = name.length ( ) ;
+
+// boolean endsWith (String str)
+boolean z  = name.endsWith("it");
+
+// char charAt (int index)
+char ch   = name.charAt (0);
+
+--------------------------------------------------------------------
+public class Driver {
+
+	public static void main(String[] args) {
+		Driver d = new Driver(); // obj creation
+
+		int x = d.add(10, 20); // calling the method
+		System.out.println(x); // printing the output
+	}
+
+	// instance method
+	int add(int a, int b) {
+		int c = a + b;
+		return c;
+	}
+}
+
+
+
+
+================================
+Working with Methods using Objects
+================================
+
+-> Object means physical entity
+
+-> Objects are used to store the data
+
+-> Object will be created based on class name
+
+-> To create the object we will use 'new' operator
+
+-> Object will be stored in heap area
+
+-> For every Obect jvm will assign one unique hashcode
+
+-> In realtime projects, data will play the major role
+
+-> Java is  a OOP language, so everything will be represented in the form of Objects
+
+-> In Realtime Projects, mainely our methods will deal with Objects only
+
+
+
+// Write a java method to print data available in the Student object
+
+		
+public class Driver {
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+		
+		Student s = new Student();
+		s.id = 101;
+		s.name = "raju";
+		
+		d.print(s);
+	}
+
+	void print(Student s) {
+		System.out.println(s.id + "  " + s.name);
+	}
+
+}
+
+class Student {
+	int id;
+	String name;
+}
+
+
+//  Take employee class with id and salary as properties
+//  Take Driver class and write the method to print employee object data & call the print method from main method
+
+class Employee {
+	int id;
+	double salary;
+}
+public class Driver {
+	
+	public static void main(String[] args) {
+		Driver d = new Driver();
+		
+		Employee e = new Employee();
+		e.id = 101;
+		e.salary = 15000.00;
+		
+		d.print(e);
+	}
+
+	void print(Employee e) {
+		System.out.println(e.id + "--" + e.salary);
+	}
+
+}
+
+
+// Take Product class with productId, productName, productPrice as properties
+
+// Create Driver class with print ( ) method to print product data
+
+
+class Product {
+	int pid;
+	String pname;
+	double price;
+}
+
+class Driver {
+
+	void print(Product p) {
+		System.out.println(p.pid + " " + p.pname + " " + p.price);
+	}
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+
+		Product p = new Product();
+		p.pid = 101;
+		p.pname = "Mouse";
+		p.price = 450.00;
+
+		d.print(p);
+	}
+}
+
+// Take Docter class with docterName, docterAge  as properties
+// Create Driver class with print ( ) method to print Docter data
+
+
+class Docter {
+	String name;
+	int age;
+}
+
+class Driver {
+
+	void print(Docter d) {
+		System.out.println(d.name + " " + d.age);
+	}
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+
+		Docter d1 = new Docter();
+		d1.name = "Rathod";
+		d1.age = 29;
+		d.print(d1);
+	}
+}
+------------------------------------------------------------------------------------------------------------------
+
+// Take a Player class with id, name, age properties
+
+class Player {
+
+	int id;
+	String name;
+	int age;
+}
+
+// Take driver class to print Player Data
+
+class Driver {
+
+	void print (Player p1) {
+		s.o.p(p1.id +"--"+ p1.name+""+p1.age);
+	}
+
+		psvm(String... args){
+			Driver d = new Driver( );
+
+			Player p2 = new Player ( );
+			//set data
+
+			d.print (p2);
+		}
+
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+// write a java method which will give Person object with data 
+
+package ashokit;
+
+class Driver {
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+		Person p = d.m1();
+		System.out.println(p.id + "--" + p.name + "--" + p.age);
+
+	}
+
+	Person m1() {
+		Person p = new Person();
+		p.id = 101;
+		p.name = "Rani";
+		p.age = 32;
+
+		return p;
+	}
+
+}
+
+class Person {
+	int id;
+	String name;
+	int age;
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+
+// Write a java method to return College data (id, name)
+
+
+package ashokit;
+
+class Driver {
+
+	College m1() {
+
+		College c = new College();
+		c.id = 101;
+		c.name = "HITM";
+
+		return c;
+	}
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+		College c = d.m1();
+		System.out.println(c.id + "--" + c.name);
+	}
+
+}
+
+class College {
+	int id;
+	String name;
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Raju Data ( 101,  Raju, 30 )
+
+Rani Data ( 102 , Rani, 32 )
+
+// Write a java method which will take id as input. if id is 101 then method should return Raju object
+if id is 102 then method should return Rani object.
+
+
+package ashokit;
+
+class Driver {
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+
+		//read id from keyboard
+
+		Person person = d.m1(120);
+		System.out.println(person.id + "--" + person.name);
+	}
+
+	Person m1(int id) {
+		Person p = new Person();
+		if (id == 101) {
+			p.id = 101;
+			p.name = "Raju";
+			p.age = 30;
+		} else if (id == 102) {
+			p.id = 102;
+			p.name = "Rani";
+			p.age = 32;
+		}
+		return p;
+	}
+}
+
+class Person {
+	int id;
+	String name;
+	int age;
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+// write a java method which will return cricket player data based on player number
+
+Player Data --> id, name, age
+
+7 ----> Dhoni
+
+18 ---> Kohli
+
+45 ---> Rohit Sharma
+
+
+package ashokit;
+
+class Driver {
+
+	public static void main(String[] args) {
+		Driver d = new Driver();
+		Player p = d.m1(45);
+		System.out.println(p.id + "--" + p.name + "--" + p.age);
+	}
+
+	Player m1(int id) {
+
+		Player p = new Player();
+
+		if (id == 7) { //false
+			p.id = 7;
+			p.name = "dhoni";
+			p.age = 40;
+		} else if (id == 18) { // false
+			p.id = 18;
+			p.name = "kohli";
+			p.age = 34;
+		} else if (id == 45) { // true
+			p.id = 45;
+			p.name = "Rohit";
+			p.age = 38;
+		}
+		return p;
+	}
+
+}
+
+class Player {
+	int id;
+	String name;
+	int age;
+}
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+// Write a java method to return University data based on unvesity ID
+
+101 -----> id - 101, name - Oxford
+
+102 ----> id- 102, name - Standford
+
+
+public class University {
+
+	int id;
+	String name;
+
+	public static void main(String[] args) {
+		University u = m1(101);
+		System.out.println(u.id + "--" + u.name);
+		String str = u.m2();
+		System.out.println(str);
+	}
+
+	String m2() {
+		String s = "hello";
+		return s;
+	}
+
+	static University m1(int id) {
+		University u = new University();
+		if (id == 101) {
+			u.id = 101;
+			u.name = "Oxford";
+		} else if (id == 102) {
+			u.id = 102;
+			u.name = "Standford";
+		}
+		return u;
+	}
+}
+
+
+// Write a java class with two methods
+
+// first method should take 2 Person objects as input
+
+		Approach-1:
+
+			void m1(Person p1, Person p2){
+					// logic
+			}
+
+		Approach-2 :
+
+			void m1 (Person[ ] p){
+
+			}
+			
+
+// second method should give 3 Person Objects as ouput
+
+			Person[ ] m2(){
+				 // logic
+			}
+
+
+--------------------------------------------------------------------------
+package ashokit;
+
+public class Person {
+
+	int id;
+	String name;
+
+	Person[] m2() {
+
+		Person p1 = new Person();
+		p1.id = 101;
+		p1.name = "Raju";
+
+		Person p2 = new Person();
+		p2.id = 102;
+		p2.name = "Rani";
+
+		Person p3 = new Person();
+		p3.id = 103;
+		p3.name = "Anil";
+
+		Person[] arr = { p1, p2, p3 };
+
+		return arr;
+
+	}
+
+	void m1(Person p1, Person p2) {
+		System.out.println(p1.id + "--" + p1.name);
+		System.out.println(p2.id + "--" + p2.name);
+	}
+
+	public static void main(String[] args) {
+		Person p = new Person(); // obj1 created
+
+		Person p1 = new Person(); // obj2 created
+		p1.id = 101;
+		p1.name = "Raju";
+
+		Person p2 = new Person(); // obj3 created
+		p2.id = 102;
+		p2.name = "Rani";
+
+		p.m1(p1, p2);
+
+		Person[] arr = p.m2();
+
+		for (Person person : arr) {
+			System.out.println(person.id + "--" + person.name);
+		}
+
+	}
+}
+-------------------------------------------------------------------------------------------------
+
+
+
+
+Class : It is a plan or model. It contains variables & Methods
+
+Object : Physical Entity. It is used to access variables & methods of the class
+
+Variables : Used to store the data 
+
+				 - instance variables (inside class, outside method without static keyword)
+							-> When obj created, memory will be allocated for instance variables
+							-> Every obj will maintain its own copy of instance variables
+
+				 - static variables (inside class, outside method with static keyword)
+							->  When class is loaded then memory will be allocated for static variables
+														
+				 - local variables (inside the method)
+							-> When method is invoked then only memory will be allocated for local variables
+							-> Before using local variable, we have to initialize that
+
+Methods : To perform some operation
+
+				 - instance method ---> We will call by using object
+				 - static method -----> We will call by using Classname
+
+				 - Method Declaration   (Signaure) ---> return type + name + list of parameters
+
+				 - Method Definition  (Body)   ----> logic
+
+
+==============
+Constructors
+==============
+
+-> Constructor is a special method in java which is used to initialize current class instance variables
+
+-> Constructor name should be same as class name
+
+-> Constructor shoudn't have any return type (not even void)
+
+
+Note: If we write return type for the constructor then it will become method
+
+Syntax :
+
+class Demo {
+
+		Demo ( ) {
+				// logic
+		}
+
+}
+
+
+Demo d = new Demo ( );
+
+Note: At the time of object creation our class Constructor will be executed. Constructor is mandatory to create the object.
+
+-> Object creation means calling the constructor (new Demo( ) )
+
+Note: If we don't write the constructor in class, then java compiler will add one default constructor to our class.
+
+-> We can check default constructor for the class using below command
+
+				> javap classname
+
+Note: If we write constructor in the class, then compiler will not add any constructor.
+
+
+-> Constructors are divided into 2 types
+
+1) Zero Param Constructor / Default Constructor
+
+				-  Constructor without parameters
+
+					class Student {
+
+							Student ( ) {
+									...
+							}
+					}
+
+2) Parameterized Constructor
+
+				- Constructor which contains 1 or more paramters
+
+					class Student {
+
+							Student (int i, int b ) {
+									...
+							}
+					}
+				
+
+
+class Employee {
+
+	public Employee(int i, int j) {
+		System.out.println(i + j);
+	}
+
+	public static void main (String[] args) {
+		Employee emp = new Employee(100, 200);
+	}
+
+}
+
+==========
+this keyword
+===========
+
+-> this is a predefined keyword in java
+
+-> It is used to represent current class object
+
+class Employee {
+
+	String name;
+	float salary;
+
+	public Employee(String name, float salary) {
+		this.name = name;
+		this.salary = salary;
+		System.out.println(this.name + "--" + this.salary);
+	}
+
+	public static void main(String[] args) {
+		Employee emp = new Employee("Raju", 55000.00f);
+	}
+
+}
+
+
+------------------------------------------------------------------
+
+public class Student {
+
+	int id;
+	String name;
+	int age;
+	String gender;
+
+	public Student(int id, String name, int age, String gender) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		System.out.println(this.id + "-" + this.name + "-" + this.age + "-" + this.gender);
+	}
+
+	public static void main(String[] args) {
+		Student s1 = new Student(1, "Raju", 20, "Male");
+		Student s2 = new Student(1, "Rani", 22, "FeMale");
+	}
+
+}
+
+
+======================
+Constructor Overloading
+======================
+
+-> Writing more than one constructor with different parameters is called as Constructor Overloading
+
+
+class Employee {
+
+	Employee(int id){
+
+	}
+
+	Employee(double d){
+
+	}
+
+}
+
+
+
+InputStreamReader isr = new InputStreamReader ( );
+
+BufferedReader br = new BufferedReader( isr );
+
+String s = new String("hi");
+
+StringBuffer sb  = new StringBuffer(s);
+
+==========================
+Access Specifiers / Modifiers
+==========================
+
+-> These are used to specify accessibility for our classes, constructors, variables & methods
+
+-> In java we have below 4 access specifiers / modifiers
+
+			1) public
+			2) private
+			3) protected
+			4) default
+
+public : It is used to specify global access for classes, variables, methods and Constructors
+		
+				-> We can take class as public
+				-> We can take constructor as public
+				-> We can take variables as public 
+				-> We can take methods as public
+
+Note: public means anybody can access from inside and outside the class also.
+
+private: It is used to specify local access (with in the class). private variables, private methods, private constructors can't be accessed outside of the class.
+
+				-> We can't use private for classes  (not allowed)
+				-> We can take variables as private
+				-> We can take constructor as private (no body can create obj from outside of cls)
+				-> We can take method as private (no body can call our method from outside of cls)
+
+Note: To make our java class as Singleton, we will use private constructor. The java class which is having only one object is called as Singleton class.
+
+protected : Protected members can be accessed in same package & its sub classes
+
+default : default members can be accessed in same package. When we don't specify any modifier then it comes under default modifier.
+
+Note: only public and default modifiers are allowed for classes. private and protected are not allowed.
+
+Note: If we use 'public' for the class name then class name & file name should be same. We should have only one public class in the java file.
+
+
+Class Name : EligServiceImpl
+
+Method : public EligResponse executePlanCondtions(Long caseNum, String planName, Integer age)
+
+
+			EligServiceImpl    eligService = new EligServiceImpl ( );
+
+			EligResponse response = eligService.executePlanConditions (. . .);
+
+=======
+OOPS
+=======
+
+Encapsulation : Combining variables & methods as single unit. It is used for data hiding.
+	
+			Ex: Java Class
+
+Abstraction : Hiding un-necessary details and providing only useful information.
+
+			Ex: Abstract classes & Interfaces
+
+Inheritence : The process of extending properties from one class to another class is called as inheritence.
+
+			-> It is used for code re-usability
+
+Polymorphism : Exihibiting multiple behaviours based on the situation is called as Polymorphism.
+
+			Ex: Objects will exhibit multiple behaviours
+
+
+=============
+Encapsulation
+=============
+
+-> It is used for data hiding
+
+-> We will combine variables & methods as one single unit using Class
+
+-> Java class is one of the best example for Encapsulation
+
+
+public class Account {
+
+	private int accNum;
+	private String name;
+
+	public void setAccNum(int accNum) {
+		this.accNum = accNum;
+	}
+
+	public int getAccNum() {
+		return this.accNum;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+}
+
+
+public class Test {
+
+	public static void main(String[] args) {
+
+		Account obj = new Account(); // obj creation
+		obj.setAccNum(797979);
+		obj.setName("Ashok");
+
+		int accNum = obj.getAccNum();
+		String name = obj.getName();
+
+		System.out.println(accNum + "--" + name);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

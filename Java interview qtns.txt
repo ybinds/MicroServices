@@ -1,0 +1,278 @@
+----Bhuwan Bhatt---------
+
+=====================================================
+Core Java Topics
+===================================================
+
+1. OOps **********************************
+2. Exceptional Hadling *****
+3. Multi Threading *****
+3. Java.Lang package *****
+4. Collection *****
+
+5. File I/O **
+6. Generics *
+7. Serialization *
+
+8. Core Java Programme on 
+     - Number
+     - String
+     - Array
+     - Collection
+
+========================================================
+Frequently Asked Core Java Interview Question
+=======================================================
+
+*** practise OOPS logical Question
+
+1 - What is encapsulation, explain with example ?
+    How we acheive it ?
+Ans: The process of binding data and corresponding methods together into 
+	a single unit is called encapsulation in java. It allows data hiding as well.
+class Student{
+	private int studentId;
+	private String studentName;
+	
+//getters and setters
+}
+Encapsulation can be achieved by creating a class.
+
+2 - What is overloading, overrding, method hiding, polymorphism, type of polymorphism 
+Polymorphism is one of OOP's Principles.
+The word polymorphism means having many forms;
+Polymorphism is a concept by which we can perform a single action in different ways.
+
+Compile time polymorphism: Whenever an object is bound with their functionality at the compile-time,
+this is known as the compile-time polymorphism. At compile-time, compiler knows which method to call by
+checking the method signatures. So this is called compile-time polymorphism or static or early binding.
+Compile-time polymorphism is achieved through method overloading.
+
+Runtime Polymorphism: Whenever an object is bound with the functionality at runtime, this is known as runtime
+polymorphism.The runtime polymorphism can be achieved by the method overriding. Java virtual machine determines
+the proper method to call at the runtime, not at the compile time. It is called dynamic or late binding.
+
+3 - When null pointer exception occured ?
+
+4 - Working of Hashmap.
+
+5 - Contract b/w hashamp and hashcode.
+
+6 - What are checked and unchecked exception ?
+
+7 - How can we increase size of collection
+
+8 - Default size of Hashmap.
+
+9 - Applicable modifier for top level class & inner class.
+
+10 - Why string are immutable
+
+11 - Diff b/w 
+
+    Hashset & linkded hashset
+    Comparable & Comparator
+    fail safe & fail fast
+    Vector & Arraylist ?
+    hashmmap & hashtable ?
+    final, finally & finalize
+    == operator & equals()
+    protected & default access modifier
+
+12 Programs
+
+  - Reverse String
+  - Reverse Sentence
+  - Find duplicates from array
+  - Programme to print prime.
+  - find prime no b/w 'm' and 'n' (ex - find prime no b/w 10 and 20)
+
+13. Logic Ques
+
+   Q)
+
+     String s1 = "Bhuwan";
+     String s2 = "Bhuwan";
+     String s3 = "Rahul";
+     String s4 = new String ("Bhuwan");
+
+     Sopln (s1==s2) // true
+     Sopln (s1 ==s3) // false
+     Sopln (s2 ==s4) // false
+
+     Sopln(s1.equals(s2)) // true
+     Sopln(s1.equals(s3)) // false
+     Sopln(s1.equals(s4)) // true
+
+   Q) Tell how many objects created
+
+
+   String s1 = "Bhuwan";
+   String s2 = "Bhuwan";
+   String s3 = "Rahul";
+   String s4 = new String ("Bhuwan");
+
+  Ans - 2 in string constant pool, 1 in heap
+
+=====================================================
+Frequently Asked Advance Java Ques.
+===================================================
+
+Jdbc
+--------
+
+1.*** Types of driver and there advantanges and limitations ?
+2.*** Steps for delovping jdbc prgram. write code and explain meaning of each line.
+3. what does class.forName() method does ? 
+   Ans - used to load the driver
+4.*** Difference between statement and prepared statement.
+5. Differnce between Stored prodcedures and Functions.
+6. What are callable statemet
+7. What is connection pooling.
+8.*** What are Different Trasaction Properties.
+   Ans -ACID (Explain them)
+9.*** What is Save Point.
+10. How you fetch data from database in JDBC ?
+   Ans. check steps in programe
+11. What is resultset ?
+12. what is return type of executrQuery(), executeUpdate(), execute().
+    Ans. executrQuery() - return type is ResultSet, (executrQuery() is used to get group of records, which are reperesnted by Resultset object)
+         executeUpdate() - return typee int.(executeUpdate() tells about no of rows effected in database)
+         execute() - return type boolean. 
+13.what are select and non-select operation.
+   Ans. Select operation - DQL
+        Non-Selct operation - DML, DDL etc 
+ 
+
+Servlet
+----------
+
+1.*** Lifecycle of Servelt ?
+2. what is load-on-startup ?
+3. What is generic servlet, http servlet ?
+4. how you read data in servelts, which is received from browser ?
+  Ans. using request.getParameter()
+     String s = request.getParameter("name"):
+5.*** Difference between GET and POST?
+6.*** Draw directory structure of web-application.
+7. Differnce between servlet config and servlet context.
+8. Difference between forward() and include().
+9. what does sendRedirect() does ?
+10.*** What HTTP is said to be stateless Protocol ?
+11.*** What are Difference type of session Managment , explain them ,and tell pros and cons of each one.
+     Ans. HTTPSession, Cookies, URL Rewriting, Hidden Form filed.. explain them and wrtie there pros and cons.
+12. what is root tag in web.xml ?
+   Ans. webapp
+ 
+JSP
+-----------
+
+1.*** Difference betweeen Servlet and JSP ?
+2.*** Lifecylcle of JSP.
+3. Differece between include directive and include actions
+4. what are differenct implcit object ?
+5.*** what are JSP scripting element ? what their syntax.
+   Ans. Expression , scriplet, Delcration .. write there syntax
+6. Tell me name of some standrard action tags.
+
+======================================================
+Frequently Asked Java 8 Ques.
+======================================================
+
+*** practise Java 8 programme from you tube
+
+1 - What are new Feaures of Java 8 ? explain each.
+
+2 - What is Functional Interface ?
+Ans. An Interface that has only one abstract method.
+3 - Diff b/w normal interface and functional interface ?
+Ans. Normal interface can have any number of abstract methods declared but functional interface
+can have only one abstract method.
+====================================================================
+Frequently Asked Spring & Spring Boot Ques.
+==============================================================
+
+*** Read Each annotation use
+*** Practise one CRUD operation example Using Spring boot, they will ask you to write in notepad
+
+1 - What are Joins, how many types.
+Ans. Joins are used to combine two or more tables together to get the output. There are 4 types of joins:
+OneToOne
+ManyToOne
+OneToMany
+ManyToMany
+
+2 - Diff b/w Controller and ReST Controller?
+Ans: Controller is used for Web Applications and ReST controller is used for Web Services.
+
+3 - What is ORM ?
+Ans: Object Relational Mapping. Its a bridge that maps/converts Data from Object to DB row and vice versa.
+
+4 - What is IOC?
+Ans: Inversion of Control. Spring Container creates objects from Dependants to 
+
+5 - Default scope in spring ?
+Ans: Singleton
+
+6 - Diff b/w path param/ Query param and path variable ?
+
+7 - Full form of ReST.
+
+8 - What are diff HTTP methods which you used in project ? Explain them.
+     (Anss - Get, Head, Put, Patch, Post)
+
+9 - Difference between Put and Patch.
+
+10 - can we use put instead of post ?
+     can we use post instead of put ?
+
+
+
+
+
+spring boot design patterns?
+
+how can you access data from multiple database?
+Ans: By using Joins
+
+explain executor service?
+
+how will you verify thread task is completed or not? 
+Ans: isActive()
+
+explain @look up annotation(they asked question indirectly)?
+
+actuator in spring boot?
+
+if list specify final then, is it possiable to add elements?
+
+once serialization done, how will you verify data is serialized or not?
+
+once you commit the changes where it will commit?
+how will you provide communication one microservice to another microservices?
+explain steam api usage in your project?
+how will you take thread dump?
+what is identity hash map?
+explain one service you have developed recently?
+dev tools will use dev evn, for production which one will use?
+how will you mock private methods using powermockito?
+one microserviceis depending on second microservice but 2nd one is keep on failing then how will you handle in that situation?
+what is junit coverage?
+what is coverage line?
+in production having some issue,but dev env is working as expected, what to do in that situation?
+what is git conflect?
+what are the challenges you have faced in your project?
+suppose one database is giving meta data and another data base is giving actual data, how will you handle two data bases?
+cluster index and non cluster index?
+what is 403 http error code and explain when did you get this in your project?
+what is classcastexception?
+
+My questions
+1. What is Static and Dynamic binding?
+Binding: Connecting a method call to the method body is known as binding.
+Static Binding: binding happens during compilation. It is also called early binding because binding 
+happens before a program actually runs.
+Binding of all the static, private and final methods is done at compile-time.
+Method overloading is an example of static binding.
+Dynamic Binding:  binding does not happen during compilation time. Overriding is a perfect example of dynamic binding.
+It is also called late binding because binding happens during program execution.

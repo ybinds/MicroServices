@@ -1,0 +1,20 @@
+
+=> When method is taking interface as a parameter that means that method is expecting interface implementation class object as parameter.
+
+				public void m1 (Bank b ) {  // loosely coupled bcz we can pass any impl cls obj
+
+				}
+
+				public void m1(AxisBank b){ // tightly coupled bcz we have to pass only AxisBank obj
+
+				}
+
+=> When method is having Interface as a return type that means that method will return interface implementation object as return type
+
+				public Bank  m2 ( ) { // loosely coupled bcz we can return any impl cls obj
+
+				}
+
+				public HdfcBank  m2 ( ) {  // tighthly coupled bcz only HdfcBank obj shud be returned
+
+				}
